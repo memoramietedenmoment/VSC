@@ -9,7 +9,7 @@
  *   - Direkter Anfrage-CTA
  */
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { useRoute } from "wouter";
 import { ChevronLeft, ChevronRight, Check, AlertCircle } from "lucide-react";
@@ -882,6 +882,9 @@ export default function ProductDetail() {
   const [match, params] = useRoute("/produkt/:slug");
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+  const minSwipeDistance = 50;
 
   if (!match) return null;
 
@@ -906,6 +909,37 @@ export default function ProductDetail() {
       `Hallo memora! Ich interessiere mich für ${product.name}. Bitte sendet mir mehr Informationen und ein Angebot.`
     );
     window.open(`https://wa.me/4915225896570?text=${msg}`, "_blank");
+  };
+
+  const nextImage = () => {
+    if (!product.images) return;
+    setCurrentImageIndex((prev) => (prev === product.images!.length - 1 ? 0 : prev + 1));
+  };
+
+  const previousImage = () => {
+    if (!product.images) return;
+    setCurrentImageIndex((prev) => (prev === 0 ? product.images!.length - 1 : prev - 1));
+  };
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    touchEndX.current = null;
+    touchStartX.current = event.touches[0].clientX;
+  };
+
+  const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+    touchEndX.current = event.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) return;
+    const distance = touchStartX.current - touchEndX.current;
+    if (Math.abs(distance) < minSwipeDistance) return;
+
+    if (distance > 0) {
+      nextImage();
+    } else {
+      previousImage();
+    }
   };
 
   return (
@@ -944,13 +978,18 @@ export default function ProductDetail() {
               animate={{ opacity: 1, x: 0 }}
               className="relative"
             >
-              <div className="relative overflow-hidden rounded-2xl shadow-lg">
+              <div
+                className="relative overflow-hidden rounded-2xl shadow-lg"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
                 {product.images && product.images.length > 0 ? (
                   <>
                     <img
                       src={product.images[currentImageIndex]}
                       alt={`${product.name} - Bild ${currentImageIndex + 1}`}
-                      className="w-full h-96 object-contain"
+                      className="w-full h-auto object-contain"
                     />
 
                     {/* Navigation Arrows */}
