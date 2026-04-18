@@ -702,7 +702,7 @@ export default function Home() {
               transition={{ delay: 1.1 }}
               className="text-white/50 text-sm mt-8"
             >
-              ✓ Unverbindlich &nbsp;·&nbsp; ✓ Kostenlose Beratung &nbsp;·&nbsp; ✓ Antwort innerhalb von 2h
+              ✓ Unverbindlich anfragen &nbsp;·&nbsp; ✓ Kostenlose Beratung &nbsp;·&nbsp; ✓ Antwort innerhalb von 2h
             </motion.p>
           </div>
         </div>
@@ -712,7 +712,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/40"
+          className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/40"
         >
           <span className="text-xs">Mehr entdecken</span>
           <motion.div
