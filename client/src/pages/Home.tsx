@@ -700,7 +700,7 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.1 }}
-              className="text-white/50 text-sm mt-4"
+              className="text-white/50 text-sm mt-8"
             >
               ✓ Unverbindlich &nbsp;·&nbsp; ✓ Kostenlose Beratung &nbsp;·&nbsp; ✓ Antwort innerhalb von 2h
             </motion.p>
