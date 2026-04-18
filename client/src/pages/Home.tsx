@@ -353,7 +353,7 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
-  const [formData, setFormData] = useState({ name: "", phone: "", date: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", phone: "", date: "", products: [] as string[], message: "" });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [showAllProducts, setShowAllProducts] = useState(false);
@@ -407,9 +407,15 @@ export default function Home() {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (formData.products.length === 0) {
+      alert("Bitte wähle mindestens ein Produkt aus.");
+      return;
+    }
+
+    const productList = formData.products.join(" | ");
     // Öffnet WhatsApp mit vorausgefüllter Nachricht
     const msg = encodeURIComponent(
-      `Hallo memora-Team! Ich möchte eine Anfrage stellen.\n\nName: ${formData.name}\nTelefon: ${formData.phone}\nEvent-Datum: ${formData.date}\nNachricht: ${formData.message}`
+      `Hallo memora-Team! Ich möchte eine Anfrage stellen.\n\nName: ${formData.name}\nTelefon: ${formData.phone}\nEvent-Datum: ${formData.date}\nProdukte: ${productList}\nNachricht: ${formData.message}`
     );
     window.open(`https://wa.me/4915225896570?text=${msg}`, "_blank");
     setFormSubmitted(true);
@@ -1261,12 +1267,39 @@ export default function Home() {
 
                   <div>
                     <label className="block text-sm font-semibold text-foreground mb-1.5">
-                      Was planst du? *
+                      Für welche Produkte interessierst du dich? *
+                    </label>
+                    <div className="grid gap-2 p-4 rounded-3xl border border-border bg-[oklch(0.97_0.012_85)]">
+                      {PRODUCTS.map((product) => (
+                        <label key={product.id} className="flex items-center gap-3 text-sm text-foreground">
+                          <input
+                            type="checkbox"
+                            className="h-4 w-4 rounded border-border text-amber-500 focus:ring-amber-300"
+                            checked={formData.products.includes(`${product.name} (${product.price})`)}
+                            onChange={(e) => {
+                              const value = `${product.name} (${product.price})`;
+                              setFormData((prev) => ({
+                                ...prev,
+                                products: e.target.checked
+                                  ? [...prev.products, value]
+                                  : prev.products.filter((item) => item !== value),
+                              }));
+                            }}
+                          />
+                          <span>{product.name} – {product.price}</span>
+                        </label>
+                      ))}
+                    </div>
+                    <p className="mt-2 text-xs text-muted-foreground">Mehrfachauswahl möglich. Das Feld ist erforderlich.</p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-foreground mb-1.5">
+                      Erzähl uns mehr über dein Event (optional) 
                     </label>
                     <textarea
-                      required
                       rows={3}
-                      placeholder="z.B. Hochzeit mit 80 Personen in Kalsruhe, interessiere mich für Fotospiegel und Slushmaschine..."
+                      placeholder="z.B. Hochzeit mit 80 Personen in Kalsruhe, möchte die Produkte gerne selbst abholen, etc."
                       className="form-input resize-none"
                       value={formData.message}
                       onChange={e => setFormData({ ...formData, message: e.target.value })}
@@ -1309,7 +1342,7 @@ export default function Home() {
                     Anfrage gesendet!
                   </h3>
                   <p className="text-muted-foreground mb-4">
-                    Wir melden uns innerhalb von 12 Stunden bei dir. Schau auch in dein WhatsApp!
+                    Wir melden uns innerhalb von 2 Stunden bei dir. Schau auch in dein WhatsApp!
                   </p>
                   <button
                     onClick={() => setFormSubmitted(false)}

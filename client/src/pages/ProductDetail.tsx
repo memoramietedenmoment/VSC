@@ -332,7 +332,7 @@ const PRODUCTS_DETAIL = {
       "LED-Effekte",
       "Kabellose Mikrofone",
       "Einfache Bedienung",
-      "Techniker vor Ort",
+      "Perfekt für alle Altersgruppen",
     ],
     occasions: ["Geburtstag", "Firmenfeier", "Party", "Hochzeit"],
     reviews: [
@@ -890,7 +890,6 @@ export default function ProductDetail() {
 
   const slug = params?.slug as string;
   const product = PRODUCTS_DETAIL[slug as keyof typeof PRODUCTS_DETAIL];
-
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
