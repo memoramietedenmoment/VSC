@@ -762,8 +762,8 @@ export default function Home() {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
-                <div className="p-5">
-                  <p className="text-sm font-semibold text-foreground">{item.caption}</p>
+                <div className="p-6">
+                  <p className="text-xl font-semibold text-foreground leading-tight" style={{ fontFamily: "'Cormorant Garamond', serif" }}>{item.caption}</p>
                 </div>
               </motion.div>
             ))}
