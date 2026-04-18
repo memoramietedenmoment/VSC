@@ -15,6 +15,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { MenuIcon, Instagram, Music } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 
 // ─── Daten ───────────────────────────────────────────────────────────────────
 
@@ -28,7 +31,7 @@ const PRODUCTS = [
     tagColor: "bg-amber-500",
     description: "Der moderne Garant für gute Laune – sofortige Schnappschüsse zum Mitnehmen. Einfach aufstellen, sofort loslegen.",
     occasions: ["Hochzeit", "Geburtstag", "Firmenfeier"],
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/fotospiegel-glow-neu-mEWnc6uokeNiC4Qd7MzeJ3.webp",
+    image: "/images/Fotospiegel_Übersichtsseite.png",
   },
   {
     id: 2,
@@ -136,7 +139,7 @@ const PRODUCTS = [
     price: "ab 49,- €",
     tag: "Lecker",
     tagColor: "bg-yellow-600",
-    description: "Knusprige Nachos mit warmer, cremiger Käsesoe – echtes Kino-Feeling auf eurer Party!",
+    description: "Knusprige Nachos mit warmer, cremiger Käsesoße – echtes Kino-Feeling auf eurer Party!",
     occasions: ["Party", "Geburtstag", "Firmenfeier"],
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/nachowarmer-sala-65QjBzSrDUQNoGexkDjxQr.webp",
   },
@@ -155,34 +158,34 @@ const PRODUCTS = [
 
 const GALLERY_IMAGES = [
   {
-    src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/hero-wedding-bxuza95kZppK3iMUgEStpR.webp",
-    alt: "Elegante Hochzeit mit Festbeleuchtung",
-    caption: "Elegante Hochzeit",
+    src: "/images/Audio-Gästebuch_Polaroid.jpg",
+    alt: "Elegante Hochzeit mit Audio-Gästebuch und Sofortbildkamera",
+    caption: "☎️ Elegante Hochzeit mit Audio-Gästebuch und Sofortbildkamera",
   },
   {
-    src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/hero-party-QUt8YTdG6QANTMs6YJXq7z.webp",
-    alt: "Fröhliche Feier mit Party-Atmosphäre",
-    caption: "Party-Moment",
+    src: "/images/Fotospiegel_Ergebnis.png",
+    alt: "Fröhliche Feier mit Party-Atmosphäre am Fotospiegel",
+    caption: "🪩 Party-Moment bei der Hochzeit am Fotospiegel",
   },
   {
-    src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/social-proof-bg-gS42g2yciKsdt6zp5Kz5bx.webp",
-    alt: "Gäste feiern gemeinsam beim Event",
-    caption: "Gemeinsamer Applaus",
+    src: "/images/Seifenblasenmaschine_Hochzeit.png",
+    alt: "Gäste feiern gemeinsam beim Event mit Seifenblasenmaschine",
+    caption: "🫧 Seifenblasen bereit zum Hochzeitstanz",
   },
   {
-    src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/fotospiegel-glow-neu-mEWnc6uokeNiC4Qd7MzeJ3.webp",
+    src: "/images/Fotospiegel_dekoriert.png",
     alt: "Fotospiegel GLOW im Eventeinsatz",
-    caption: "Fotospiegel-Highlight",
+    caption: "✨ Fotospiegel-Highlight an einem 35. Geburtstag",
   },
   {
-    src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/karaokemaschine-sing-E68YRAvtn3s3erpgQufsH5.webp",
+    src: "/images/Karaoke_Weihnachtsfeier.jpg",
     alt: "Gäste singen Karaoke auf der Party",
-    caption: "Karaoke Spaß",
+    caption: "🎤 Karaoke-Spaß bei der Weihnachtsfeier des FV Bad Rotenfels",
   },
   {
-    src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/zuckerwattemaschine-luna-YssUQSBqzSfkyTrshDaWmk.webp",
+    src: "/images/Zuckerwatte_Winterfeier.png",
     alt: "Zuckerwattemaschine LUNA auf einem Event",
-    caption: "Süßer Genuss",
+    caption: "🍭 Süßer Genuss bei einer internen Winterfeier",
   },
 ];
 
@@ -213,6 +216,78 @@ const TESTIMONIALS = [
     event: "Geburtstag",
     avatar: "J",
     avatarColor: "bg-sky-600",
+  },
+  {
+  name: "Fabio",
+    date: "Februar 2026",
+    rating: 5,
+    text: "Wir haben im Januar für den 60. Geburtstag meines Vaters eine Karaokemaschine über Memora gemietet und selbst abgeholt. Die beiden vor Ort waren sehr zuvorkommend, freundlich und haben alles ruhig erklärt. Die Abholung lief absolut unkompliziert. Die Karaokemaschine war in einwandfreiem Zustand, leicht aufzubauen und zu bedienen. Unsere Gäste hatten riesigen Spaß, Karaoke war definitiv das Highlight des Abends! Klare Empfehlung, wir würden jederzeit wieder mieten.",
+    event: "Geburtstag",
+    avatar: "F",
+    avatarColor: "bg-amber-600",
+     },
+  {
+  name: "Marc",
+    date: "Februar 2026",
+    rating: 5,
+    text: "Der Fotospiegel war das absolute Highlight meiner Geburtstagsfeier! Super einfache Bedienung, tolle Fotoqualität und jede Menge Spaß für alle Gäste. Aufbau und Service liefen reibungslos und professionell. Klare Empfehlung – würde ich jederzeit wieder buchen!",
+    event: "Geburtstag",
+    avatar: "M",
+    avatarColor: "bg-emerald-600",
+     },
+  {
+  name: "Julian",
+    date: "Februar 2026",
+    rating: 5,
+    text: "Der gesamte Ablauf war absolut unkompliziert und professionell. Die Kommunikation war freundlich, schnell und zuverlässig, Absprachen wurden perfekt eingehalten. Übergabe und Rückgabe verliefen reibungslos. Die Popcornmaschine war in einem sehr guten, sauberen Zustand und funktionierte einwandfrei – frisches, leckeres Popcorn ohne Aufwand. Insgesamt ein toller Service mit hochwertigem Gerät. Sehr zu empfehlen!",
+    event: "Private Feier",
+    avatar: "J",
+    avatarColor: "bg-blue-600",
+     },
+  {
+  name: "Luca Ciadamidaro",
+    date: "Februar 2026",
+    rating: 5,
+    text: "Habe den Fotospiegel für meinen Geburtstag gehabt. Alles von Lieferung, Aufbau, Unterhaltung bis Abholung war top. Der Spiegel wurde den ganzen Abend viel genutzt, die Fotos sind in einer sehr guten Qualität, sind auf einer Cloud gespeichert und können sogar direkt ausgedruckt werden. Empfehle es jedem weiter!",
+    event: "Geburtstag",
+    avatar: "LC",
+    avatarColor: "bg-yellow-600",
+      },
+  {
+  name: "Adrian Ehlinger",
+    date: "Januar 2026",
+    rating: 5,
+    text: "Ich kann memora jedem wärmstens empfehlen. Ob Popcornmaschine, Karaokemaschine oder der Fotospiegel - das ganze Equipment war in einem sehr guten Zustand und hat genau den gewünschten Effekt erzielt: Gute Laune bei den Gästen. Die Anfrage über die Webseite lief schnell sowie unkompliziert ab und die beiden Ansprechpartner waren sehr zuvorkommend und hilfsbereit.",
+    event: "Geburtstag",
+    avatar: "AE",
+    avatarColor: "bg-amber-600",
+    },
+  {
+  name: "Lea Stegmaier",
+    date: "Dezember 2025",
+    rating: 5,
+    text: "Ich hatte die Karaokemaschine für Silvester und war sehr zufrieden. Einfache Bestellung und Lieferung, super nettes Team die mir beim Anschließen geholfen haben und auch die Rückgabe hat problemlos funktioniert. Kann es nur empfehlen und werde wieder bei Memora bestellen!",
+    event: "Silvesterfeier",
+    avatar: "LS",
+    avatarColor: "bg-emerald-600",
+      },
+  {
+  name: "Stefan Wieland",
+    date: "Dezember 2025",
+    rating: 5,
+    text: "Waren Mega zufrieden , der Service war echt klasse das abholen und zurückbringen funktionierte sehr gut . Wir hatten die Karaoke Maschine für ein Event , und das war der Hammer. Funktionierte sehr gut und wir hatten alle einen Riesen Spaß damit. Gerne wieder !",
+    event: "Weihnachtsfeier",
+    avatar: "SW",
+    avatarColor: "bg-sky-600",
+      },
+  {
+  name: "Katrin van Himbergen",
+    date: "Dezember 2025",
+    rating: 5,
+    text: "Mega bequem: Online auswählen, Anfrage absenden, Lieferung — alles ohne Stress. Die Geräte waren hochwertig und funktionierten problemlos. Unsere Gäste waren total begeistert. Danke für die tolle Unterstützung!",
+    event: "Hochzeit",
+    avatar: "KV",
+    avatarColor: "bg-blue-600",
   },
 ];
 
@@ -282,7 +357,11 @@ export default function Home() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [showAllProducts, setShowAllProducts] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const contactRef = useRef<HTMLDivElement>(null);
+  const testimonialRef = useRef<HTMLDivElement>(null);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 80);
@@ -302,6 +381,30 @@ export default function Home() {
     contactRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Touch handlers for testimonial swiping
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      setActiveTestimonial(prev => (prev + 1) % TESTIMONIALS.length);
+    }
+    if (isRightSwipe) {
+      setActiveTestimonial(prev => prev === 0 ? TESTIMONIALS.length - 1 : prev - 1);
+    }
+  };
+
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Öffnet WhatsApp mit vorausgefüllter Nachricht
@@ -313,7 +416,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-background font-sans">
+    <div className="min-h-screen bg-background font-sans overflow-x-hidden">
 
       {/* ═══════════════════════════════════════════════════
           STICKY NAVIGATION
@@ -325,35 +428,168 @@ export default function Home() {
             : "bg-transparent"
         }`}
       >
-        <div className="container flex items-center justify-between h-16">
+        <div className="container relative flex items-center h-16">
           {/* Logo */}
           <a href="#" className="flex items-center gap-2 group">
-            <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/memora_Logo_9da7fd54.png" alt="memora Logo" className="h-10 w-auto" />
+            <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/memora_Logo_9da7fd54.png" alt="memora Logo" className="h-10 w-auto filter invert" />
           </a>
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-6 text-sm text-white/80">
-            <a href="#produkte" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Produkte</a>
-            <a href="#wie-es-funktioniert" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">So geht's</a>
-            <a href="#bewertungen" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Bewertungen</a>
-            <a href="#kontakt" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Kontakt</a>
-          </nav>
+          {/* Mobile Menu - rechts */}
+          <div className="md:hidden absolute right-4">
+            <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+              <SheetTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-white hover:text-[oklch(0.75_0.14_80)] hover:bg-white/10"
+                >
+                  <MenuIcon className="h-5 w-5" />
+                  <span className="sr-only">Menü öffnen</span>
+                </Button>
+              </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] bg-[oklch(0.22_0.06_155)] border-l border-white/20">
+              <div className="flex flex-col gap-6 mt-6">
+                <nav className="flex flex-col gap-4 items-center">
+                  <a
+                    href="#impressionen"
+                    className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsMenuOpen(false);
+                      setTimeout(() => {
+                        document.getElementById('impressionen')?.scrollIntoView({ behavior: 'smooth' });
+                      }, 300);
+                    }}
+                  >
+                    Impressionen
+                  </a>
+                  <a
+                    href="#wie-es-funktioniert"
+                    className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsMenuOpen(false);
+                      setTimeout(() => {
+                        document.getElementById('wie-es-funktioniert')?.scrollIntoView({ behavior: 'smooth' });
+                      }, 300);
+                    }}
+                  >
+                    So geht's
+                  </a>
+                  <a
+                    href="#produkte"
+                    className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsMenuOpen(false);
+                      setTimeout(() => {
+                        document.getElementById('produkte')?.scrollIntoView({ behavior: 'smooth' });
+                      }, 300);
+                    }}
+                  >
+                    Produkte
+                  </a>
+                  <a
+                    href="#bewertungen"
+                    className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsMenuOpen(false);
+                      setTimeout(() => {
+                        document.getElementById('bewertungen')?.scrollIntoView({ behavior: 'smooth' });
+                      }, 300);
+                    }}
+                  >
+                    Bewertungen
+                  </a>
+                  <a
+                    href="#kontakt"
+                    className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsMenuOpen(false);
+                      setTimeout(() => {
+                        document.getElementById('kontakt')?.scrollIntoView({ behavior: 'smooth' });
+                      }, 300);
+                    }}
+                  >
+                    Kontakt
+                  </a>
+                </nav>
+                <div className="flex flex-col gap-4 pt-4 border-t border-white/20 items-center">
+                  <a
+                    href="tel:+4915225896570"
+                    className="flex items-center gap-2 text-white/80 hover:text-white transition-colors"
+                  >
+                    <PhoneIcon />
+                    <span>0152 258 96570</span>
+                  </a>
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      setTimeout(() => {
+                        scrollToContact();
+                      }, 300);
+                    }}
+                    className="btn-gold px-4 py-3 rounded-lg text-sm font-bold pulse-gold w-full text-center max-w-xs"
+                  >
+                    Jetzt anfragen
+                  </button>
+                  <div className="flex gap-6 pt-4">
+                    <a
+                      href="https://www.instagram.com/memora_miete_den_moment/?igsh=MnFhYTBtNGowMjhk"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors"
+                      title="Folge uns auf Instagram"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Instagram className="w-6 h-6" />
+                    </a>
+                    <a
+                      href="https://www.tiktok.com/@memora303?_t=ZN-90SplgHjs6Y&_r=1"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors"
+                      title="Folge uns auf TikTok"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Music className="w-6 h-6" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+          </div>
 
-          {/* Nav CTA */}
-          <div className="flex items-center gap-2">
-            <a
-              href="tel:+4915225896570"
-              className="hidden sm:flex items-center gap-1.5 text-white/80 hover:text-white text-sm transition-colors"
-            >
-              <PhoneIcon />
-              <span className="hidden lg:inline">0152 258 96570</span>
-            </a>
-            <button
-              onClick={scrollToContact}
-              className="btn-gold px-4 py-2 rounded-lg text-sm font-bold pulse-gold"
-            >
-              Jetzt anfragen
-            </button>
+          {/* Desktop Layout */}
+          <div className="hidden md:flex items-center justify-between w-full ml-4">
+            {/* Desktop Nav */}
+            <nav className="flex items-center gap-6 text-sm text-white/80">
+              <a href="#impressionen" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Impressionen</a>
+              <a href="#wie-es-funktioniert" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">So geht's</a>
+              <a href="#produkte" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Produkte</a>
+              <a href="#bewertungen" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Bewertungen</a>
+              <a href="#kontakt" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Kontakt</a>
+            </nav>
+
+            {/* Nav CTA */}
+            <div className="flex items-center gap-2">
+              <a
+                href="tel:+4915225896570"
+                className="hidden sm:flex items-center gap-1.5 text-white/80 hover:text-white text-sm transition-colors"
+              >
+                <PhoneIcon />
+                <span className="hidden lg:inline">0152 258 96570</span>
+              </a>
+              <button
+                onClick={scrollToContact}
+                className="btn-gold px-4 py-2 rounded-lg text-sm font-bold pulse-gold"
+              >
+                Jetzt anfragen
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -402,7 +638,7 @@ export default function Home() {
               transition={{ delay: 0.5, duration: 0.7 }}
               className="text-lg md:text-xl text-white/85 mb-8 leading-relaxed max-w-xl"
             >
-              Hochwertige Eventausstattung mieten in Karlsruhe, Rastatt & Umgebung.
+              Hochwertige Eventausstattung mieten in Karlsruhe, Rastatt & erweiterter Umgebung.
               Fotospiegel, Slushmaschinen, Audio-Gästebücher und mehr –
               <strong className="text-white"> einfach, schnell, unkompliziert.</strong>
             </motion.p>
@@ -431,7 +667,7 @@ export default function Home() {
                   <StarRating />
                   <span className="text-white font-bold text-sm ml-1">5.0</span>
                 </div>
-                <p className="text-white/70 text-xs">Über 20 begeisterte Kunden</p>
+                <p className="text-white/70 text-xs">Werde auch Du ein begeisterter Kunde</p>
               </div>
             </motion.div>
 
@@ -466,7 +702,7 @@ export default function Home() {
               transition={{ delay: 1.1 }}
               className="text-white/50 text-sm mt-4"
             >
-              ✓ Unverbindlich &nbsp;·&nbsp; ✓ Kostenlose Beratung &nbsp;·&nbsp; ✓ Antwort innerhalb von 12h
+              ✓ Unverbindlich &nbsp;·&nbsp; ✓ Kostenlose Beratung &nbsp;·&nbsp; ✓ Antwort innerhalb von 2h
             </motion.p>
           </div>
         </div>
@@ -493,7 +729,7 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════
           IMAGE GALLERY
       ═══════════════════════════════════════════════════ */}
-      <section className="py-20 bg-[oklch(0.97_0.012_85)]">
+      <section id="impressionen" className="py-20 bg-[oklch(0.97_0.012_85)]">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -545,7 +781,7 @@ export default function Home() {
               { value: 20, suffix: "+", label: "zufriedene Kunden" },
               { value: 5, suffix: "★", label: "Google-Bewertung" },
               { value: 12, suffix: "", label: "Produkte verfügbar" },
-              { value: 12, suffix: "h", label: "Antwortzeit" },
+              { value: 2, suffix: "h", label: "Antwortzeit" },
             ].map((stat, i) => (
               <motion.div
                 key={i}
@@ -885,7 +1121,13 @@ export default function Home() {
           </motion.div>
 
           {/* Featured Testimonial */}
-          <div className="max-w-3xl mx-auto mb-8">
+          <div
+            ref={testimonialRef}
+            className="max-w-3xl mx-auto mb-8"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             <motion.div
               key={activeTestimonial}
               initial={{ opacity: 0, x: 20 }}
@@ -1024,7 +1266,7 @@ export default function Home() {
                     <textarea
                       required
                       rows={3}
-                      placeholder="z.B. Hochzeit für 80 Personen, interessiere mich für Fotospiegel und Slushmaschine..."
+                      placeholder="z.B. Hochzeit mit 80 Personen in Kalsruhe, interessiere mich für Fotospiegel und Slushmaschine..."
                       className="form-input resize-none"
                       value={formData.message}
                       onChange={e => setFormData({ ...formData, message: e.target.value })}
@@ -1099,7 +1341,7 @@ export default function Home() {
               <div className="space-y-3">
                 {[
                   { icon: "⚡", title: "Schnelle Antwort", desc: "Wir melden uns innerhalb von 2 Stunden – auch abends und am Wochenende." },
-                  { icon: "🚚", title: "Lieferung & Abholung", desc: "Kostenlose Abholung oder bequeme Lieferung in der Region Karlsruhe / Baden-Baden." },
+                  { icon: "🚚", title: "Lieferung & Abholung", desc: "Kostenlose Abholung oder bequeme Lieferung im 100-km-Umkreis von Gaggenau." },
                   { icon: "🎓", title: "Einweisung inklusive", desc: "Alle Geräte sind sofort einsatzbereit – wir erklären alles in wenigen Minuten." },
                   { icon: "💚", title: "Faire Preise", desc: "Transparente Preise ohne versteckte Kosten. Schon ab 29,- € für dein Event." },
                 ].map((point, i) => (
@@ -1145,16 +1387,16 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════
           FOOTER
       ═══════════════════════════════════════════════════ */}
-      <footer className="bg-[oklch(0.15_0.04_155)] text-white/70 py-12">
+      <footer className="bg-[oklch(0.15_0.04_155)] text-white/70 py-12 md:pb-12 pb-24">
         <div className="container">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             {/* Brand */}
             <div>
                 <div className="flex items-center gap-2">
-                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/memora_Logo_9da7fd54.png" alt="memora Logo" className="h-10 w-auto" />
+                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/memora_Logo_9da7fd54.png" alt="memora Logo" className="h-10 w-auto filter invert" />
               </div>
               <p className="text-sm leading-relaxed">
-                Hochwertige Eventausstattung mieten in Karlsruhe, Rastatt, Baden-Baden und Umgebung.
+                Hochwertige Eventausstattung mieten in Karlsruhe, Rastatt, Baden-Baden und erweiterter Umgebung.
               </p>
             </div>
 
@@ -1162,8 +1404,9 @@ export default function Home() {
             <div>
               <h4 className="text-white font-semibold mb-3">Schnellzugriff</h4>
               <div className="space-y-2 text-sm">
+                <a href="#impressionen" className="block hover:text-[oklch(0.75_0.14_80)] transition-colors">Impressionen</a>
+                <a href="#wie-es-funktioniert" className="block hover:text-[oklch(0.75_0.14_80)] transition-colors">So geht's</a>
                 <a href="#produkte" className="block hover:text-[oklch(0.75_0.14_80)] transition-colors">Produkte</a>
-                <a href="#wie-es-funktioniert" className="block hover:text-[oklch(0.75_0.14_80)] transition-colors">So funktioniert's</a>
                 <a href="#bewertungen" className="block hover:text-[oklch(0.75_0.14_80)] transition-colors">Kundenbewertungen</a>
                 <a href="#kontakt" className="block hover:text-[oklch(0.75_0.14_80)] transition-colors">Kontakt & Anfrage</a>
               </div>
@@ -1182,6 +1425,13 @@ export default function Home() {
                   </svg>
                   info@mietedenmoment.de
                 </a>
+                <div className="flex items-start gap-2 text-white/80">
+                  <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                  <span>Mühlstraße 8c<br />76571 Gaggenau</span>
+                </div>
                 <a
                   href="https://wa.me/4915225896570"
                   target="_blank"
@@ -1192,14 +1442,39 @@ export default function Home() {
                 </a>
               </div>
             </div>
+
+            {/* Social Media */}
+            <div>
+              <h4 className="text-white font-semibold mb-3">Folge uns</h4>
+              <div className="flex gap-4">
+                <a
+                  href="https://www.instagram.com/memora_miete_den_moment/?igsh=MnFhYTBtNGowMjhk"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[oklch(0.75_0.14_80)] transition-colors"
+                  title="Folge uns auf Instagram"
+                >
+                  <Instagram className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://www.tiktok.com/@memora303?_t=ZN-90SplgHjs6Y&_r=1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[oklch(0.75_0.14_80)] transition-colors"
+                  title="Folge uns auf TikTok"
+                >
+                  <Music className="w-6 h-6" />
+                </a>
+              </div>
+            </div>
           </div>
 
           <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
             <p>© 2025 memora – miete den moment. Alle Rechte vorbehalten.</p>
             <div className="flex gap-4">
-              <a href="https://www.mietedenmoment.de/impressum" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Impressum</a>
-              <a href="https://www.mietedenmoment.de/datenschutz" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Datenschutz</a>
-              <a href="https://www.mietedenmoment.de/agbs" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">AGB</a>
+              <a href="/impressum" className="hover:text-white transition-colors">Impressum</a>
+              <a href="/datenschutz" className="hover:text-white transition-colors">Datenschutz</a>
+              <a href="/agb" className="hover:text-white transition-colors">AGB</a>
             </div>
           </div>
         </div>
@@ -1215,7 +1490,7 @@ export default function Home() {
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 2, type: "spring" }}
-        className="fixed bottom-6 right-6 z-50 btn-whatsapp pulse-whatsapp w-14 h-14 rounded-full flex items-center justify-center shadow-2xl"
+        className="hidden md:flex fixed bottom-6 right-6 z-50 btn-whatsapp pulse-whatsapp w-14 h-14 rounded-full flex items-center justify-center shadow-2xl"
         title="WhatsApp Anfrage"
       >
         <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7">

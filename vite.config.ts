@@ -150,10 +150,16 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
+const plugins = [react(), tailwindcss(), jsxLocPlugin(), // vitePluginManusRuntime(), 
+vitePluginManusDebugCollector()];
 
 export default defineConfig({
   plugins,
+
+  server: {
+  host: true,
+  allowedhosts: ["tattoo-manpower-unwatched.ngrok-free.dev"]
+},
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),

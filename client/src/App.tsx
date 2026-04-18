@@ -4,7 +4,10 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import AGB from "./pages/AGB";
+import Datenschutz from "./pages/Datenschutz";
 import Home from "./pages/Home";
+import Impressum from "./pages/Impressum";
 import ProductDetail from "./pages/ProductDetail";
 
 
@@ -13,6 +16,9 @@ function Router() {
     <Switch>
       <Route path={"/"} component={Home} />
       <Route path={"/produkt/:slug"} component={ProductDetail} />
+      <Route path={"/impressum"} component={Impressum} />
+      <Route path={"/datenschutz"} component={Datenschutz} />
+      <Route path={"/agb"} component={AGB} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
