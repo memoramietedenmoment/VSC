@@ -247,9 +247,17 @@ Eine Weiterveräußerung, Verpfändung oder sonstige Überlassung an Dritte ist 
               </p>
             </section>
 
+            {/* Schlussbestimmungen */}
+            <section className="mb-12">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">§ 18 Schlussbestimmungen</h2>
+              <p className="mb-6">
+                Es gilt deutsches Recht. Gerichtsstand ist, soweit zulässig, der Sitz von memora. Sollten einzelne Bestimmungen dieser AGB unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt.
+              </p>
+            </section>
+
             {/* Geschäftsführer */}
             <section id="geschaeftsfuehrer" className="mb-12 rounded-xl border border-gray-200 bg-white p-6 sm:p-8 shadow-sm">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">§ 18 Geschäftsführer</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">§ 19 Geschäftsführer</h2>
               <p className="mb-2 text-gray-800">Vertreten durch die geschäftsführenden Gesellschafter:</p>
               <p className="mb-0 text-gray-800">
                 Daniel Zimmer
