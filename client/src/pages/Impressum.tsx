@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-
+import BackButton from "@/components/BackButton";
 export default function Impressum() {
   return (
     <div className="min-h-screen bg-background font-sans overflow-x-hidden">
@@ -8,7 +8,6 @@ export default function Impressum() {
         <div className="container text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Impressum</h1>
           <p className="text-lg text-white/80 max-w-2xl mx-auto">
-            Rechtliche Informationen und Kontaktdaten gemäß § 5 TMG
           </p>
         </div>
       </header>
@@ -16,15 +15,19 @@ export default function Impressum() {
       {/* Content */}
       <main className="py-16">
         <div className="container max-w-4xl">
+          <div className="mb-8">
+            <BackButton />
+          </div>
+
           <div className="prose prose-lg mx-auto text-gray-700">
 
             {/* Angaben gemäß § 5 TMG */}
             <section className="mb-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Angaben gemäß § 5 TMG</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Anbieterinformationen</h2>
 
               <div className="bg-gray-50 p-6 rounded-lg mb-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Diensteanbieter</h3>
-                <p className="mb-2"><strong>memora</strong></p>
+                <p className="mb-2"><strong>memora - miete den moment​ Daniel Zimmer Simon Bleier GbR</strong></p>
                 <p className="mb-2">Mühlstraße 8c</p>
                 <p className="mb-2">76571 Gaggenau</p>
                 <p className="mb-2">Deutschland</p>
@@ -47,8 +50,12 @@ export default function Impressum() {
               </div>
 
               <div className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Vertretungsberechtigte Person</h3>
-                <p>Geschäftsführer</p>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Vertreten durch:</h3>
+                <p>Daniel Zimmer, Simon Bleier (Geschäftsführer)</p>
+              </div>
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Zuständige Aufsichtsbehörde:</h3>
+                <p>Gewerbeamt der Stadt Gaggenau</p>
               </div>
             </section>
 
@@ -56,18 +63,9 @@ export default function Impressum() {
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Haftungsausschluss (Disclaimer)</h2>
 
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Haftung für Inhalte</h3>
               <p className="mb-6">
-                Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den
-                allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht
-                verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen
-                zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
-              </p>
-              <p className="mb-6">
-                Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen
-                Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt
-                der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden
-                Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
+                Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.
+              
               </p>
 
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Haftung für Links</h3>
@@ -100,25 +98,11 @@ export default function Impressum() {
               </p>
             </section>
 
-            {/* Datenschutz */}
+            {/* Streitbeilegung */}
             <section className="mb-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Datenschutz</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Streitbeilegung</h2>
               <p className="mb-6">
-                Die Nutzung unserer Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich.
-                Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder
-                eMail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis.
-                Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben.
-              </p>
-              <p className="mb-6">
-                Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail)
-                Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte
-                ist nicht möglich.
-              </p>
-              <p className="mb-6">
-                Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten durch Dritte zur
-                Übersendung von nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit
-                ausdrücklich widersprochen. Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte
-                im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor.
+                Wir sind zur Teilnahme an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle weder verpflichtet noch bereit.​ 
               </p>
             </section>
 
@@ -139,15 +123,6 @@ export default function Impressum() {
               </p>
             </section>
 
-          </div>
-
-          {/* Back to Home */}
-          <div className="text-center mt-12">
-            <Link href="/">
-              <button className="btn-gold px-6 py-3 rounded-lg font-bold">
-                Zurück zur Startseite
-              </button>
-            </Link>
           </div>
         </div>
       </main>

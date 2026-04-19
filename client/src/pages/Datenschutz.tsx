@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import BackButton from "@/components/BackButton";
 
 export default function Datenschutz() {
   return (
@@ -8,7 +9,7 @@ export default function Datenschutz() {
         <div className="container text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Datenschutzerklärung</h1>
           <p className="text-lg text-white/80 max-w-2xl mx-auto">
-            Informationen über die Verarbeitung Ihrer personenbezogenen Daten
+            Informationen über die Verarbeitung eurer personenbezogenen Daten
           </p>
         </div>
       </header>
@@ -16,13 +17,17 @@ export default function Datenschutz() {
       {/* Content */}
       <main className="py-16">
         <div className="container max-w-4xl">
+          <div className="mb-8">
+            <BackButton />
+          </div>
+
           <div className="prose prose-lg mx-auto text-gray-700">
 
             {/* Verantwortlicher */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">1. Verantwortlicher</h2>
               <div className="bg-gray-50 p-6 rounded-lg">
-                <p className="mb-2"><strong>memora</strong></p>
+                <p className="mb-2"><strong>memora miete den moment Daniel Zimmer Simon Bleier GbR</strong></p>
                 <p className="mb-2">Mühlstraße 8c</p>
                 <p className="mb-2">76571 Gaggenau</p>
                 <p className="mb-2">Deutschland</p>
@@ -41,32 +46,19 @@ export default function Datenschutz() {
               </div>
             </section>
 
-            {/* Datenschutzbeauftragter */}
+            {/* Datenschutz auf einen Blick */}
             <section className="mb-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">2. Datenschutzbeauftragtragter</h2>
-              <p>
-                Da wir weniger als 10 Personen beschäftigen, sind wir nicht verpflichtet, einen Datenschutzbeauftragten
-                zu benennen. Bei Fragen zum Datenschutz können Sie uns jedoch jederzeit kontaktieren.
-              </p>
-            </section>
-
-            {/* Allgemeines zur Datenverarbeitung */}
-            <section className="mb-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">3. Allgemeines zur Datenverarbeitung</h2>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">3.1 Umfang der Verarbeitung personenbezogener Daten</h3>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">2. Datenschutz auf einen Blick</h2>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">2.1 Allgemeine Hinweise </h3>
               <p className="mb-6">
-                Wir verarbeiten personenbezogene Daten unserer Nutzer grundsätzlich nur, soweit dies zur Bereitstellung
-                einer funktionsfähigen Website sowie unserer Inhalte und Leistungen erforderlich ist. Die Verarbeitung
-                personenbezogener Daten unserer Nutzer erfolgt regelmäßig nur nach Einwilligung des Nutzers. Eine
-                Ausnahme gilt in solchen Fällen, in denen eine vorherige Einholung einer Einwilligung aus tatsächlichen
-                Gründen nicht möglich ist und die Verarbeitung der Daten durch gesetzliche Vorschriften gestattet ist.
+                Der Schutz eurer persönlichen Daten ist uns wichtig. Personenbezogene Daten sind alle Daten, mit denen ihr persönlich identifiziert werden könnt. Beim Besuch dieser Website werden personenbezogene Daten nur im technisch erforderlichen Umfang sowie dann verarbeitet, wenn ihr uns diese freiwillig mitteilt (z. B. über Kontaktformular, E-Mail oder WhatsApp).
               </p>
 
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">3.2 Rechtsgrundlage für die Verarbeitung personenbezogener Daten</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">2.2 Rechtsgrundlage für die Verarbeitung personenbezogener Daten</h3>
               <p className="mb-6">
                 Soweit wir für Verarbeitungsvorgänge personenbezogener Daten eine Einwilligung der betroffenen Person
                 einholen, dient Art. 6 Abs. 1 lit. a EU-Datenschutz-Grundverordnung (DSGVO) als Rechtsgrundlage.
-              </p>
+                </p>
               <p className="mb-6">
                 Bei der Verarbeitung von personenbezogenen Daten, die zur Erfüllung eines Vertrages, dessen Vertragspartei
                 die betroffene Person ist, erforderlich ist, dient Art. 6 Abs. 1 lit. b DSGVO als Rechtsgrundlage. Dies
@@ -77,12 +69,62 @@ export default function Datenschutz() {
                 ist, der unser Unternehmen unterliegt, dient Art. 6 Abs. 1 lit. c DSGVO als Rechtsgrundlage.
               </p>
 
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">3.3 Datenlöschung und Speicherdauer</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">2.3 Wie erfassen wir eure Daten? </h3>
+              <p className="mb-6">
+                Eure Daten werden zum einen dadurch erhoben, dass ihr sie uns mitteilt – zum Beispiel, wenn ihr ein Kontaktformular ausfüllt oder euch für unseren Newsletter anmeldet.
+Andere Daten werden automatisch oder nach eurer Einwilligung beim Besuch der Website durch unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z. B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs). Diese Erfassung passiert automatisch, sobald ihr unsere Seite betretet.
+              </p>
+
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">2.4 Wofür nutzen wir eure Daten? </h3>
+              <p className="mb-6">
+                Ein Teil der Daten wird erhoben, um die Website fehlerfrei bereitzustellen. Andere Daten können zur Analyse eures Nutzerverhaltens verwendet werden oder um euch gezielt Inhalte anzuzeigen, die euch interessieren.
+              </p>
+
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">2.5 Welche Rechte habt ihr in Bezug auf eure Daten? </h3>
+              <p className="mb-6">
+                Ihr habt jederzeit das Recht, kostenlos Auskunft über Herkunft, Empfänger und Zweck eurer gespeicherten personenbezogenen Daten zu bekommen. Außerdem könnt ihr die Berichtigung oder Löschung eurer Daten verlangen.
+Wenn ihr uns eine Einwilligung zur Datenverarbeitung gegeben habt, könnt ihr diese jederzeit für die Zukunft widerrufen.
+Außerdem habt ihr das Recht, unter bestimmten Umständen die Einschränkung der Verarbeitung eurer personenbezogenen Daten zu verlangen. Des Weiteren steht euch ein Beschwerderecht bei der zuständigen Aufsichtsbehörde zu. Hierzu sowie zu weiteren Fragen zum Thema Datenschutz könnt ihr euch jederzeit an uns wenden.
+              </p>
+              
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">2.6 Datenlöschung und Speicherdauer</h3>
               <p className="mb-6">
                 Die personenbezogenen Daten der betroffenen Person werden gelöscht oder gesperrt, sobald der Zweck der
                 Speicherung entfällt. Eine Speicherung kann darüber hinaus erfolgen, wenn dies durch den europäischen
                 oder nationalen Gesetzgeber in unionsrechtlichen Verordnungen, Gesetzen oder sonstigen Vorschriften,
                 denen der Verantwortliche unterliegt, vorgesehen wurde.
+              </p>
+
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">2.7 Analyse-Tools und Tools von Drittanbietern </h3>
+              <p className="mb-6">
+                Beim Besuch unserer Website kann euer Surfverhalten statistisch ausgewertet werden. Das passiert vor allem mit sogenannten Analyseprogrammen.
+Detaillierte Infos dazu findet ihr in dieser Datenschutzerklärung.
+              </p>
+            </section>
+
+            {/* Hosting */}
+            <section className="mb-12">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">3. Hosting</h2>
+              <p className="mb-6">
+                Diese Website wird bei Netlify, Inc., 44 Montgomery Street, Suite 300, San Francisco, California 94104, USA gehostet.
+</p>
+<p className="mb-6">
+Beim Besuch dieser Website verarbeitet Netlify technische Zugriffsdaten (z. B. IP-Adresse, Browserinformationen, Betriebssystem und Server-Logfiles), um die sichere und stabile Bereitstellung der Website zu gewährleisten.
+</p>
+<p className="mb-6">
+Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.
+</p>
+<p className="mb-6">
+Weitere Informationen:
+{" "}
+                <a
+                  href="https://www.netlify.com/privacy/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline"
+                >
+                  https://www.netlify.com/privacy/
+                </a>{" "}
               </p>
             </section>
 
@@ -127,10 +169,16 @@ export default function Datenschutz() {
               <ul className="list-disc pl-6 mb-6">
                 <li>Name</li>
                 <li>Telefonnummer</li>
-                <li>E-Mail-Adresse</li>
-                <li>Nachricht</li>
                 <li>Event-Datum</li>
+                <li>Produkte</li>
+                <li>Optionale Nachricht</li>
               </ul>
+              <p className="mb-6">
+                Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO oder Art. 6 Abs. 1 lit. f DSGVO.
+              </p>
+              <p className="mb-6">
+                Die Daten verbleiben bei uns, bis der Zweck der Verarbeitung entfällt oder gesetzliche Aufbewahrungspflichten entgegenstehen.
+              </p>
 
               <h3 className="text-xl font-semibold text-gray-900 mb-4">5.2 Rechtsgrundlage für die Datenverarbeitung</h3>
               <p className="mb-6">
@@ -145,21 +193,43 @@ export default function Datenschutz() {
                 Kontaktaufnahme. Im Falle einer Kontaktaufnahme per E-Mail liegt hieran auch das erforderliche berechtigte
                 Interesse an der Verarbeitung der Daten.
               </p>
+
+               <h3 className="text-xl font-semibold text-gray-900 mb-4">5.3 Kontaktaufnahme per WhatsApp</h3>
+              <p className="mb-6">
+                Für die Kommunikation über WhatsApp nutzen wir WhatsApp Ireland Limited, 4 Grand Canal Square, Dublin 2, Irland. Bitte beachtet, dass bei Nutzung von WhatsApp personenbezogene Daten auch an Unternehmen der Meta-Gruppe übermittelt werden können.
+               </p>
+<p className="mb-6">
+Weitere Informationen:
+{" "}
+                <a
+                  href="https://www.whatsapp.com/legal/privacy-policy-eea"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline"
+                >
+                  https://www.whatsapp.com/legal/privacy-policy-eea
+                </a>{" "}
+              </p>
             </section>
 
             {/* Cookies */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">6. Cookies</h2>
               <p className="mb-6">
-                Unsere Internetseite verwendet Cookies. Cookies sind Textdateien, welche über einen Internetbrowser auf
-                einem Computersystem abgelegt und gespeichert werden. Zahlreiche Internetseiten und Server verwenden Cookies.
-                Viele Cookies enthalten eine sogenannte Cookie-ID. Eine Cookie-ID ist eine eindeutige Kennung des Cookies.
-                Sie besteht aus einer Zeichenfolge, durch welche Internetseiten und Server dem konkreten Internetbrowser
-                zugeordnet werden können, in dem das Cookie gespeichert wurde.
+                Unsere Internetseiten verwenden so genannte „Cookies“. Cookies sind kleine Datenpakete und richten auf eurem Endgerät keinen Schaden an. Sie werden entweder vorübergehend für die Dauer einer Sitzung (Session-Cookies) oder dauerhaft (permanente Cookies) auf eurem Endgerät gespeichert. Session-Cookies werden nach Ende eures Besuchs automatisch gelöscht. Permanente Cookies bleiben auf eurem Endgerät gespeichert, bis ihr diese selbst löscht oder eine automatische Löschung durch euren Webbrowser erfolgt.
               </p>
               <p className="mb-6">
-                Durch den Einsatz von Cookies kann unser Unternehmen den Nutzern unserer Internetseite nutzerfreundlichere
-                Services bereitstellen, die ohne die Cookie-Setzung nicht möglich wären.
+                Cookies können von uns (First-Party-Cookies) oder von Drittunternehmen stammen (sog. Third-Party-Cookies). Third-Party-Cookies ermöglichen die Einbindung bestimmter Dienstleistungen von Drittunternehmen innerhalb von Webseiten (z. B. Cookies zur Abwicklung von Zahlungsdienstleistungen).
+              </p>
+              <p className="mb-6">
+                Cookies haben verschiedene Funktionen. Zahlreiche Cookies sind technisch notwendig, da bestimmte Webseitenfunktionen ohne diese nicht funktionieren würden (z. B. die Warenkorbfunktion oder die Anzeige von Videos). Andere Cookies können zur Auswertung des Nutzerverhaltens oder zu Werbezwecken verwendet werden.
+                 </p>
+              <p className="mb-6">
+                Cookies, die zur Durchführung des elektronischen Kommunikationsvorgangs, zur Bereitstellung bestimmter, von euch erwünschter Funktionen (z. B. für die Warenkorbfunktion) oder zur Optimierung der Website (z. B. Cookies zur Messung des Webpublikums) erforderlich sind (notwendige Cookies), werden auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO gespeichert, sofern keine andere Rechtsgrundlage angegeben wird. Der Websitebetreiber hat ein berechtigtes Interesse an der Speicherung von notwendigen Cookies zur technisch fehlerfreien und optimierten Bereitstellung seiner Dienste. Sofern eine Einwilligung zur Speicherung von Cookies und vergleichbaren Wiedererkennungstechnologien abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage dieser Einwilligung (Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG); die Einwilligung ist jederzeit widerrufbar.
+                </p>
+              <p className="mb-6">
+                Ihr können euren Browser so einstellen, dass ihr über das Setzen von Cookies informiert werdet und Cookies nur im Einzelfall erlauben, die Annahme von Cookies für bestimmte Fälle oder generell ausschließen sowie das automatische Löschen der Cookies beim Schließen des Browsers aktivieren. Bei der Deaktivierung von Cookies kann die Funktionalität dieser Website eingeschränkt sein.
+Welche Cookies und Dienste auf dieser Website eingesetzt werden, könnt ihr dieser Datenschutzerklärung entnehmen.
               </p>
             </section>
 

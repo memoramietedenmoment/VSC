@@ -178,7 +178,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
   },
-  "polaroidkamera-dior": {
+  "sofortbildkamera-dior": {
     id: 3,
     name: "Sofortbildkamera DIOR",
     emoji: "📸",
@@ -386,7 +386,7 @@ const PRODUCTS_DETAIL = {
   },
   "zuckerwattemaschine-luna": {
     id: 6,
-    name: "Zuckerwattemaschine LUNA",
+    name: "Zuckerwatte-Maschine LUNA",
     emoji: "🍭",
     tagline: "Nostalgischer Jahrmarkt-Flair",
     price: "ab 49,- €",
@@ -456,7 +456,7 @@ const PRODUCTS_DETAIL = {
   },
   "seifenblasenmaschine-lilo": {
     id: 7,
-    name: "Seifenblasenmaschine LILO",
+    name: "Seifenblasen-Maschine LILO",
     emoji: "🫧",
     tagline: "Magie in der Luft",
     price: "ab 59,- €",

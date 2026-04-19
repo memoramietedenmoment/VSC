@@ -18,6 +18,7 @@ import { motion, useInView } from "framer-motion";
 import { MenuIcon, Instagram, Music } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
 
 // ─── Daten ───────────────────────────────────────────────────────────────────
 
@@ -46,7 +47,7 @@ const PRODUCTS = [
   },
   {
     id: 3,
-    name: "Polaroidkamera DIOR",
+    name: "Sofortbildkamera DIOR",
     emoji: "📸",
     price: "ab 29,- €",
     tag: "Günstig",
@@ -168,9 +169,9 @@ const GALLERY_IMAGES = [
     caption: "🪩 Party-Moment bei der Hochzeit am Fotospiegel",
   },
   {
-    src: "/images/Seifenblasenmaschine_Hochzeit.png",
+    src: "/images/Seifenblasen_Hochzeit.png",
     alt: "Gäste feiern gemeinsam beim Event mit Seifenblasenmaschine",
-    caption: "🫧 Seifenblasen bereit zum Hochzeitstanz",
+    caption: "🫧 Walk-Out mit Seifenblasen",
   },
   {
     src: "/images/Fotospiegel_dekoriert.png",
@@ -183,9 +184,9 @@ const GALLERY_IMAGES = [
     caption: "🎤 Karaoke-Spaß bei der Weihnachtsfeier des FV Bad Rotenfels",
   },
   {
-    src: "/images/Zuckerwatte_Winterfeier.png",
+    src: "/images/Zuckerwatte_Kindergeburtstag.png",
     alt: "Zuckerwattemaschine LUNA auf einem Event",
-    caption: "🍭 Süßer Genuss bei einer internen Winterfeier",
+    caption: "🍭 Süßer Genuss bei einem Kindergeburtstag",
   },
 ];
 
@@ -691,7 +692,7 @@ export default function Home() {
                 <span>✨ Kostenlos anfragen</span>
               </button>
               <a
-                href="https://wa.me/4915225896570?text=Hallo%20memora-Team!%20Ich%20interessiere%20mich%20f%C3%BCr%20eure%20Eventausstattung."
+                href="https://wa.me/4915225896570?text=Hallo%20memora!%20Ich%20interessiere%20mich%20f%C3%BCr%20eure%20Eventausstattung."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-whatsapp px-6 py-4 rounded-xl text-base font-bold flex items-center justify-center gap-2"
@@ -783,12 +784,12 @@ export default function Home() {
       <section className="bg-[oklch(0.32_0.07_155)] py-8">
         <div className="container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            {[
+            {([
               { value: 20, suffix: "+", label: "zufriedene Kunden" },
               { value: 5, suffix: "★", label: "Google-Bewertung" },
               { value: 12, suffix: "", label: "Produkte verfügbar" },
               { value: 2, suffix: "h", label: "Antwortzeit" },
-            ].map((stat, i) => (
+            ]).map((stat, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 16 }}
@@ -830,7 +831,7 @@ export default function Home() {
             {/* Connecting line */}
             <div className="hidden md:block absolute top-12 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-[oklch(0.75_0.14_80)] to-[oklch(0.75_0.14_80)] opacity-20" />
 
-            {[
+            {([
               {
                 step: "01",
                 icon: "🔍",
@@ -856,7 +857,7 @@ export default function Home() {
                 cta: "Lieferinfo",
                 href: "#kontakt",
               },
-            ].map((step, i) => (
+            ]).map((step, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 32 }}
@@ -935,7 +936,9 @@ export default function Home() {
                 transition={{ delay: i * 0.08 }}
                 className="product-card group cursor-pointer"
               >
-                <a href={`/produkt/${slug}`} className="block h-full hover:opacity-95 transition-opacity">
+                <Link href={`/produkt/${slug}`} 
+                  className="block h-full hover:opacity-95 transition-opacity"
+                >
                 {/* Product Image / Emoji */}
                 <div className="relative h-48 overflow-hidden bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.88_0.02_85)]">
                   {product.image ? (
@@ -989,7 +992,7 @@ export default function Home() {
                     Jetzt anfragen
                   </a>
                 </div>
-                </a>
+                </Link>
               </motion.div>
             );
             })}
@@ -1016,7 +1019,9 @@ export default function Home() {
                     transition={{ delay: i * 0.08 }}
                     className="product-card group cursor-pointer"
                   >
-                    <a href={`/produkt/${slug}`} className="block h-full hover:opacity-95 transition-opacity">
+                    <Link href={`/produkt/${slug}`} 
+                      className="block h-full hover:opacity-95 transition-opacity"
+                    >
                     {/* Product Image / Emoji */}
                     <div className="relative h-48 overflow-hidden bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.88_0.02_85)]">
                       {product.image ? (
@@ -1070,7 +1075,7 @@ export default function Home() {
                         Jetzt anfragen
                       </a>
                     </div>
-                    </a>
+                    </Link>
                   </motion.div>
                 );
                 })}
@@ -1299,7 +1304,7 @@ export default function Home() {
                     </label>
                     <textarea
                       rows={3}
-                      placeholder="z.B. Hochzeit mit 80 Personen in Kalsruhe, möchte die Produkte gerne selbst abholen, etc."
+                      placeholder="z.B. Hochzeit mit 80 Personen in Karlsruhe, möchte die Produkte gerne selbst abholen, etc."
                       className="form-input resize-none"
                       value={formData.message}
                       onChange={e => setFormData({ ...formData, message: e.target.value })}
@@ -1359,10 +1364,10 @@ export default function Home() {
               initial={{ opacity: 0, x: 32 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="space-y-6"
+              className="flex flex-col gap-6"
             >
               {/* Hero Image */}
-              <div className="rounded-2xl overflow-hidden shadow-xl">
+              <div className="order-2 lg:order-1 hidden lg:block rounded-2xl overflow-hidden shadow-xl">
                 <img
                   src="https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/hero-party-QUt8YTdG6QANTMs6YJXq7z.webp"
                   alt="Fröhliche Feier mit memora Ausstattung"
@@ -1371,13 +1376,13 @@ export default function Home() {
               </div>
 
               {/* Trust Points */}
-              <div className="space-y-3">
-                {[
+              <div className="order-3 lg:order-2 space-y-3">
+                {([
                   { icon: "⚡", title: "Schnelle Antwort", desc: "Wir melden uns innerhalb von 2 Stunden – auch abends und am Wochenende." },
                   { icon: "🚚", title: "Lieferung & Abholung", desc: "Kostenlose Abholung oder bequeme Lieferung im 100-km-Umkreis von Gaggenau." },
                   { icon: "🎓", title: "Einweisung inklusive", desc: "Alle Geräte sind sofort einsatzbereit – wir erklären alles in wenigen Minuten." },
                   { icon: "💚", title: "Faire Preise", desc: "Transparente Preise ohne versteckte Kosten. Schon ab 29,- € für dein Event." },
-                ].map((point, i) => (
+                ]).map((point, i) => (
                   <div key={i} className="trust-badge">
                     <span className="text-2xl">{point.icon}</span>
                     <div>
@@ -1389,7 +1394,7 @@ export default function Home() {
               </div>
 
               {/* Direct Contact */}
-              <div className="bg-[oklch(0.32_0.07_155)] rounded-2xl p-6 text-white">
+              <div className="order-4 lg:order-3 bg-[oklch(0.32_0.07_155)] rounded-2xl p-6 text-white">
                 <h4 className="font-bold text-lg mb-4" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                   Direkt kontaktieren
                 </h4>
@@ -1411,6 +1416,24 @@ export default function Home() {
                     Anrufen: 0152 258 96570
                   </a>
                 </div>
+              </div>
+
+              {/* Geschäftsführer - mobile zwischen Kontakttext links und Bild, desktop unten rechts */}
+              <div className="order-1 lg:order-4 rounded-2xl border border-border bg-[oklch(0.97_0.012_85)] p-5 text-center">
+                <h4
+                  className="mb-4 text-xl font-bold text-foreground"
+                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                >
+                  Wir freuen uns auf deine Nachricht.
+                </h4>
+                <img
+                  src="/images/ueberuns_mit_logo.jpeg"
+                  alt="Geschäftsführer Daniel und Simon"
+                  className="mx-auto w-full max-w-sm rounded-xl object-cover"
+                />
+                <p className="mt-3 italic font-semibold text-[oklch(0.32_0.07_155)]">
+                  Daniel &amp; Simon
+                </p>
               </div>
             </motion.div>
           </div>
@@ -1505,9 +1528,9 @@ export default function Home() {
           <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
             <p>© 2025 memora – miete den moment. Alle Rechte vorbehalten.</p>
             <div className="flex gap-4">
-              <a href="/impressum" className="hover:text-white transition-colors">Impressum</a>
-              <a href="/datenschutz" className="hover:text-white transition-colors">Datenschutz</a>
-              <a href="/agb" className="hover:text-white transition-colors">AGB</a>
+              <Link href="/impressum" className="hover:text-white transition-colors">Impressum</Link>
+              <Link href="/datenschutz" className="hover:text-white transition-colors">Datenschutz</Link>
+              <Link href="/agb" className="hover:text-white transition-colors">AGB</Link>
             </div>
           </div>
         </div>
