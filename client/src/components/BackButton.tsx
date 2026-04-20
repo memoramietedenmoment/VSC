@@ -10,10 +10,14 @@ export default function BackButton({ fallbackTo = "/", className = "" }: BackBut
   const [, setLocation] = useLocation();
 
   const handleBack = () => {
+    window.sessionStorage.setItem("restore-scroll-once", "1");
+
     if (window.history.length > 1) {
       window.history.back();
       return;
     }
+
+    window.sessionStorage.removeItem("restore-scroll-once");
     setLocation(fallbackTo);
   };
 

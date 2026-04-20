@@ -909,10 +909,14 @@ export default function ProductDetail() {
   };
 
   const handleBackClick = () => {
+    window.sessionStorage.setItem("restore-scroll-once", "1");
+
     if (window.history.length > 1) {
       window.history.back();
       return;
     }
+
+    window.sessionStorage.removeItem("restore-scroll-once");
     setLocation("/");
   };
 
