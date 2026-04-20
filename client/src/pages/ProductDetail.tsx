@@ -100,6 +100,10 @@ const PRODUCTS_DETAIL = {
         a: "Ja! Wir können die Ausdrucke mit deinem Namen, Logo oder Motiv bedrucken lassen.",
         },
       {
+        q: "Könnt ihr uns den Fotospiegel auch liefern?",
+        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
+        },
+      {
         q: "Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -173,6 +177,10 @@ const PRODUCTS_DETAIL = {
         a: "Ja, wir stellen dir die Rohdateien zur Verfügung. Du kannst sie mit jeder Standard-Audio-Software bearbeiten.",
          },
       {
+        q: "Könnt ihr uns das Audio-Gästebuch auch liefern?",
+        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
+      },
+      {
         q: "Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -231,6 +239,10 @@ const PRODUCTS_DETAIL = {
         q: "Können die Bilder signiert werden?",
         a: "Ja, die Bilder haben einen weißen Rand – perfekt zum Signieren!",
         },
+      {
+        q: "Könnt ihr uns die Sofortbildkamera auch liefern?",
+        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
+      },
       {
         q: "Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
@@ -297,6 +309,10 @@ const PRODUCTS_DETAIL = {
         q:"Müssen wir das Gerät nach der Nutzung reinigen?",
         a:"Eine Intensiv-Reinigung ist nicht erforderlich. Wir empfehlen, die Maschine nach der Nutzung mit klarem Wasser durchzuspülen. Eine gründliche Reinigung erfolgt bei uns nach jedem Event. Bei starker Verschmutzung behalten wir uns vor eine Reinigungsgebühr in Höhe von 50,- € zu berechnen.",
          },
+      {
+        q: "Könnt ihr uns die Slushmaschine auch liefern?",
+        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
+      },
       {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
@@ -379,6 +395,10 @@ const PRODUCTS_DETAIL = {
         a: "2 kabellose Mikrofone.",
          },
       {
+        q: "Könnt ihr uns die Karaoke-Maschine auch liefern?",
+        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
+      },
+      {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -434,7 +454,7 @@ const PRODUCTS_DETAIL = {
     faq: [
       {
         q: "Wie viele Portionen pro Stunde?",
-        a: "Mit einer Maschine können ca. 50-100 Portionen pro Stunde hergestellt werden.",
+        a: "Mit der Zuckerwattemaschine können ca. 50-100 Portionen pro Stunde hergestellt werden.",
       },
       {
         q: "Welche Farben gibt es?",
@@ -448,6 +468,10 @@ const PRODUCTS_DETAIL = {
          q:"Müssen wir das Gerät nach der Nutzung reinigen?",
         a:"Eine Intensiv-Reinigung ist nicht erforderlich. Wir empfehlen, die Maschine nach der Nutzung mit klarem Wasser durchzuspülen. Eine gründliche Reinigung erfolgt bei uns nach jedem Event. Bei starker Verschmutzung behalten wir uns vor eine Reinigungsgebühr in Höhe von 25,- € zu berechnen.",
          },
+      {
+        q: "Könnt ihr uns die Zuckerwattemaschine auch liefern?",
+        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
+      },
       {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
@@ -515,6 +539,10 @@ const PRODUCTS_DETAIL = {
         a: "Ja, die Produktion ist stufenlos regelbar – von sanften Blasen bis zu intensiven Blasenwolken.",
          },
       {
+        q: "Könnt ihr uns die Seifenblasenmaschine auch liefern?",
+        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
+      },
+      {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -578,6 +606,10 @@ const PRODUCTS_DETAIL = {
         a: "Die 2,5 Liter Tankinhalt reichen für ca. 4-6 Stunden kontinuierlichen Betrieb.",
          },
       {
+        q: "Könnt ihr uns die Nebelmaschine auch liefern?",
+        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
+      },
+      {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -639,6 +671,10 @@ const PRODUCTS_DETAIL = {
         q: "Wie weit reicht das Mikrofon?",
         a: "Das drahtlose Mikrofon hat eine Reichweite von bis zu 50 Metern.",
          },
+      {
+        q: "Könnt ihr uns die Musik-Box auch liefern?",
+        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
+      },
       {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
@@ -708,6 +744,10 @@ const PRODUCTS_DETAIL = {
         a:"Eine Intensiv-Reinigung ist nicht erforderlich. Wir empfehlen, die Maschine nach der Nutzung mit klarem Wasser durchzuspülen. Eine gründliche Reinigung erfolgt bei uns nach jedem Event. Bei starker Verschmutzung behalten wir uns vor eine Reinigungsgebühr in Höhe von 25,- € zu berechnen.",
          },
       {
+        q: "Könnt ihr uns den Hot-Dog-Wärmer auch liefern?",
+        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
+      },
+      {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -773,6 +813,10 @@ const PRODUCTS_DETAIL = {
          q:"Müssen wir das Gerät nach der Nutzung reinigen?",
         a:"Eine Intensiv-Reinigung ist nicht erforderlich. Wir empfehlen, die Maschine nach der Nutzung mit klarem Wasser durchzuspülen. Eine gründliche Reinigung erfolgt bei uns nach jedem Event. Bei starker Verschmutzung behalten wir uns vor eine Reinigungsgebühr in Höhe von 25,- € zu berechnen.",
          },
+      {
+        q: "Könnt ihr uns den Nacho-Wärmer auch liefern?",
+        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
+      },
       {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
@@ -848,6 +892,10 @@ const PRODUCTS_DETAIL = {
          q:"Müssen wir das Gerät nach der Nutzung reinigen?",
         a:"Eine Intensiv-Reinigung ist nicht erforderlich. Wir empfehlen, die Maschine nach der Nutzung mit klarem Wasser durchzuspülen. Eine gründliche Reinigung erfolgt bei uns nach jedem Event. Bei starker Verschmutzung behalten wir uns vor eine Reinigungsgebühr in Höhe von 25,- € zu berechnen.",
          },
+      {
+        q: "Könnt ihr uns die Popcornmaschine auch liefern?",
+        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
+      },
       {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",

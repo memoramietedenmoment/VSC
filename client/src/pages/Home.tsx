@@ -1475,6 +1475,50 @@ export default function Home() {
       </section>
 
       {/* ═══════════════════════════════════════════════════
+          EINSATZGEBIET / STANDORT
+      ═══════════════════════════════════════════════════ */}
+      <section id="einsatzgebiet" className="py-20 bg-[oklch(0.97_0.012_85)]">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <h2 className="section-headline centered text-4xl md:text-5xl mb-4 mx-auto inline-block">
+              Eventausstattung im Raum Karlsruhe, Rastatt & Baden-Baden
+            </h2>
+            <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+              Wir vermieten Eventausstattung mit Fokus auf die Region Karlsruhe, Rastatt, Baden-Baden und den erweiterten Umkreis.
+              Abholung ist in Gaggenau möglich, auf Wunsch liefern wir zu eurer Location im Umkreis von bis zu 100 km.
+            </p>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-left">
+              {[
+                "Karlsruhe",
+                "Rastatt",
+                "Baden-Baden",
+                "Gaggenau",
+                "Ettlingen",
+                "Bühl",
+              ].map((city) => (
+                <div
+                  key={city}
+                  className="rounded-xl border border-border bg-white px-4 py-3 text-sm font-semibold text-[oklch(0.32_0.07_155)]"
+                >
+                  {city}
+                </div>
+              ))}
+            </div>
+
+            <p className="mt-6 text-sm text-muted-foreground">
+              Deine Stadt ist nicht dabei? Sende uns trotzdem eine Anfrage - wir prüfen gerne individuell, ob eine Lieferung möglich ist.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════
           FOOTER
       ═══════════════════════════════════════════════════ */}
       <footer className="bg-[oklch(0.15_0.04_155)] text-white/70 py-12 md:pb-12 pb-24">
