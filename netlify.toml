@@ -1,4 +1,19 @@
 [[redirects]]
+from = "/produkt/audio-gstebuch-vivi"
+to = "/produkt/audio-gaestebuch-vivi"
+status = 301
+
+[[redirects]]
+from = "/produkt/hot-dog-wrmer-sjen"
+to = "/produkt/hot-dog-waermer-sjen"
+status = 301
+
+[[redirects]]
+from = "/produkt/nacho-wrmer-sala"
+to = "/produkt/nacho-waermer-sala"
+status = 301
+
+[[redirects]]
 from = "/*"
 to = "/index.html"
 status = 200

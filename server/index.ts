@@ -10,6 +10,12 @@ async function startServer() {
   const app = express();
   const server = createServer(app);
 
+  const legacySlugRedirects: Record<string, string> = {
+    "/produkt/audio-gstebuch-vivi": "/produkt/audio-gaestebuch-vivi",
+    "/produkt/hot-dog-wrmer-sjen": "/produkt/hot-dog-waermer-sjen",
+    "/produkt/nacho-wrmer-sala": "/produkt/nacho-waermer-sala",
+  };
+
   // Serve static files from dist/public in production
   const staticPath =
     process.env.NODE_ENV === "production"
@@ -17,6 +23,10 @@ async function startServer() {
       : path.resolve(__dirname, "..", "dist", "public");
 
   app.use(express.static(staticPath));
+
+  app.get(Object.keys(legacySlugRedirects), (req, res) => {
+    res.redirect(301, legacySlugRedirects[req.path]);
+  });
 
   // Handle client-side routing - serve index.html for all routes
   app.get("*", (_req, res) => {
@@ -31,3 +41,4 @@ async function startServer() {
 }
 
 startServer().catch(console.error);
+

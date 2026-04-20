@@ -150,16 +150,38 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), // vitePluginManusRuntime(), 
-vitePluginManusDebugCollector()];
+function vitePluginAnalytics(): Plugin {
+  return {
+    name: "analytics-inject",
+    transformIndexHtml(_html, ctx) {
+      if (!ctx.server) {
+        // production build only
+        const endpoint = process.env.VITE_ANALYTICS_ENDPOINT;
+        const siteId = process.env.VITE_ANALYTICS_WEBSITE_ID;
+        if (endpoint && siteId) {
+          return {
+            html: _html,
+            tags: [
+              {
+                tag: "script",
+                attrs: { defer: true, src: `${endpoint}/umami`, "data-website-id": siteId },
+                injectTo: "body",
+              },
+            ],
+          };
+        }
+      }
+      return _html;
+    },
+  };
+}
+
+const plugins = [react(), tailwindcss(), jsxLocPlugin(), // vitePluginManusRuntime(),
+vitePluginManusDebugCollector(), vitePluginAnalytics()];
 
 export default defineConfig({
   plugins,
 
-  server: {
-  host: true,
-  allowedhosts: ["tattoo-manpower-unwatched.ngrok-free.dev"]
-},
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),

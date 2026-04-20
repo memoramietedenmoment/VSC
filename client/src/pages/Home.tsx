@@ -16,8 +16,10 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { MenuIcon, Instagram, Music } from "lucide-react";
+import Seo from "@/components/Seo";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { DEFAULT_OG_IMAGE, SITE_URL, toProductSlug } from "@/lib/seo";
 import { Link } from "wouter";
 
 // ─── Daten ───────────────────────────────────────────────────────────────────
@@ -462,6 +464,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background font-sans overflow-x-hidden">
+      <Seo
+        title="Eventausstattung mieten in Karlsruhe, Rastatt & Baden-Baden | memora"
+        description="Eventausstattung mieten in Karlsruhe, Rastatt, Baden-Baden und Umgebung: Fotospiegel, Slushmaschine, Audio-Gaestebuch, Popcornmaschine und mehr. Abholung in Gaggenau oder Lieferung im Umkreis von bis zu 100 km."
+        canonicalUrl={SITE_URL}
+        image={DEFAULT_OG_IMAGE}
+      />
 
       {/* ═══════════════════════════════════════════════════
           STICKY NAVIGATION
@@ -964,7 +972,7 @@ export default function Home() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {PRODUCTS.slice(0, 6).map((product, i) => {
-              const slug = product.name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+              const slug = toProductSlug(product.name);
               return (
               <motion.div
                 key={product.id}
@@ -1045,7 +1053,7 @@ export default function Home() {
             >
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {PRODUCTS.slice(6, 12).map((product, i) => {
-                  const slug = product.name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+                  const slug = toProductSlug(product.name);
                   return (
                   <motion.div
                     key={product.id}

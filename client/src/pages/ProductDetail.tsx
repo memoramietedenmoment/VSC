@@ -11,6 +11,8 @@
 
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
+import Seo from "@/components/Seo";
+import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL, extractNumericPrice, toAbsoluteUrl } from "@/lib/seo";
 import { Link, useLocation, useRoute } from "wouter";
 import { ChevronLeft, ChevronRight, Check, AlertCircle } from "lucide-react";
 
@@ -109,7 +111,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
   },
-  "audio-gstebuch-vivi": {
+  "audio-gaestebuch-vivi": {
     id: 2,
     name: "Audio-Gästebuch VIVI",
     emoji: "📞",
@@ -681,7 +683,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
   },
-  "hot-dog-wrmer-sjen": {
+  "hot-dog-waermer-sjen": {
     id: 10,
     name: "Hot-Dog-Wärmer SJEN",
     emoji: "🌭",
@@ -753,7 +755,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
   },
-  "nacho-wrmer-sala": {
+  "nacho-waermer-sala": {
     id: 11,
     name: "Nacho-Wärmer SALA",
     emoji: "🦦",
@@ -904,6 +906,116 @@ const PRODUCTS_DETAIL = {
   },
 };
 
+const LEGACY_SLUG_REDIRECTS: Record<string, string> = {
+  "audio-gstebuch-vivi": "audio-gaestebuch-vivi",
+  "hot-dog-wrmer-sjen": "hot-dog-waermer-sjen",
+  "nacho-wrmer-sala": "nacho-waermer-sala",
+};
+
+type ProductDetailData = (typeof PRODUCTS_DETAIL)[keyof typeof PRODUCTS_DETAIL];
+
+function buildProductStructuredData(product: ProductDetailData, slug: string) {
+  const canonicalUrl = `${SITE_URL}/produkt/${slug}`;
+  const imageUrls = product.images.map((image) => toAbsoluteUrl(image));
+  const numericPrice = extractNumericPrice(product.price);
+  const reviewCount = product.reviews.length;
+  const ratingValue = reviewCount > 0
+    ? (product.reviews.reduce((sum, review) => sum + review.rating, 0) / reviewCount).toFixed(1)
+    : "5.0";
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Product",
+        name: product.name,
+        description: product.longDescription,
+        image: imageUrls,
+        sku: slug,
+        brand: {
+          "@type": "Brand",
+          name: "memora",
+        },
+        category: "Eventausstattung Vermietung",
+        areaServed: ["Karlsruhe", "Rastatt", "Baden-Baden", "Gaggenau"],
+        url: canonicalUrl,
+        offers: {
+          "@type": "Offer",
+          price: numericPrice,
+          priceCurrency: "EUR",
+          url: canonicalUrl,
+          availability: "https://schema.org/InStock",
+          itemCondition: "https://schema.org/UsedCondition",
+          seller: {
+            "@type": "LocalBusiness",
+            name: SITE_NAME,
+            url: SITE_URL,
+          },
+        },
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue,
+          reviewCount: String(reviewCount),
+          bestRating: "5",
+          worstRating: "1",
+        },
+        review: product.reviews.map((review) => ({
+          "@type": "Review",
+          reviewRating: {
+            "@type": "Rating",
+            ratingValue: String(review.rating),
+            bestRating: "5",
+            worstRating: "1",
+          },
+          author: {
+            "@type": "Person",
+            name: review.name,
+          },
+          reviewBody: review.text,
+          datePublished: review.date,
+          itemReviewed: {
+            "@type": "Product",
+            name: product.name,
+          },
+        })),
+        additionalProperty: product.specs.map((spec) => ({
+          "@type": "PropertyValue",
+          name: spec.label,
+          value: spec.value,
+        })),
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: product.faq.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.a,
+          },
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Startseite",
+            item: SITE_URL,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: product.name,
+            item: canonicalUrl,
+          },
+        ],
+      },
+    ],
+  };
+}
+
 function StarRating({ count = 5 }: { count?: number }) {
   return (
     <div className="flex gap-0.5">
@@ -939,9 +1051,20 @@ export default function ProductDetail() {
 
   const slug = params?.slug as string;
   const product = PRODUCTS_DETAIL[slug as keyof typeof PRODUCTS_DETAIL];
+  if (!product && LEGACY_SLUG_REDIRECTS[slug]) {
+    window.location.replace(`/produkt/${LEGACY_SLUG_REDIRECTS[slug]}`);
+    return null;
+  }
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
+        <Seo
+          title="Produkt nicht gefunden | memora"
+          description="Die angeforderte Produktseite wurde nicht gefunden."
+          canonicalUrl={`${SITE_URL}/404`}
+          image={DEFAULT_OG_IMAGE}
+          robots="noindex,follow"
+        />
         <div className="text-center">
           <h1 className="text-3xl font-bold text-foreground mb-4">Produkt nicht gefunden</h1>
           <Link href="/" className="text-[oklch(0.32_0.07_155)] hover:underline font-semibold">
@@ -999,8 +1122,23 @@ export default function ProductDetail() {
     }
   };
 
+  const canonicalUrl = `${SITE_URL}/produkt/${slug}`;
+  const seoTitle = `${product.name} mieten in Karlsruhe | memora`;
+  const seoDescription = `${product.name} ab ${product.price.replace("ab ", "")} fuer Hochzeiten, Geburtstage und Firmenfeiern in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten. ${product.description}`;
+  const seoImage = product.images[0] ? toAbsoluteUrl(product.images[0]) : DEFAULT_OG_IMAGE;
+  const structuredData = buildProductStructuredData(product, slug);
+
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
+      <Seo
+        title={seoTitle}
+        description={seoDescription}
+        canonicalUrl={canonicalUrl}
+        image={seoImage}
+        structuredData={structuredData}
+        type="product"
+      />
+
       {/* ═══════════════════════════════════════════════════
           HEADER
       ═══════════════════════════════════════════════════ */}
