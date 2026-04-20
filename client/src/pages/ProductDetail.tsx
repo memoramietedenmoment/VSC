@@ -11,7 +11,7 @@
 
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { useRoute } from "wouter";
+import { Link, useLocation, useRoute } from "wouter";
 import { ChevronLeft, ChevronRight, Check, AlertCircle } from "lucide-react";
 
 // ─── Produktdaten ─────────────────────────────────────────────────────────────
@@ -25,8 +25,8 @@ const PRODUCTS_DETAIL = {
     price: "ab 299,- €",
     images: [
       "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/fotospiegel-glow-neu-mEWnc6uokeNiC4Qd7MzeJ3.webp",
-      "/images/Fotospiegel_Hochzeit.png",
-      "/images/Fotospiegel_Geburtstag.png",
+      "/images/Fotospiegel_Übersichtsseite.png",
+      "/images/Fotospiegel_dekoriert.png",
       "/images/Fotospiegel_mit_Koffer.png",
     ],
     description: "Sofortige Schnappschüsse zum Mitnehmen. Der Fotospiegel GLOW ist das Highlight auf jeder Feier – Gäste halten ihre Momente sofort in den Händen und haben eine echte Erinnerung.",
@@ -880,6 +880,7 @@ function WhatsAppIcon() {
 
 export default function ProductDetail() {
   const [match, params] = useRoute("/produkt/:slug");
+  const [, setLocation] = useLocation();
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
@@ -895,19 +896,24 @@ export default function ProductDetail() {
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-foreground mb-4">Produkt nicht gefunden</h1>
-          <a href="/" className="text-[oklch(0.32_0.07_155)] hover:underline font-semibold">
+          <Link href="/" className="text-[oklch(0.32_0.07_155)] hover:underline font-semibold">
             ← Zurück zur Startseite
-          </a>
+          </Link>
         </div>
       </div>
     );
   }
 
-  const handleWhatsAppClick = () => {
-    const msg = encodeURIComponent(
-      `Hallo memora! Ich interessiere mich für ${product.name}. Bitte sendet mir mehr Informationen und ein Angebot.`
-    );
-    window.open(`https://wa.me/4915225896570?text=${msg}`, "_blank");
+  const handleFormInquiryClick = () => {
+    setLocation(`/?productId=${product.id}#kontakt`);
+  };
+
+  const handleBackClick = () => {
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    setLocation("/");
   };
 
   const nextImage = () => {
@@ -948,15 +954,15 @@ export default function ProductDetail() {
       ═══════════════════════════════════════════════════ */}
       <header className="sticky top-0 left-0 right-0 z-50 bg-white border-b border-border shadow-sm">
         <div className="container flex items-center justify-between h-16">
-          <a href="/" className="flex items-center gap-2 group">
+          <button type="button" onClick={handleBackClick} className="flex items-center gap-2 group">
             <ChevronLeft className="w-5 h-5 text-[oklch(0.32_0.07_155)]" />
             <span className="text-sm font-semibold text-[oklch(0.32_0.07_155)]">Zurück</span>
-          </a>
-          <a href="/" className="flex items-center gap-2">
+          </button>
+          <Link href="/" className="flex items-center gap-2">
             <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/memora_Logo_9da7fd54.png" alt="memora Logo" className="h-8 w-auto filter invert" />
-          </a>
+          </Link>
           <button
-            onClick={handleWhatsAppClick}
+            onClick={handleFormInquiryClick}
             className="btn-gold pulse-gold px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2"
           >
             <WhatsAppIcon />
@@ -1085,7 +1091,7 @@ export default function ProductDetail() {
 
               {/* CTA */}
               <button
-                onClick={handleWhatsAppClick}
+                onClick={handleFormInquiryClick}
                 className="w-full btn-gold pulse-gold py-4 rounded-xl text-lg font-bold flex items-center justify-center gap-2 mb-3"
               >
                 <WhatsAppIcon />
@@ -1304,7 +1310,7 @@ export default function ProductDetail() {
               Stell uns eine kostenlose Anfrage zu {product.name}. Wir melden uns innerhalb von 2 Stunden zurück.
             </p>
             <button
-              onClick={handleWhatsAppClick}
+              onClick={handleFormInquiryClick}
               className="btn-gold pulse-gold px-8 py-4 rounded-xl text-lg font-bold flex items-center justify-center gap-2 mx-auto"
             >
               <WhatsAppIcon />

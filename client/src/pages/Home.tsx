@@ -41,7 +41,7 @@ const PRODUCTS = [
     price: "ab 49,- €",
     tag: "Beliebt",
     tagColor: "bg-emerald-600",
-    description: "Statt Gästebucheinträgen hinterlassen eure Gäste persönliche Sprachnachrichten – Gänsehaut garantiert!",
+    description: "Statt geschriebenen Gästebucheinträgen hinterlassen eure Gäste persönliche Sprachnachrichten – Gänsehaut garantiert!",
     occasions: ["Hochzeit", "Jubiläum", "Geburtstag"],
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/audio-gaestebuch-vivi-8TDr2DteLoHaGVv5GwKgqm.webp",
   },
@@ -85,7 +85,7 @@ const PRODUCTS = [
     price: "ab 49,- €",
     tag: "Kinder-Favorit",
     tagColor: "bg-pink-500",
-    description: "Der Duft, die flauschige Konsistenz, der nostalgische Flair – eure Gäste sind direkt auf dem Jahrmarkt.",
+    description: "Der Duft, die flauschige Konsistenz, der nostalgische Flair – eure Gäste fühlen sich direkt wie auf dem Jahrmarkt.",
     occasions: ["Kindergeburtstag", "Familienfeier", "Schulveranstaltung"],
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/zuckerwattemaschine-luna-YssUQSBqzSfkyTrshDaWmk.webp",
   },
@@ -118,7 +118,7 @@ const PRODUCTS = [
     price: "ab 99,- €",
     tag: "Audio",
     tagColor: "bg-teal-600",
-    description: "Dezente Hintergrundmusik beim Sektempfang oder Dinner – Mikro für Reden und Ansprachen inklusive.",
+    description: "Dezente Hintergrundmusik beim Sektempfang oder Dinner – Mikrofone für Reden und Ansprachen sind inklusive.",
     occasions: ["Hochzeit", "Firmenfeier", "Jubiläum"],
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/musikbox-sunu-YzchpMLmbyfqh4DufPyvkD.webp",
   },
@@ -140,7 +140,7 @@ const PRODUCTS = [
     price: "ab 49,- €",
     tag: "Lecker",
     tagColor: "bg-yellow-600",
-    description: "Knusprige Nachos mit warmer, cremiger Käsesoße – echtes Kino-Feeling auf eurer Party!",
+    description: "Knusprige, warme Nachos - ein ganz besonderer Snack, der garantiert schnell zum Lieblingsspot eurer Gäste wird.",
     occasions: ["Party", "Geburtstag", "Firmenfeier"],
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/nachowarmer-sala-65QjBzSrDUQNoGexkDjxQr.webp",
   },
@@ -166,7 +166,7 @@ const GALLERY_IMAGES = [
   {
     src: "/images/Fotospiegel_Ergebnis.png",
     alt: "Fröhliche Feier mit Party-Atmosphäre am Fotospiegel",
-    caption: "🪩 Party-Moment bei der Hochzeit am Fotospiegel",
+    caption: "🪩 Unser Fotospiegel im Einsatz",
   },
   {
     src: "/images/Seifenblasen_Hochzeit.png",
@@ -292,6 +292,8 @@ const TESTIMONIALS = [
   },
 ];
 
+type Product = (typeof PRODUCTS)[number];
+
 // ─── Hilfsfunktionen ──────────────────────────────────────────────────────────
 
 function StarRating({ count = 5 }: { count?: number }) {
@@ -378,8 +380,44 @@ export default function Home() {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    const productIdParam = window.location.search ? new URLSearchParams(window.location.search).get("productId") : null;
+    const productId = productIdParam ? Number(productIdParam) : NaN;
+
+    if (!Number.isInteger(productId)) return;
+
+    const selectedProduct = PRODUCTS.find((product) => product.id === productId);
+    if (!selectedProduct) return;
+
+    const value = `${selectedProduct.name} (${selectedProduct.price})`;
+
+    setFormSubmitted(false);
+    setFormData((prev) => ({
+      ...prev,
+      products: prev.products.includes(value) ? prev.products : [...prev.products, value],
+    }));
+
+    requestAnimationFrame(() => {
+      document.getElementById("kontakt")?.scrollIntoView({ behavior: "smooth" });
+    });
+
+    const nextHash = window.location.hash || "#kontakt";
+    window.history.replaceState({}, "", `${window.location.pathname}${nextHash}`);
+  }, []);
+
   const scrollToContact = () => {
     contactRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleProductInquiry = (product: Product) => {
+    const value = `${product.name} (${product.price})`;
+
+    setFormSubmitted(false);
+    setFormData((prev) => ({
+      ...prev,
+      products: prev.products.includes(value) ? prev.products : [...prev.products, value],
+    }));
+    scrollToContact();
   };
 
   // Touch handlers for testimonial swiping
@@ -937,7 +975,7 @@ export default function Home() {
                 className="product-card group cursor-pointer"
               >
                 <Link href={`/produkt/${slug}`} 
-                  className="block h-full hover:opacity-95 transition-opacity"
+                  className="block hover:opacity-95 transition-opacity"
                 >
                 {/* Product Image / Emoji */}
                 <div className="relative h-48 overflow-hidden bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.88_0.02_85)]">
@@ -979,20 +1017,18 @@ export default function Home() {
                       </span>
                     ))}
                   </div>
-
-                  {/* CTA */}
-                  <a
-                    href={`https://wa.me/4915225896570?text=Hallo%20memora!%20Ich%20interessiere%20mich%20f%C3%BCr%20${encodeURIComponent(product.name)}.`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
+                </div>
+                </Link>
+                <div className="px-5 pb-5">
+                  <button
+                    type="button"
+                    onClick={() => handleProductInquiry(product)}
                     className="w-full btn-gold py-2.5 px-4 rounded-lg text-sm font-bold flex items-center justify-center gap-2 group-hover:scale-[1.02] transition-transform"
                   >
                     <WhatsAppIcon />
                     Jetzt anfragen
-                  </a>
+                  </button>
                 </div>
-                </Link>
               </motion.div>
             );
             })}
@@ -1020,7 +1056,7 @@ export default function Home() {
                     className="product-card group cursor-pointer"
                   >
                     <Link href={`/produkt/${slug}`} 
-                      className="block h-full hover:opacity-95 transition-opacity"
+                      className="block hover:opacity-95 transition-opacity"
                     >
                     {/* Product Image / Emoji */}
                     <div className="relative h-48 overflow-hidden bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.88_0.02_85)]">
@@ -1062,20 +1098,18 @@ export default function Home() {
                           </span>
                         ))}
                       </div>
-
-                      {/* CTA */}
-                      <a
-                        href={`https://wa.me/4915225896570?text=Hallo%20memora!%20Ich%20interessiere%20mich%20f%C3%BCr%20${encodeURIComponent(product.name)}.`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
+                    </div>
+                    </Link>
+                    <div className="px-5 pb-5">
+                      <button
+                        type="button"
+                        onClick={() => handleProductInquiry(product)}
                         className="w-full btn-gold py-2.5 px-4 rounded-lg text-sm font-bold flex items-center justify-center gap-2 group-hover:scale-[1.02] transition-transform"
                       >
                         <WhatsAppIcon />
                         Jetzt anfragen
-                      </a>
+                      </button>
                     </div>
-                    </Link>
                   </motion.div>
                 );
                 })}
@@ -1526,7 +1560,7 @@ export default function Home() {
           </div>
 
           <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
-            <p>© 2025 memora – miete den moment. Alle Rechte vorbehalten.</p>
+            <p>© 2026 memora – miete den moment. Alle Rechte vorbehalten.</p>
             <div className="flex gap-4">
               <Link href="/impressum" className="hover:text-white transition-colors">Impressum</Link>
               <Link href="/datenschutz" className="hover:text-white transition-colors">Datenschutz</Link>

@@ -50,7 +50,7 @@ function ScrollManager() {
           requestAnimationFrame(() => {
             requestAnimationFrame(() => {
               setTimeout(() => {
-                window.scrollTo({ top: saved, behavior: "instant" });
+                window.scrollTo({ top: saved, behavior: "auto" });
               }, 50);
             });
           });
