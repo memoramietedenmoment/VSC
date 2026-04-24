@@ -1,8 +1,17 @@
 import { Link } from "wouter";
 import BackButton from "@/components/BackButton";
+import Seo from "@/components/Seo";
+import { SITE_URL } from "@/lib/seo";
+
 export default function Impressum() {
   return (
     <div className="min-h-screen bg-background font-sans overflow-x-hidden">
+      <Seo
+        title="Impressum | memora Eventausstattung Vermietung Karlsruhe"
+        description="Impressum und Kontaktinformationen von memora - Eventausstattung Vermietung in Karlsruhe, Rastatt, Baden-Baden und Umgebung."
+        canonicalUrl={`${SITE_URL}/impressum`}
+        robots="noindex,follow"
+      />
       {/* Header */}
       <header className="bg-[oklch(0.22_0.06_155)] text-white py-16">
         <div className="container text-center">

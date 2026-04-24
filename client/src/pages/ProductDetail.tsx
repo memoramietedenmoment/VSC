@@ -15,6 +15,7 @@ import Seo from "@/components/Seo";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL, extractNumericPrice, toAbsoluteUrl } from "@/lib/seo";
 import { Link, useLocation, useRoute } from "wouter";
 import { ChevronLeft, ChevronRight, Check, AlertCircle } from "lucide-react";
+import { PRODUCT_COMBINATIONS } from "@/lib/product-combinations";
 
 // ─── Produktdaten ─────────────────────────────────────────────────────────────
 
@@ -490,7 +491,7 @@ const PRODUCTS_DETAIL = {
       "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/seifenblasenmaschine-lilo-o6z2zHGSXkLJAPjW43bzS5.webp",
       "/images/Seifenblasen_blau.png",
       "/images/Seifenblasenmaschine_Hochzeit.png",
-      "/images/Seifenblasen_Hochzeit.png",
+      "/images/Seifenblasen_Hochzeit_Kuss.png",
     ],
     description: "Bringt Magie in die Luft – romantisch beim Hochzeitstanz oder verspielt im Freien.",
     longDescription: "Die Seifenblasenmaschine LILO schafft eine märchenhafte Atmosphäre auf deinem Event. Mit unzähligen schillernden Seifenblasen wird dein Hochzeitstanz oder deine Party zu einem magischen Moment – perfekt für Fotos und Videos!",
@@ -1482,6 +1483,85 @@ export default function ProductDetail() {
           </motion.div>
         </div>
       </section>
+
+      {/* ═══════════════════════════════════════════════════
+          GERNE KOMBINIERT MIT - RELATED PRODUCTS
+      ═══════════════════════════════════════════════════ */}
+      {PRODUCT_COMBINATIONS[slug as keyof typeof PRODUCT_COMBINATIONS] && (
+        <section className="py-16 bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.95_0.01_85)]">
+          <div className="container max-w-5xl">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl font-bold text-foreground mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                Gerne kombiniert mit
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                {PRODUCT_COMBINATIONS[slug as keyof typeof PRODUCT_COMBINATIONS]?.bundleDescription}
+              </p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {PRODUCT_COMBINATIONS[slug as keyof typeof PRODUCT_COMBINATIONS]?.related.map((relatedSlug, idx) => {
+                const relatedProduct = PRODUCTS_DETAIL[relatedSlug as keyof typeof PRODUCTS_DETAIL];
+                if (!relatedProduct) return null;
+                
+                return (
+                  <Link key={relatedSlug} href={`/produkt/${relatedSlug}`}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: idx * 0.1 }}
+                      className="group cursor-pointer rounded-xl overflow-hidden bg-white border border-border hover:shadow-lg transition-shadow"
+                    >
+                      {/* Product Image */}
+                      <div className="relative h-40 bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.88_0.02_85)] overflow-hidden flex items-center justify-center">
+                        {relatedProduct.images?.[0] ? (
+                          <img
+                            src={relatedProduct.images[0]}
+                            alt={`${relatedProduct.name} - zu ${product.name} kombinieren - Eventausstattung`}
+                            className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform"
+                          />
+                        ) : (
+                          <div className="text-5xl">{relatedProduct.emoji}</div>
+                        )}
+                      </div>
+
+                      {/* Product Info */}
+                      <div className="p-4">
+                        <h3 className="font-bold text-foreground mb-1 group-hover:text-[oklch(0.32_0.07_155)] transition-colors">
+                          {relatedProduct.name}
+                        </h3>
+                        <p className="text-sm text-muted-foreground mb-3">{relatedProduct.price}</p>
+                        <p className="text-xs text-muted-foreground line-clamp-2 mb-4">
+                          {relatedProduct.description}
+                        </p>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            const msg = encodeURIComponent(
+                              `Hallo memora-Team,\n\nIch interessiere mich für ${relatedProduct.name} (um ${product.name} zu kombinieren).`
+                            );
+                            window.open(`https://wa.me/4915225896570?text=${msg}`, "_blank");
+                          }}
+                          className="w-full text-sm btn-green py-2 rounded-lg font-semibold group-hover:scale-[1.02] transition-transform"
+                        >
+                          Anfragen
+                        </button>
+                      </div>
+                    </motion.div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ═══════════════════════════════════════════════════
           FINAL CTA

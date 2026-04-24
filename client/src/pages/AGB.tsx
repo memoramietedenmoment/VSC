@@ -1,9 +1,17 @@
 import { Link } from "wouter";
 import BackButton from "@/components/BackButton";
+import Seo from "@/components/Seo";
+import { SITE_NAME, SITE_URL } from "@/lib/seo";
 
 export default function Agb() {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="AGB - Allgemeine Geschäftsbedingungen | memora Eventausstattung"
+        description="Alle Geschäftsbedingungen für die Vermietung von Eventausstattung bei memora in Karlsruhe. Mietbedingungen, Vertragsbedingungen und rechtliche Informationen."
+        canonicalUrl={`${SITE_URL}/agb`}
+        robots="noindex,follow"
+      />
 
       {/* Header */}
       <header className="bg-[oklch(0.22_0.06_155)] text-white py-10 sm:py-16">

@@ -19,7 +19,15 @@ import { MenuIcon, Instagram, Music } from "lucide-react";
 import Seo from "@/components/Seo";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { DEFAULT_OG_IMAGE, SITE_URL, toProductSlug } from "@/lib/seo";
+import {
+  DEFAULT_OG_IMAGE,
+  SITE_NAME,
+  SITE_URL,
+  extractNumericPrice,
+  toAbsoluteUrl,
+  toProductSlug,
+} from "@/lib/seo";
+import { PRODUCT_COMBINATIONS } from "@/lib/product-combinations";
 import { Link } from "wouter";
 
 // ─── Daten ───────────────────────────────────────────────────────────────────
@@ -161,9 +169,9 @@ const PRODUCTS = [
 
 const GALLERY_IMAGES = [
   {
-    src: "/images/Audio-Gästebuch_Polaroid.jpg",
-    alt: "Elegante Hochzeit mit Audio-Gästebuch und Sofortbildkamera",
-    caption: "☎️ Elegante Hochzeit mit Audio-Gästebuch und Sofortbildkamera",
+    src: "/images/Fotospiegel_dekoriert.png",
+    alt: "Fotospiegel GLOW im Eventeinsatz",
+    caption: "✨ Fotospiegel-Highlight an einem 35. Geburtstag",
   },
   {
     src: "/images/Fotospiegel_Ergebnis.png",
@@ -171,14 +179,14 @@ const GALLERY_IMAGES = [
     caption: "🪩 Unser Fotospiegel im Einsatz",
   },
   {
-    src: "/images/Seifenblasen_Hochzeit.png",
+    src: "/images/Seifenblasen_Hochzeit_Kuss.png",
     alt: "Gäste feiern gemeinsam beim Event mit Seifenblasenmaschine",
-    caption: "🫧 Walk-Out mit Seifenblasen",
+    caption: "🫧 Fotoshooting mit Seifenblasen",
   },
   {
-    src: "/images/Fotospiegel_dekoriert.png",
-    alt: "Fotospiegel GLOW im Eventeinsatz",
-    caption: "✨ Fotospiegel-Highlight an einem 35. Geburtstag",
+    src: "/images/Audio-Gästebuch_Polaroid.jpg",
+    alt: "Elegante Hochzeit mit Audio-Gästebuch und Sofortbildkamera",
+    caption: "☎️ Elegante Hochzeit mit Audio-Gästebuch und Sofortbildkamera",
   },
   {
     src: "/images/Karaoke_Weihnachtsfeier.jpg",
@@ -295,6 +303,126 @@ const TESTIMONIALS = [
 ];
 
 type Product = (typeof PRODUCTS)[number];
+
+const SERVICE_AREAS = [
+  "Karlsruhe",
+  "Rastatt",
+  "Baden-Baden",
+  "Gaggenau",
+  "Ettlingen",
+  "Buehl",
+];
+
+const HOME_FAQ_ITEMS = [
+  {
+    question: "Wie funktioniert die Miete bei memora?",
+    answer:
+      "Du suchst dir auf unserer Webseite die passenden Produkte aus und stellst uns dann eine kostenlose Anfrage per WhatsApp, E-Mail oder Telefon. Wir prüfen die Verfügbarkeit, stimmen alles mit dir ab und danach kannst du die Ausstattung in Gaggenau abholen oder dir liefern lassen.",
+  },
+  {
+    question: "Kann ich die Produkte abholen oder liefern lassen?",
+    answer:
+      "Ja. Du kannst die Produkte kostenlos in Gaggenau abholen oder dir die Ausstattung bequem liefern lassen. Auf Wunsch liefern wir zu eurer Location im Umkreis von bis zu 100 km.",
+  },
+  {
+    question: "In welchem Gebiet liefert ihr?",
+    answer:
+      "Wir vermieten Eventausstattung mit Fokus auf Karlsruhe, Rastatt, Baden-Baden, Gaggenau, Ettlingen und Bühl. Wenn deine Stadt nicht dabei ist, kannst du uns trotzdem eine Anfrage senden und wir prüfen individuell, ob eine Lieferung möglich ist.",
+  },
+  {
+    question: "Ist eine Einweisung bei den Geräten dabei?",
+    answer:
+      "Ja. Alle Geräte sind sofort einsatzbereit und wir erklären euch alles in wenigen Minuten, damit ihr direkt loslegen könnt.",
+  },
+];
+
+const HOME_STRUCTURED_DATA = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": `${SITE_URL}/#business`,
+      name: SITE_NAME,
+      url: SITE_URL,
+      email: "info@mietedenmoment.de",
+      telephone: "+49 1522 5896570",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Muehlstrasse 8c",
+        postalCode: "76571",
+        addressLocality: "Gaggenau",
+        addressCountry: "DE",
+      },
+      areaServed: SERVICE_AREAS,
+      sameAs: [
+        "https://www.instagram.com/memora_miete_den_moment/?igsh=MnFhYTBtNGowMjhk",
+      ],
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          contactType: "Customer Service",
+          telephone: "+49 1522 5896570",
+          email: "info@mietedenmoment.de",
+          areaServed: SERVICE_AREAS,
+          hoursAvailable: {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            opens: "09:00",
+            closes: "18:00",
+          },
+        },
+      ],
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "5.0",
+        reviewCount: "5",
+      },
+      priceRange: "EUR",
+    },
+    ...PRODUCTS.map((product) => {
+      const slug = toProductSlug(product.name);
+      const serviceUrl = `${SITE_URL}/produkt/${slug}`;
+
+      return {
+        "@type": "Service",
+        "@id": `${serviceUrl}#service`,
+        name: `${product.name} Vermietung`,
+        serviceType: product.name,
+        description: product.description,
+        url: serviceUrl,
+        areaServed: SERVICE_AREAS,
+        provider: {
+          "@id": `${SITE_URL}/#business`,
+        },
+        category: "Eventausstattung Vermietung",
+        audience: {
+          "@type": "Audience",
+          audienceType: product.occasions.join(", "),
+        },
+        offers: {
+          "@type": "Offer",
+          url: serviceUrl,
+          priceCurrency: "EUR",
+          price: extractNumericPrice(product.price),
+          availability: "https://schema.org/InStock",
+        },
+        image: toAbsoluteUrl(product.image),
+      };
+    }),
+    {
+      "@type": "FAQPage",
+      "@id": `${SITE_URL}/#faq`,
+      mainEntity: HOME_FAQ_ITEMS.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    },
+  ],
+};
 
 // ─── Hilfsfunktionen ──────────────────────────────────────────────────────────
 
@@ -422,6 +550,24 @@ export default function Home() {
     scrollToContact();
   };
 
+  const handleBundleInquiry = (productSlugs: string[]) => {
+    setFormSubmitted(false);
+    const bundleProducts = productSlugs
+      .map(slug => PRODUCTS.find(p => toProductSlug(p.name) === slug))
+      .filter(Boolean)
+      .map(p => `${p!.name} (${p!.price})`)
+      .filter(val => !formData.products.includes(val));
+    
+    setFormData((prev) => ({
+      ...prev,
+      products: [...prev.products, ...bundleProducts],
+    }));
+    
+    setTimeout(() => {
+      document.getElementById("kontakt")?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  };
+
   // Touch handlers for testimonial swiping
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null);
@@ -456,7 +602,7 @@ export default function Home() {
     const productList = formData.products.join(" | ");
     // Öffnet WhatsApp mit vorausgefüllter Nachricht
     const msg = encodeURIComponent(
-      `Hallo memora-Team! Ich möchte eine Anfrage stellen.\n\nName: ${formData.name}\nTelefon: ${formData.phone}\nEvent-Datum: ${formData.date}\nProdukte: ${productList}\nNachricht: ${formData.message}`
+      `Hallo memora-Team,\n\nName: ${formData.name}\nTelefon: ${formData.phone}\nEvent-Datum: ${formData.date}\nProdukte: ${productList}\nNachricht: ${formData.message}`
     );
     window.open(`https://wa.me/4915225896570?text=${msg}`, "_blank");
     setFormSubmitted(true);
@@ -469,6 +615,7 @@ export default function Home() {
         description="Eventausstattung mieten in Karlsruhe, Rastatt, Baden-Baden und Umgebung: Fotospiegel, Slushmaschine, Audio-Gaestebuch, Popcornmaschine und mehr. Abholung in Gaggenau oder Lieferung im Umkreis von bis zu 100 km."
         canonicalUrl={SITE_URL}
         image={DEFAULT_OG_IMAGE}
+        structuredData={HOME_STRUCTURED_DATA}
       />
 
       {/* ═══════════════════════════════════════════════════
@@ -636,12 +783,15 @@ export default function Home() {
                 <PhoneIcon />
                 <span className="hidden lg:inline">0152 258 96570</span>
               </a>
-              <button
-                onClick={scrollToContact}
-                className="btn-gold px-4 py-2 rounded-lg text-sm font-bold pulse-gold"
+              <a
+                href="https://wa.me/4915225896570?text=Hallo%20memora-Team,%20"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-whatsapp px-4 py-2 rounded-lg text-sm font-bold flex items-center justify-center gap-2"
               >
-                Jetzt anfragen
-              </button>
+                <WhatsAppIcon />
+                <span>WhatsApp</span>
+              </a>
             </div>
           </div>
         </div>
@@ -660,6 +810,8 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.12_0.06_155/0.85)] via-[oklch(0.12_0.06_155/0.65)] to-[oklch(0.12_0.06_155/0.3)]" />
 
         <div className="container relative z-10 pt-24 pb-16">
+          {/* H1 for SEO - visually hidden */}
+          <h1 className="sr-only">Eventausstattung mieten in Karlsruhe, Rastatt und Baden-Baden | memora - miete den moment</h1>
           <div className="max-w-2xl">
             {/* Urgency Badge */}
             <motion.div
@@ -672,7 +824,7 @@ export default function Home() {
             </motion.div>
 
             {/* Headline */}
-            <motion.h1
+            <motion.h2
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.7 }}
@@ -682,7 +834,7 @@ export default function Home() {
               Mach dein Event
               <br />
               <span className="text-[oklch(0.75_0.14_80)] italic">unvergesslich.</span>
-            </motion.h1>
+            </motion.h2>
 
             {/* Subheadline */}
             <motion.p
@@ -724,12 +876,26 @@ export default function Home() {
               </div>
             </motion.div>
 
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              className="sm:hidden mb-8"
+            >
+              <button
+                onClick={scrollToContact}
+                className="btn-gold pulse-gold w-full px-8 py-4 rounded-xl text-lg font-bold flex items-center justify-center gap-2"
+              >
+                <span>✨ Kostenlos anfragen</span>
+              </button>
+            </motion.div>
+
             {/* Primary CTA */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
-              className="flex flex-col sm:flex-row gap-3"
+              className="hidden sm:flex"
             >
               <button
                 onClick={scrollToContact}
@@ -737,15 +903,6 @@ export default function Home() {
               >
                 <span>✨ Kostenlos anfragen</span>
               </button>
-              <a
-                href="https://wa.me/4915225896570?text=Hallo%20memora!%20Ich%20interessiere%20mich%20f%C3%BCr%20eure%20Eventausstattung."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-whatsapp px-6 py-4 rounded-xl text-base font-bold flex items-center justify-center gap-2"
-              >
-                <WhatsAppIcon />
-                <span>WhatsApp</span>
-              </a>
             </motion.div>
 
             {/* Micro Trust */}
@@ -951,6 +1108,96 @@ export default function Home() {
       </section>
 
       {/* ═══════════════════════════════════════════════════
+          ÜBER UNS - TRUST & E-A-T
+      ═══════════════════════════════════════════════════ */}
+      <section className="py-20 bg-white">
+        <div className="container max-w-5xl">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="section-headline centered text-4xl md:text-5xl mb-4 mx-auto inline-block">
+              Warum memora?
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Weil besondere Momente mehr verdienen als Standardlösungen. Wir schaffen Erlebnisse, die eure Feier nicht nur schöner machen, sondern unvergesslich.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            {[
+              {
+                icon: "⭐",
+                title: "5.0 Sterne Bewertung",
+                desc: "100% zufriedene Kunden – Qualität und Service sind uns wichtig",
+              },
+              {
+                icon: "🚀",
+                title: "Produkte für sämtliche Anlässe",
+                desc: "Hochzeiten, Geburtstage, Firmenfeiern – wir haben Erfahrung",
+              },
+              {
+                icon: "🎯",
+                title: "Unkompliziert & zuverlässig",
+                desc: "Schnelle Reaktion, faire Preise, persönlicher Service",
+              },
+              {
+                icon: "🏆",
+                title: "Professionelle Geräte",
+                desc: "Hochwertige Produkte, regelmäßig gewartet und desinfiziert",
+              },
+              {
+                icon: "📍",
+                title: "Lokal & nachhaltig",
+                desc: "Ansässig in Gaggenau – unterstützen wir die lokale Community",
+              },
+              {
+                icon: "💬",
+                title: "2h Reaktionszeit",
+                desc: "Deine Anfragen werden innerhalb von 2 Stunden beantwortet",
+              },
+            ].map((item, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="text-center p-6 rounded-2xl border border-border hover:shadow-lg transition-shadow bg-[oklch(0.97_0.012_85)]"
+              >
+                <div className="text-5xl mb-3">{item.icon}</div>
+                <h3 className="font-bold text-lg mb-2 text-foreground">{item.title}</h3>
+                <p className="text-sm text-muted-foreground">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center bg-gradient-to-r from-[oklch(0.32_0.07_155)] to-[oklch(0.32_0.07_155/0.8)] text-white rounded-2xl p-8"
+          >
+            <h3 className="text-2xl font-bold mb-3" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              Bereit für dein perfektes Event?
+            </h3>
+            <p className="mb-6 text-white/90">
+              Lass dich von unserer Erfahrung und Leidenschaft überzeugen
+            </p>
+            <button
+              onClick={scrollToContact}
+              className="btn-gold px-8 py-3 rounded-xl font-bold hover:scale-[1.02] transition-transform"
+            >
+              Jetzt Anfrage stellen
+            </button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════
           PRODUKTE
       ═══════════════════════════════════════════════════ */}
       <section id="produkte" className="py-20 bg-[oklch(0.95_0.012_85)]">
@@ -990,7 +1237,7 @@ export default function Home() {
                   {product.image ? (
                     <img
                       src={product.image}
-                      alt={product.name}
+                      alt={`${product.name} - Eventausstattung Vermietung für ${product.occasions.join(", ")}`}
                       className="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
                     />
                   ) : (
@@ -1071,7 +1318,7 @@ export default function Home() {
                       {product.image ? (
                         <img
                           src={product.image}
-                          alt={product.name}
+                          alt={`${product.name} - Eventausstattung Vermietung für ${product.occasions.join(", ")}`}
                           className="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
                         />
                       ) : (
@@ -1140,6 +1387,161 @@ export default function Home() {
               {showAllProducts ? "Weniger Produkte anzeigen ↑" : "Alle Produkte anzeigen →"}
             </button>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════
+          HÄUFIG KOMBINIERT - PRODUKT-BUNDLES
+      ═══════════════════════════════════════════════════ */}
+      <section className="py-20 bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.95_0.01_85)]">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="section-headline centered text-4xl md:text-5xl mb-4 mx-auto inline-block">
+              Gerne kombiniert
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Diese Produkte ergänzen sich perfekt – für noch mehr Spaß und Abwechslung auf eurer Feier.
+            </p>
+          </motion.div>
+
+          {/* Featured Combinations */}
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* Hochzeit-Bundle */}
+            <motion.div
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="rounded-2xl border border-border bg-white p-8 shadow-lg hover:shadow-xl transition-shadow"
+            >
+              <div className="text-center mb-6">
+                <div className="text-5xl mb-3">💍</div>
+                <h3 className="text-2xl font-bold text-foreground mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  Das Hochzeits-Paket
+                </h3>
+                <p className="text-muted-foreground text-sm">
+                  Erinnerungen & Atmosphäre
+                </p>
+              </div>
+              <div className="space-y-3 mb-8">
+                {["fotospiegel-glow", "audio-gaestebuch-vivi", "sofortbildkamera-dior"].map((slug) => {
+                  const product = PRODUCTS.find(p => toProductSlug(p.name) === slug);
+                  return (
+                    <Link key={slug} href={`/produkt/${slug}`} className="block">
+                      <div className="flex items-center gap-3 p-3 rounded-lg bg-[oklch(0.97_0.012_85)] hover:bg-[oklch(0.93_0.015_85)] transition-colors">
+                        <span className="text-2xl">{product?.emoji}</span>
+                        <div className="flex-1">
+                          <div className="font-semibold text-foreground text-sm">{product?.name}</div>
+                          <div className="text-xs text-muted-foreground">{product?.price}</div>
+                        </div>
+                        <span className="text-[oklch(0.75_0.14_80)] text-lg">→</span>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+              <button
+                type="button"
+                onClick={() => handleBundleInquiry(["fotospiegel-glow", "audio-gaestebuch-vivi", "sofortbildkamera-dior"])}
+                className="w-full btn-gold py-2.5 px-4 rounded-lg text-sm font-bold flex items-center justify-center gap-2"
+              >
+                <WhatsAppIcon />
+                Paket anfragen
+              </button>
+            </motion.div>
+
+            {/* Party-Bundle */}
+            <motion.div
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="rounded-2xl border border-border bg-white p-8 shadow-lg hover:shadow-xl transition-shadow"
+            >
+              <div className="text-center mb-6">
+                <div className="text-5xl mb-3">🎉</div>
+                <h3 className="text-2xl font-bold text-foreground mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  Das Party-Paket
+                </h3>
+                <p className="text-muted-foreground text-sm">
+                  Karaoke & Show-Effekte
+                </p>
+              </div>
+              <div className="space-y-3 mb-8">
+                {["karaokemaschine-sing", "seifenblasenmaschine-lilo", "nebelmaschine-mira"].map((slug) => {
+                  const product = PRODUCTS.find(p => toProductSlug(p.name) === slug);
+                  return (
+                    <Link key={slug} href={`/produkt/${slug}`} className="block">
+                      <div className="flex items-center gap-3 p-3 rounded-lg bg-[oklch(0.97_0.012_85)] hover:bg-[oklch(0.93_0.015_85)] transition-colors">
+                        <span className="text-2xl">{product?.emoji}</span>
+                        <div className="flex-1">
+                          <div className="font-semibold text-foreground text-sm">{product?.name}</div>
+                          <div className="text-xs text-muted-foreground">{product?.price}</div>
+                        </div>
+                        <span className="text-[oklch(0.75_0.14_80)] text-lg">→</span>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+              <button
+                type="button"
+                onClick={() => handleBundleInquiry(["karaokemaschine-sing", "seifenblasenmaschine-lilo", "nebelmaschine-mira"])}
+                className="w-full btn-gold py-2.5 px-4 rounded-lg text-sm font-bold flex items-center justify-center gap-2"
+              >
+                <WhatsAppIcon />
+                Paket anfragen
+              </button>
+            </motion.div>
+
+            {/* Gastro-Bundle */}
+            <motion.div
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="rounded-2xl border border-border bg-white p-8 shadow-lg hover:shadow-xl transition-shadow"
+            >
+              <div className="text-center mb-6">
+                <div className="text-5xl mb-3">🍿</div>
+                <h3 className="text-2xl font-bold text-foreground mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  Das Gastro-Paket
+                </h3>
+                <p className="text-muted-foreground text-sm">
+                  Getränke & Snacks
+                </p>
+              </div>
+              <div className="space-y-3 mb-8">
+                {["slushmaschine-emit", "hot-dog-waermer-sjen", "popcornmaschine-keno"].map((slug) => {
+                  const product = PRODUCTS.find(p => toProductSlug(p.name) === slug);
+                  return (
+                    <Link key={slug} href={`/produkt/${slug}`} className="block">
+                      <div className="flex items-center gap-3 p-3 rounded-lg bg-[oklch(0.97_0.012_85)] hover:bg-[oklch(0.93_0.015_85)] transition-colors">
+                        <span className="text-2xl">{product?.emoji}</span>
+                        <div className="flex-1">
+                          <div className="font-semibold text-foreground text-sm">{product?.name}</div>
+                          <div className="text-xs text-muted-foreground">{product?.price}</div>
+                        </div>
+                        <span className="text-[oklch(0.75_0.14_80)] text-lg">→</span>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+              <button
+                type="button"
+                onClick={() => handleBundleInquiry(["slushmaschine-emit", "hot-dog-waermer-sjen", "popcornmaschine-keno"])}
+                className="w-full btn-gold py-2.5 px-4 rounded-lg text-sm font-bold flex items-center justify-center gap-2"
+              >
+                <WhatsAppIcon />
+                Paket anfragen
+              </button>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -1389,7 +1791,7 @@ export default function Home() {
                     Anfrage gesendet!
                   </h3>
                   <p className="text-muted-foreground mb-4">
-                    Wir melden uns innerhalb von 2 Stunden bei dir. Schau auch in dein WhatsApp!
+                    Wir melden uns innerhalb der nächsten 2 Stunden bei dir.
                   </p>
                   <button
                     onClick={() => setFormSubmitted(false)}
@@ -1442,7 +1844,7 @@ export default function Home() {
                 </h4>
                 <div className="space-y-3">
                   <a
-                    href="https://wa.me/4915225896570?text=Hallo%20memora!%20Ich%20m%C3%B6chte%20eine%20Anfrage%20stellen."
+                    href="https://wa.me/4915225896570?text=Hallo%20memora-Team,%20"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-whatsapp pulse-whatsapp w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2"
@@ -1456,6 +1858,16 @@ export default function Home() {
                   >
                     <PhoneIcon />
                     Anrufen: 0152 258 96570
+                  </a>
+                  <a
+                    href="mailto:info@mietedenmoment.de"
+                    className="w-full bg-white/10 hover:bg-white/20 transition-colors py-3 rounded-xl font-semibold flex items-center justify-center gap-2 text-white"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                      <polyline points="22,6 12,13 2,6" />
+                    </svg>
+                    E-Mail: info@mietedenmoment.de
                   </a>
                 </div>
               </div>
@@ -1478,6 +1890,48 @@ export default function Home() {
                 </p>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════
+          FAQ
+      ═══════════════════════════════════════════════════ */}
+      <section id="faq" className="py-20 bg-background">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-14"
+          >
+            <h2 className="section-headline centered text-4xl md:text-5xl mb-4 mx-auto inline-block">
+              Häufige Fragen zur Miete
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Die wichtigsten Antworten zu Anfrage, Lieferung, Abholung und Einweisung auf einen Blick.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {HOME_FAQ_ITEMS.map((item, index) => (
+              <motion.div
+                key={item.question}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.08 }}
+                className="rounded-2xl border border-border bg-[oklch(0.97_0.012_85)] p-6 shadow-sm"
+              >
+                <h3
+                  className="text-2xl font-bold text-foreground mb-3"
+                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                >
+                  {item.question}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">{item.answer}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -1626,13 +2080,13 @@ export default function Home() {
           FLOATING WHATSAPP BUTTON
       ═══════════════════════════════════════════════════ */}
       <motion.a
-        href="https://wa.me/4915225896570?text=Hallo%20memora!%20Ich%20m%C3%B6chte%20eine%20Anfrage%20stellen."
+        href="https://wa.me/4915225896570?text=Hallo%20memora-Team,%20"
         target="_blank"
         rel="noopener noreferrer"
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 2, type: "spring" }}
-        className="hidden md:flex fixed bottom-6 right-6 z-50 btn-whatsapp pulse-whatsapp w-14 h-14 rounded-full flex items-center justify-center shadow-2xl"
+        className="hidden fixed bottom-6 right-6 z-50 btn-whatsapp pulse-whatsapp w-14 h-14 rounded-full items-center justify-center shadow-2xl"
         title="WhatsApp Anfrage"
       >
         <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7">
@@ -1647,20 +2101,20 @@ export default function Home() {
         initial={{ y: 100 }}
         animate={{ y: scrolled ? 0 : 100 }}
         transition={{ duration: 0.3 }}
-        className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-[oklch(0.22_0.06_155)] border-t border-[oklch(0.75_0.14_80/0.3)] px-4 py-3 flex gap-3"
+        className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-[oklch(0.22_0.06_155)] border-t border-[oklch(0.75_0.14_80/0.3)] px-3 py-2 flex gap-2"
       >
         <a
-          href="https://wa.me/4915225896570?text=Hallo%20memora!"
+          href="https://wa.me/4915225896570?text=Hallo%20memora-Team,%20"
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-whatsapp flex-1 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2"
+          className="btn-whatsapp flex-1 py-2 rounded-lg font-bold text-xs flex items-center justify-center gap-1.5"
         >
           <WhatsAppIcon />
           WhatsApp
         </a>
         <button
           onClick={scrollToContact}
-          className="btn-gold pulse-gold flex-1 py-3 rounded-xl font-bold text-sm"
+          className="btn-gold pulse-gold flex-1 py-2 rounded-lg font-bold text-xs"
         >
           Jetzt anfragen
         </button>
