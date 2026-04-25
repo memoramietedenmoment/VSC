@@ -510,6 +510,19 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Restore scroll position when navigating back from a product page
+  useEffect(() => {
+    const saved = window.sessionStorage.getItem("restore-home-scroll");
+    if (!saved) return;
+    window.sessionStorage.removeItem("restore-home-scroll");
+    const scrollY = Number(saved);
+    if (!Number.isFinite(scrollY) || scrollY <= 0) return;
+    const timer = setTimeout(() => {
+      window.scrollTo({ top: scrollY, behavior: "auto" });
+    }, 200);
+    return () => clearTimeout(timer);
+  }, []);
+
   // Testimonial Karussell
   useEffect(() => {
     const timer = setInterval(() => {

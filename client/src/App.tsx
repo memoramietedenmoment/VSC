@@ -11,6 +11,11 @@ import Home from "./pages/Home";
 import Impressum from "./pages/Impressum";
 import ProductDetail from "./pages/ProductDetail";
 
+// Disable browser's native scroll restoration so we control it entirely
+if (typeof window !== "undefined") {
+  window.history.scrollRestoration = "manual";
+}
+
 const scrollPositions: Record<string, number> = {};
 
 // Routen die immer oben starten
@@ -80,6 +85,14 @@ function ScrollManager() {
       }
 
       if (isBack.current) {
+        // For the home page, also set a dedicated key so Home.tsx can restore
+        // more reliably with a longer delay after full render
+        if (next === "/") {
+          const savedForHome = getSavedScroll("/");
+          if (savedForHome !== undefined && savedForHome > 0) {
+            window.sessionStorage.setItem("restore-home-scroll", String(savedForHome));
+          }
+        }
         if (!restoreScroll(next)) {
           window.scrollTo(0, 0);
         }

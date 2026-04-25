@@ -4,7 +4,7 @@ export const PRODUCT_COMBINATIONS = {
   "fotospiegel-glow": {
     related: [
       "audio-gaestebuch-vivi",
-      "seifenblasenmaschine-lilo",
+      "sofortbildkamera-dior",
       "musik-box-sunu",
     ],
     bundleTitle: "Das Hochzeits-Gesamtpaket",
@@ -41,7 +41,7 @@ export const PRODUCT_COMBINATIONS = {
     related: [
       "musik-box-sunu",
       "nebelmaschine-mira",
-      "hot-dog-waermer-sjen",
+      "seifenblasenmaschine-lilo",
     ],
     bundleTitle: "Die Party-Essentials",
     bundleDescription: "Karaoke-Spaß + Musik + Nebeleffekte = unvergessliche Nacht",

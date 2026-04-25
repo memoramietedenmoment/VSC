@@ -9,13 +9,15 @@
  *   - Direkter Anfrage-CTA
  */
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import Seo from "@/components/Seo";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL, extractNumericPrice, toAbsoluteUrl } from "@/lib/seo";
 import { Link, useLocation, useRoute } from "wouter";
-import { ChevronLeft, ChevronRight, Check, AlertCircle } from "lucide-react";
+import { ChevronLeft, ChevronRight, Check, AlertCircle, MenuIcon, Instagram } from "lucide-react";
 import { PRODUCT_COMBINATIONS } from "@/lib/product-combinations";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 
 // ─── Produktdaten ─────────────────────────────────────────────────────────────
 
@@ -1029,6 +1031,22 @@ function StarRating({ count = 5 }: { count?: number }) {
   );
 }
 
+function PhoneIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
+      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+    </svg>
+  );
+}
+
+function TikTokIcon({ className = "w-6 h-6" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.35V2h-3.2v12.39a2.93 2.93 0 0 1-2.93 2.93 2.93 2.93 0 0 1-2.93-2.93 2.93 2.93 0 0 1 2.93-2.93c.29 0 .56.04.82.12V8.33a6.1 6.1 0 0 0-.82-.06 6.12 6.12 0 0 0-6.12 6.12 6.12 6.12 0 0 0 6.12 6.12 6.12 6.12 0 0 0 6.12-6.12V8.1a8 8 0 0 0 4.57 1.43V6.35c-.26 0-.54-.02-.8-.06z" />
+    </svg>
+  );
+}
+
 function WhatsAppIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
@@ -1044,9 +1062,17 @@ export default function ProductDetail() {
   const [, setLocation] = useLocation();
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
   const minSwipeDistance = 50;
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   if (!match) return null;
 
@@ -1143,29 +1169,96 @@ export default function ProductDetail() {
       {/* ═══════════════════════════════════════════════════
           HEADER
       ═══════════════════════════════════════════════════ */}
-      <header className="sticky top-0 left-0 right-0 z-50 bg-white border-b border-border shadow-sm">
-        <div className="container flex items-center justify-between h-16">
-          <button type="button" onClick={handleBackClick} className="flex items-center gap-2 group">
-            <ChevronLeft className="w-5 h-5 text-[oklch(0.32_0.07_155)]" />
-            <span className="text-sm font-semibold text-[oklch(0.32_0.07_155)]">Zurück</span>
-          </button>
-          <Link href="/" className="flex items-center gap-2">
-            <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/memora_Logo_9da7fd54.png" alt="memora Logo" className="h-8 w-auto filter invert" />
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-[oklch(0.22_0.06_155)] shadow-lg"
+            : "bg-[oklch(0.22_0.06_155)]"
+        }`}
+      >
+        <div className="container relative flex items-center h-16">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 group">
+            <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/memora_Logo_9da7fd54.png" alt="memora Logo" className="h-10 w-auto filter invert" />
           </Link>
-          <button
-            onClick={handleFormInquiryClick}
-            className="btn-gold pulse-gold px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2"
-          >
-            <WhatsAppIcon />
-            Anfragen
-          </button>
+
+          {/* Mobile Menu */}
+          <div className="md:hidden absolute right-4">
+            <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+              <SheetTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-white hover:text-[oklch(0.75_0.14_80)] hover:bg-white/10"
+                >
+                  <MenuIcon className="h-5 w-5" />
+                  <span className="sr-only">Menü öffnen</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[300px] bg-[oklch(0.22_0.06_155)] border-l border-white/20">
+                <div className="flex flex-col gap-6 mt-6">
+                  <nav className="flex flex-col gap-4 items-center">
+                    <Link href="/#wie-es-funktioniert" className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center" onClick={() => setIsMenuOpen(false)}>So geht's</Link>
+                    <Link href="/#produkte" className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center" onClick={() => setIsMenuOpen(false)}>Produkte</Link>
+                    <Link href="/#bewertungen" className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center" onClick={() => setIsMenuOpen(false)}>Bewertungen</Link>
+                    <Link href="/#kontakt" className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center" onClick={() => setIsMenuOpen(false)}>Kontakt</Link>
+                    <Link href="/#warum-memora" className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center" onClick={() => setIsMenuOpen(false)}>Warum memora</Link>
+                  </nav>
+                  <div className="flex flex-col gap-4 pt-4 border-t border-white/20 items-center">
+                    <a href="tel:+4915225896570" className="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
+                      <PhoneIcon />
+                      <span>0152 258 96570</span>
+                    </a>
+                    <button
+                      onClick={() => { setIsMenuOpen(false); handleFormInquiryClick(); }}
+                      className="btn-gold px-4 py-3 rounded-lg text-sm font-bold pulse-gold w-full text-center max-w-xs"
+                    >
+                      Jetzt anfragen
+                    </button>
+                    <div className="flex gap-6 pt-4">
+                      <a href="https://www.instagram.com/memora_miete_den_moment/?igsh=MnFhYTBtNGowMjhk" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors" onClick={() => setIsMenuOpen(false)}>
+                        <Instagram className="w-6 h-6" />
+                      </a>
+                      <a href="https://www.tiktok.com/@memora303?_t=ZN-90SplgHjs6Y&_r=1" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors" onClick={() => setIsMenuOpen(false)}>
+                        <TikTokIcon className="w-6 h-6" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+
+          {/* Desktop Layout */}
+          <div className="hidden md:flex items-center justify-between w-full ml-4">
+            <nav className="flex items-center gap-6 text-sm text-white/80">
+              <Link href="/#wie-es-funktioniert" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">So geht's</Link>
+              <Link href="/#produkte" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Produkte</Link>
+              <Link href="/#bewertungen" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Bewertungen</Link>
+              <Link href="/#kontakt" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Kontakt</Link>
+              <Link href="/#warum-memora" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Warum memora</Link>
+            </nav>
+            <div className="flex items-center gap-2">
+              <a href="tel:+4915225896570" className="hidden sm:flex items-center gap-1.5 text-white/80 hover:text-white text-sm transition-colors">
+                <PhoneIcon />
+                <span className="hidden lg:inline">0152 258 96570</span>
+              </a>
+              <button
+                onClick={handleFormInquiryClick}
+                className="btn-gold pulse-gold px-4 py-2 rounded-lg text-sm font-bold flex items-center justify-center gap-2"
+              >
+                <WhatsAppIcon />
+                Anfragen
+              </button>
+            </div>
+          </div>
         </div>
       </header>
 
       {/* ═══════════════════════════════════════════════════
           HERO / PRODUCT OVERVIEW
       ═══════════════════════════════════════════════════ */}
-      <section className="py-12 bg-[oklch(0.95_0.012_85)]">
+      <section className="pt-28 pb-12 bg-[oklch(0.95_0.012_85)]">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Image Carousel */}
@@ -1297,9 +1390,39 @@ export default function ProductDetail() {
       </section>
 
       {/* ═══════════════════════════════════════════════════
-          SPEZIFIKATIONEN
+          PREISBERECHNUNG
       ═══════════════════════════════════════════════════ */}
       <section className="py-16 bg-background">
+        <div className="container max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl font-bold text-foreground mb-8" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              Preise
+            </h2>
+            <div className="bg-white rounded-xl border border-border overflow-hidden">
+              {product.pricing.map((item, i) => (
+                <div
+                  key={i}
+                  className={`flex items-center justify-between p-4 ${
+                    i !== product.pricing.length - 1 ? "border-b border-border" : ""
+                  }`}
+                >
+                  <span className="text-foreground font-medium">{item.label}</span>
+                  <span className="text-lg font-bold text-[oklch(0.75_0.14_80)]">{item.value}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════
+          SPEZIFIKATIONEN
+      ═══════════════════════════════════════════════════ */}
+      <section className="py-16 bg-[oklch(0.95_0.012_85)]">
         <div className="container max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -1318,7 +1441,7 @@ export default function ProductDetail() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.05 }}
-                  className="bg-[oklch(0.95_0.012_85)] rounded-lg p-4 border border-border"
+                  className="bg-white rounded-lg p-4 border border-border"
                 >
                   <div className="text-sm font-semibold text-[oklch(0.32_0.07_155)] mb-1">{spec.label}</div>
                   <div className="text-base text-foreground">{spec.value}</div>
@@ -1349,36 +1472,6 @@ export default function ProductDetail() {
                   <Check className="w-5 h-5 text-[oklch(0.75_0.14_80)] flex-shrink-0 mt-0.5" />
                   <span className="text-foreground">{feature}</span>
                 </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════
-          PREISBERECHNUNG
-      ═══════════════════════════════════════════════════ */}
-      <section className="py-16 bg-[oklch(0.95_0.012_85)]">
-        <div className="container max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl font-bold text-foreground mb-8" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-              Preise
-            </h2>
-            <div className="bg-white rounded-xl border border-border overflow-hidden">
-              {product.pricing.map((item, i) => (
-                <div
-                  key={i}
-                  className={`flex items-center justify-between p-4 ${
-                    i !== product.pricing.length - 1 ? "border-b border-border" : ""
-                  }`}
-                >
-                  <span className="text-foreground font-medium">{item.label}</span>
-                  <span className="text-lg font-bold text-[oklch(0.75_0.14_80)]">{item.value}</span>
-                </div>
               ))}
             </div>
           </motion.div>
@@ -1497,11 +1590,8 @@ export default function ProductDetail() {
               className="text-center mb-12"
             >
               <h2 className="text-3xl font-bold text-foreground mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                Gerne kombiniert mit
+                Gerne kombiniert mit:
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                {PRODUCT_COMBINATIONS[slug as keyof typeof PRODUCT_COMBINATIONS]?.bundleDescription}
-              </p>
             </motion.div>
 
             <div className="grid md:grid-cols-3 gap-6">
@@ -1540,19 +1630,9 @@ export default function ProductDetail() {
                         <p className="text-xs text-muted-foreground line-clamp-2 mb-4">
                           {relatedProduct.description}
                         </p>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            const msg = encodeURIComponent(
-                              `Hallo memora-Team,\n\nIch interessiere mich für ${relatedProduct.name} (um ${product.name} zu kombinieren).`
-                            );
-                            window.open(`https://wa.me/4915225896570?text=${msg}`, "_blank");
-                          }}
-                          className="w-full text-sm btn-green py-2 rounded-lg font-semibold group-hover:scale-[1.02] transition-transform"
-                        >
-                          Anfragen
-                        </button>
+                        <span className="w-full text-sm btn-green py-2 rounded-lg font-semibold group-hover:scale-[1.02] transition-transform flex items-center justify-center">
+                          Zum Produkt
+                        </span>
                       </div>
                     </motion.div>
                   </Link>
