@@ -15,7 +15,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { MenuIcon, Instagram, Music } from "lucide-react";
+import { MenuIcon, Instagram } from "lucide-react";
 import Seo from "@/components/Seo";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -49,7 +49,7 @@ const PRODUCTS = [
     name: "Audio-Gästebuch VIVI",
     emoji: "📞",
     price: "ab 49,- €",
-    tag: "Beliebt",
+    tag: "Trend",
     tagColor: "bg-emerald-600",
     description: "Statt geschriebenen Gästebucheinträgen hinterlassen eure Gäste persönliche Sprachnachrichten – Gänsehaut garantiert!",
     occasions: ["Hochzeit", "Jubiläum", "Geburtstag"],
@@ -60,7 +60,7 @@ const PRODUCTS = [
     name: "Sofortbildkamera DIOR",
     emoji: "📸",
     price: "ab 29,- €",
-    tag: "Günstig",
+    tag: "Nostalgie",
     tagColor: "bg-sky-600",
     description: "Echter Retro-Charme: Gäste halten ihre Momente sofort in den Händen – perfekt für Gästebücher und Fotowände.",
     occasions: ["Geburtstag", "Hochzeit", "Party"],
@@ -82,7 +82,7 @@ const PRODUCTS = [
     name: "Karaokemaschine SING",
     emoji: "🎤",
     price: "ab 69,- €",
-    tag: "Partyhit",
+    tag: "Partymagnet",
     tagColor: "bg-purple-600",
     description: "Solo, im Duett oder als Chor – hier entstehen unvergessliche Momente voller Spaß, Lacher und Applaus.",
     occasions: ["Geburtstag", "Firmenfeier", "Party"],
@@ -115,7 +115,7 @@ const PRODUCTS = [
     name: "Nebelmaschine MIRA",
     emoji: "☁️",
     price: "ab 49,- €",
-    tag: "Effekt",
+    tag: "Disco-Feeling",
     tagColor: "bg-indigo-600",
     description: "Verwandelt die Tanzfläche zur Showbühne – kombinierbar mit Lichteffekten für atemberaubende Stimmung.",
     occasions: ["Hochzeit", "Party", "Firmenfeier"],
@@ -126,7 +126,7 @@ const PRODUCTS = [
     name: "Musik-Box inkl. Mikro SUNU",
     emoji: "🎵",
     price: "ab 99,- €",
-    tag: "Audio",
+    tag: "Audio-Highlight",
     tagColor: "bg-teal-600",
     description: "Dezente Hintergrundmusik beim Sektempfang oder Dinner – Mikrofone für Reden und Ansprachen sind inklusive.",
     occasions: ["Hochzeit", "Firmenfeier", "Jubiläum"],
@@ -148,7 +148,7 @@ const PRODUCTS = [
     name: "Nacho-Wärmer SALA",
     emoji: "🦦",
     price: "ab 49,- €",
-    tag: "Lecker",
+    tag: "Kino-Feeling",
     tagColor: "bg-yellow-600",
     description: "Knusprige, warme Nachos - ein ganz besonderer Snack, der garantiert schnell zum Lieblingsspot eurer Gäste wird.",
     occasions: ["Party", "Geburtstag", "Firmenfeier"],
@@ -169,17 +169,17 @@ const PRODUCTS = [
 
 const GALLERY_IMAGES = [
   {
-    src: "/images/Fotospiegel_dekoriert.png",
+    src: "/images/Fotospiegel_Ergebnis.png",
     alt: "Fotospiegel GLOW im Eventeinsatz",
     caption: "✨ Fotospiegel-Highlight an einem 35. Geburtstag",
   },
   {
-    src: "/images/Fotospiegel_Ergebnis.png",
+    src: "/images/Audio-Gästebuch_Polaroid.jpg",
     alt: "Fröhliche Feier mit Party-Atmosphäre am Fotospiegel",
     caption: "🪩 Unser Fotospiegel im Einsatz",
   },
   {
-    src: "/images/Seifenblasen_Hochzeit_Kuss.png",
+    src: "/images/memora_zuverlaessig.png",
     alt: "Gäste feiern gemeinsam beim Event mit Seifenblasenmaschine",
     caption: "🫧 Fotoshooting mit Seifenblasen",
   },
@@ -454,6 +454,14 @@ function PhoneIcon() {
   );
 }
 
+function TikTokIcon({ className = "w-6 h-6" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.35V2h-3.2v12.39a2.93 2.93 0 0 1-2.93 2.93 2.93 2.93 0 0 1-2.93-2.93 2.93 2.93 0 0 1 2.93-2.93c.29 0 .56.04.82.12V8.33a6.1 6.1 0 0 0-.82-.06 6.12 6.12 0 0 0-6.12 6.12 6.12 6.12 0 0 0 6.12 6.12 6.12 6.12 0 0 0 6.12-6.12V8.1a8 8 0 0 0 4.57 1.43V6.35c-.26 0-.54-.02-.8-.06z" />
+    </svg>
+  );
+}
+
 // ─── Animierter Zähler ────────────────────────────────────────────────────────
 
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
@@ -651,19 +659,6 @@ export default function Home() {
               <div className="flex flex-col gap-6 mt-6">
                 <nav className="flex flex-col gap-4 items-center">
                   <a
-                    href="#impressionen"
-                    className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsMenuOpen(false);
-                      setTimeout(() => {
-                        document.getElementById('impressionen')?.scrollIntoView({ behavior: 'smooth' });
-                      }, 300);
-                    }}
-                  >
-                    Impressionen
-                  </a>
-                  <a
                     href="#wie-es-funktioniert"
                     className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center"
                     onClick={(e) => {
@@ -715,6 +710,19 @@ export default function Home() {
                   >
                     Kontakt
                   </a>
+                  <a
+                    href="#warum-memora"
+                    className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsMenuOpen(false);
+                      setTimeout(() => {
+                        document.getElementById('warum-memora')?.scrollIntoView({ behavior: 'smooth' });
+                      }, 300);
+                    }}
+                  >
+                    Warum memora
+                  </a>
                 </nav>
                 <div className="flex flex-col gap-4 pt-4 border-t border-white/20 items-center">
                   <a
@@ -754,7 +762,7 @@ export default function Home() {
                       title="Folge uns auf TikTok"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      <Music className="w-6 h-6" />
+                      <TikTokIcon className="w-6 h-6" />
                     </a>
                   </div>
                 </div>
@@ -767,11 +775,11 @@ export default function Home() {
           <div className="hidden md:flex items-center justify-between w-full ml-4">
             {/* Desktop Nav */}
             <nav className="flex items-center gap-6 text-sm text-white/80">
-              <a href="#impressionen" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Impressionen</a>
               <a href="#wie-es-funktioniert" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">So geht's</a>
               <a href="#produkte" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Produkte</a>
               <a href="#bewertungen" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Bewertungen</a>
               <a href="#kontakt" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Kontakt</a>
+              <a href="#warum-memora" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Warum memora</a>
             </nav>
 
             {/* Nav CTA */}
@@ -872,7 +880,7 @@ export default function Home() {
                   <StarRating />
                   <span className="text-white font-bold text-sm ml-1">5.0</span>
                 </div>
-                <p className="text-white/70 text-xs">Werde auch Du ein begeisterter Kunde</p>
+                <p className="text-white/70 text-xs">Bewertung von begeisterten Kunden</p>
               </div>
             </motion.div>
 
@@ -886,7 +894,7 @@ export default function Home() {
                 onClick={scrollToContact}
                 className="btn-gold pulse-gold w-full px-8 py-4 rounded-xl text-lg font-bold flex items-center justify-center gap-2"
               >
-                <span>✨ Kostenlos anfragen</span>
+                <span>✨ Wunschtermin anfragen</span>
               </button>
             </motion.div>
 
@@ -912,7 +920,7 @@ export default function Home() {
               transition={{ delay: 1.1 }}
               className="text-white/50 text-sm mt-8"
             >
-              ✓ Unverbindlich anfragen &nbsp;·&nbsp; ✓ Kostenlose Beratung &nbsp;·&nbsp; ✓ Antwort innerhalb von 2h
+              ✓ Unverbindliche Anfrage &nbsp;·&nbsp; ✓ Kostenlose Beratung &nbsp;·&nbsp; ✓ Top bewertete Dienstleistungen & Produkte
             </motion.p>
           </div>
         </div>
@@ -937,44 +945,89 @@ export default function Home() {
       </section>
 
       {/* ═══════════════════════════════════════════════════
-          IMAGE GALLERY
+          WIE ES FUNKTIONIERT
       ═══════════════════════════════════════════════════ */}
-      <section id="impressionen" className="py-20 bg-[oklch(0.97_0.012_85)]">
+      <section id="wie-es-funktioniert" className="py-20 bg-background">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-14"
           >
             <h2 className="section-headline centered text-4xl md:text-5xl mb-4 mx-auto inline-block">
-              Impressionen unserer Events
+              In 3 Schritten zum perfekten Event
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Echte Momente, lebendige Stimmung und unsere Ausstattung in Aktion.
+            <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+              {`So einfach funktioniert's.`}
             </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {GALLERY_IMAGES.map((item, index) => (
+          <div className="grid md:grid-cols-3 gap-8 relative">
+            {/* Connecting line */}
+            <div className="hidden md:block absolute top-12 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-[oklch(0.75_0.14_80)] to-[oklch(0.75_0.14_80)] opacity-20" />
+
+            {([
+              {
+                step: "01",
+                icon: "🔍",
+                title: "Stöbern & auswählen",
+                desc: "Entdecke unsere 12 Highlights und wähle die passenden Produkte für dein nächstes Event – von Fotospiegel bis Slushmaschine.",
+                cta: "Produkte ansehen",
+                href: "#produkte",
+              },
+              {
+                step: "02",
+                icon: "💬",
+                title: "Unverbindlich anfragen",
+                desc: "Stell uns eine unverbindliche Anfrage direkt per WhatsApp, E-Mail oder Telefon. Wir prüfen die Verfügbarkeit und melden uns innerhalb von 2 Stunden.",
+                cta: "Jetzt anfragen",
+                href: "#kontakt",
+                highlight: true,
+              },
+              {
+                step: "03",
+                icon: "🚀",
+                title: "Abholen oder liefern",
+                desc: "Kostenlose Abholung bei uns oder bequeme Lieferung & Aufbau – du entscheidest. Wir machen dein Event zum Erlebnis.",
+                cta: "Lieferinfo",
+                href: "#faq-lieferung",
+              },
+            ]).map((step, i) => (
               <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 24 }}
+                key={i}
+                initial={{ opacity: 0, y: 32 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.08 }}
-                className="group overflow-hidden rounded-3xl bg-white shadow-xl border border-border"
+                transition={{ delay: i * 0.15 }}
+                className={`relative rounded-2xl p-8 ${
+                  step.highlight
+                    ? "bg-[oklch(0.32_0.07_155)] text-white shadow-2xl scale-105"
+                    : "bg-white border border-border shadow-sm"
+                }`}
               >
-                <div className="relative overflow-hidden h-64 bg-slate-100">
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
+
+                <div className="text-4xl mb-4">{step.icon}</div>
+                <div className={`text-sm font-bold mb-2 ${step.highlight ? "text-[oklch(0.75_0.14_80)]" : "text-[oklch(0.75_0.14_80)]"}`}>
+                  Schritt {step.step}
                 </div>
-                <div className="p-6">
-                  <p className="text-xl font-semibold text-foreground leading-tight" style={{ fontFamily: "'Cormorant Garamond', serif" }}>{item.caption}</p>
-                </div>
+                <h3 className={`text-xl font-bold mb-3 ${step.highlight ? "text-white" : "text-foreground"}`}
+                  style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  {step.title}
+                </h3>
+                <p className={`text-sm leading-relaxed mb-6 ${step.highlight ? "text-white/80" : "text-muted-foreground"}`}>
+                  {step.desc}
+                </p>
+                <a
+                  href={step.href}
+                  className={`inline-flex items-center gap-1 text-sm font-semibold ${
+                    step.highlight
+                      ? "text-[oklch(0.75_0.14_80)]"
+                      : "text-[oklch(0.32_0.07_155)]"
+                  } hover:underline`}
+                >
+                  {step.cta} →
+                </a>
               </motion.div>
             ))}
           </div>
@@ -1008,192 +1061,6 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════
-          WIE ES FUNKTIONIERT
-      ═══════════════════════════════════════════════════ */}
-      <section id="wie-es-funktioniert" className="py-20 bg-background">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-14"
-          >
-            <h2 className="section-headline centered text-4xl md:text-5xl mb-4 mx-auto inline-block">
-              In 3 Schritten zum perfekten Event
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-              Kein Stress, kein Aufwand – wir kümmern uns um alles.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8 relative">
-            {/* Connecting line */}
-            <div className="hidden md:block absolute top-12 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-[oklch(0.75_0.14_80)] to-[oklch(0.75_0.14_80)] opacity-20" />
-
-            {([
-              {
-                step: "01",
-                icon: "🔍",
-                title: "Stöbern & auswählen",
-                desc: "Entdecke unsere 12 Highlights und wähle die passenden Produkte für dein nächstes Event – von Fotospiegel bis Slushmaschine.",
-                cta: "Produkte ansehen",
-                href: "#produkte",
-              },
-              {
-                step: "02",
-                icon: "💬",
-                title: "Unverbindlich anfragen",
-                desc: "Stell uns eine kostenlose Anfrage direkt per WhatsApp oder Formular. Wir prüfen die Verfügbarkeit und melden uns innerhalb von 12 Stunden.",
-                cta: "Jetzt anfragen",
-                href: "#kontakt",
-                highlight: true,
-              },
-              {
-                step: "03",
-                icon: "🚀",
-                title: "Abholen oder liefern",
-                desc: "Kostenlose Abholung bei uns oder bequeme Lieferung & Aufbau – du entscheidest. Wir machen dein Event zum Erlebnis.",
-                cta: "Lieferinfo",
-                href: "#kontakt",
-              },
-            ]).map((step, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 32 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                className={`relative rounded-2xl p-8 ${
-                  step.highlight
-                    ? "bg-[oklch(0.32_0.07_155)] text-white shadow-2xl scale-105"
-                    : "bg-white border border-border shadow-sm"
-                }`}
-              >
-                {step.highlight && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="bg-[oklch(0.75_0.14_80)] text-[oklch(0.18_0.02_65)] text-xs font-bold px-3 py-1 rounded-full">
-                      Empfohlen
-                    </span>
-                  </div>
-                )}
-                <div className="text-4xl mb-4">{step.icon}</div>
-                <div className={`text-sm font-bold mb-2 ${step.highlight ? "text-[oklch(0.75_0.14_80)]" : "text-[oklch(0.75_0.14_80)]"}`}>
-                  Schritt {step.step}
-                </div>
-                <h3 className={`text-xl font-bold mb-3 ${step.highlight ? "text-white" : "text-foreground"}`}
-                  style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                  {step.title}
-                </h3>
-                <p className={`text-sm leading-relaxed mb-6 ${step.highlight ? "text-white/80" : "text-muted-foreground"}`}>
-                  {step.desc}
-                </p>
-                <a
-                  href={step.href}
-                  className={`inline-flex items-center gap-1 text-sm font-semibold ${
-                    step.highlight
-                      ? "text-[oklch(0.75_0.14_80)]"
-                      : "text-[oklch(0.32_0.07_155)]"
-                  } hover:underline`}
-                >
-                  {step.cta} →
-                </a>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════
-          ÜBER UNS - TRUST & E-A-T
-      ═══════════════════════════════════════════════════ */}
-      <section className="py-20 bg-white">
-        <div className="container max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="section-headline centered text-4xl md:text-5xl mb-4 mx-auto inline-block">
-              Warum memora?
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Weil besondere Momente mehr verdienen als Standardlösungen. Wir schaffen Erlebnisse, die eure Feier nicht nur schöner machen, sondern unvergesslich.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            {[
-              {
-                icon: "⭐",
-                title: "5.0 Sterne Bewertung",
-                desc: "100% zufriedene Kunden – Qualität und Service sind uns wichtig",
-              },
-              {
-                icon: "🚀",
-                title: "Produkte für sämtliche Anlässe",
-                desc: "Hochzeiten, Geburtstage, Firmenfeiern – wir haben Erfahrung",
-              },
-              {
-                icon: "🎯",
-                title: "Unkompliziert & zuverlässig",
-                desc: "Schnelle Reaktion, faire Preise, persönlicher Service",
-              },
-              {
-                icon: "🏆",
-                title: "Professionelle Geräte",
-                desc: "Hochwertige Produkte, regelmäßig gewartet und desinfiziert",
-              },
-              {
-                icon: "📍",
-                title: "Lokal & nachhaltig",
-                desc: "Ansässig in Gaggenau – unterstützen wir die lokale Community",
-              },
-              {
-                icon: "💬",
-                title: "2h Reaktionszeit",
-                desc: "Deine Anfragen werden innerhalb von 2 Stunden beantwortet",
-              },
-            ].map((item, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="text-center p-6 rounded-2xl border border-border hover:shadow-lg transition-shadow bg-[oklch(0.97_0.012_85)]"
-              >
-                <div className="text-5xl mb-3">{item.icon}</div>
-                <h3 className="font-bold text-lg mb-2 text-foreground">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center bg-gradient-to-r from-[oklch(0.32_0.07_155)] to-[oklch(0.32_0.07_155/0.8)] text-white rounded-2xl p-8"
-          >
-            <h3 className="text-2xl font-bold mb-3" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-              Bereit für dein perfektes Event?
-            </h3>
-            <p className="mb-6 text-white/90">
-              Lass dich von unserer Erfahrung und Leidenschaft überzeugen
-            </p>
-            <button
-              onClick={scrollToContact}
-              className="btn-gold px-8 py-3 rounded-xl font-bold hover:scale-[1.02] transition-transform"
-            >
-              Jetzt Anfrage stellen
-            </button>
-          </motion.div>
         </div>
       </section>
 
@@ -1810,15 +1677,6 @@ export default function Home() {
               viewport={{ once: true }}
               className="flex flex-col gap-6"
             >
-              {/* Hero Image */}
-              <div className="order-2 lg:order-1 hidden lg:block rounded-2xl overflow-hidden shadow-xl">
-                <img
-                  src="https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/hero-party-QUt8YTdG6QANTMs6YJXq7z.webp"
-                  alt="Fröhliche Feier mit memora Ausstattung"
-                  className="w-full h-56 object-cover"
-                />
-              </div>
-
               {/* Trust Points */}
               <div className="order-3 lg:order-2 space-y-3">
                 {([
@@ -1838,7 +1696,7 @@ export default function Home() {
               </div>
 
               {/* Direct Contact */}
-              <div className="order-4 lg:order-3 bg-[oklch(0.32_0.07_155)] rounded-2xl p-6 text-white">
+              <div className="order-4 lg:order-3 bg-[oklch(0.32_0.07_155)] rounded-2xl p-6 text-white hidden lg:block">
                 <h4 className="font-bold text-lg mb-4" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                   Direkt kontaktieren
                 </h4>
@@ -1872,8 +1730,8 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Geschäftsführer - mobile zwischen Kontakttext links und Bild, desktop unten rechts */}
-              <div className="order-1 lg:order-4 rounded-2xl border border-border bg-[oklch(0.97_0.012_85)] p-5 text-center">
+              {/* Geschäftsführer */}
+              <div className="order-1 lg:order-1 rounded-2xl border border-border bg-[oklch(0.97_0.012_85)] p-5 text-center">
                 <h4
                   className="mb-4 text-xl font-bold text-foreground"
                   style={{ fontFamily: "'Cormorant Garamond', serif" }}
@@ -1895,6 +1753,88 @@ export default function Home() {
       </section>
 
       {/* ═══════════════════════════════════════════════════
+          ÜBER UNS - TRUST & E-A-T
+      ═══════════════════════════════════════════════════ */}
+      <section id="warum-memora" className="py-20 bg-white">
+        <div className="container max-w-5xl">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="section-headline centered text-4xl md:text-5xl mb-4 mx-auto inline-block">
+              Warum memora?
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Weil besondere Momente mehr verdienen als Standardlösungen. Wir schaffen Erlebnisse, die eure Feier nicht nur schöner machen, sondern unvergesslich.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            {[
+              {
+                icon: "⭐",
+                title: "5.0 Sterne Bewertung",
+                desc: "100% zufriedene Kunden – Qualität und Service sind unser Versprechen.",
+              },
+              {
+                icon: "🚀",
+                title: "Produkte für sämtliche Anlässe",
+                desc: "Hochzeiten, Geburtstage, Firmenfeiern – wir haben Erfahrung.",
+              },
+              {
+                icon: "🎯",
+                title: "Unkompliziert & zuverlässig",
+                desc: "Schnelle Reaktion, faire Preise, persönlicher Service.",
+              },
+              {
+                icon: "🏆",
+                title: "Professionelle Geräte",
+                desc: "Hochwertige Produkte, regelmäßig gewartet und desinfiziert",
+              },
+              {
+                icon: "📍",
+                title: "Lokal & nachhaltig",
+                desc: "Ansässig in Gaggenau – unterstützen wir die lokale Community",
+              },
+              {
+                icon: "💬",
+                title: "2h Reaktionszeit",
+                desc: "Deine Anfragen werden innerhalb von 2 Stunden beantwortet",
+              },
+            ].map((item, idx) => {
+              const galleryItem = GALLERY_IMAGES[idx];
+              return (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className={`text-center overflow-hidden rounded-2xl border border-border hover:shadow-lg transition-shadow bg-[oklch(0.97_0.012_85)]${idx >= 3 ? " hidden" : ""}`}
+              >
+                {galleryItem && (
+                  <div className="relative overflow-hidden h-52 bg-slate-100">
+                    <img
+                      src={galleryItem.src}
+                      alt={galleryItem.alt}
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                  </div>
+                )}
+                <div className="p-6">
+                <h3 className="font-bold text-lg mb-2 text-foreground">{item.title}</h3>
+                <p className="text-sm text-muted-foreground">{item.desc}</p>
+                </div>
+              </motion.div>
+            )})}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════
           FAQ
       ═══════════════════════════════════════════════════ */}
       <section id="faq" className="py-20 bg-background">
@@ -1909,7 +1849,7 @@ export default function Home() {
               Häufige Fragen zur Miete
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Die wichtigsten Antworten zu Anfrage, Lieferung, Abholung und Einweisung auf einen Blick.
+              Die wichtigsten Antworten auf einen Blick.
             </p>
           </motion.div>
 
@@ -1917,6 +1857,7 @@ export default function Home() {
             {HOME_FAQ_ITEMS.map((item, index) => (
               <motion.div
                 key={item.question}
+                id={index === 1 ? "faq-lieferung" : undefined}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -2000,11 +1941,11 @@ export default function Home() {
             <div>
               <h4 className="text-white font-semibold mb-3">Schnellzugriff</h4>
               <div className="space-y-2 text-sm">
-                <a href="#impressionen" className="block hover:text-[oklch(0.75_0.14_80)] transition-colors">Impressionen</a>
                 <a href="#wie-es-funktioniert" className="block hover:text-[oklch(0.75_0.14_80)] transition-colors">So geht's</a>
                 <a href="#produkte" className="block hover:text-[oklch(0.75_0.14_80)] transition-colors">Produkte</a>
                 <a href="#bewertungen" className="block hover:text-[oklch(0.75_0.14_80)] transition-colors">Kundenbewertungen</a>
                 <a href="#kontakt" className="block hover:text-[oklch(0.75_0.14_80)] transition-colors">Kontakt & Anfrage</a>
+                <a href="#warum-memora" className="block hover:text-[oklch(0.75_0.14_80)] transition-colors">Warum memora</a>
               </div>
             </div>
 
@@ -2059,7 +2000,7 @@ export default function Home() {
                   className="hover:text-[oklch(0.75_0.14_80)] transition-colors"
                   title="Folge uns auf TikTok"
                 >
-                  <Music className="w-6 h-6" />
+                  <TikTokIcon className="w-6 h-6" />
                 </a>
               </div>
             </div>
