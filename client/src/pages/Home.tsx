@@ -169,7 +169,7 @@ const PRODUCTS = [
 
 const GALLERY_IMAGES = [
   {
-    src: "/images/Fotospiegel_Ergebnis.png",
+    src: "/images/Fotospiegel_Julis_Geburtstag.jpg",
     alt: "Fotospiegel GLOW im Eventeinsatz",
     caption: "✨ Fotospiegel-Highlight an einem 35. Geburtstag",
   },
@@ -830,7 +830,7 @@ export default function Home() {
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.12_0.06_155/0.85)] via-[oklch(0.12_0.06_155/0.65)] to-[oklch(0.12_0.06_155/0.3)]" />
 
-        <div className="container relative z-10 pt-24 pb-16">
+        <div className="container relative z-10 pt-12 md:pt-24 pb-16">
           {/* H1 for SEO - visually hidden */}
           <h1 className="sr-only">Eventausstattung mieten in Karlsruhe, Rastatt und Baden-Baden | memora - miete den moment</h1>
           <div className="max-w-2xl">
@@ -907,7 +907,7 @@ export default function Home() {
                 onClick={scrollToContact}
                 className="btn-gold pulse-gold w-full px-8 py-4 rounded-xl text-lg font-bold flex items-center justify-center gap-2"
               >
-                <span>✨ Wunschtermin anfragen</span>
+                <span>Wunschtermin anfragen</span>
               </button>
             </motion.div>
 
@@ -922,7 +922,7 @@ export default function Home() {
                 onClick={scrollToContact}
                 className="btn-gold pulse-gold px-8 py-4 rounded-xl text-lg font-bold flex items-center justify-center gap-2"
               >
-                <span>✨ Kostenlos anfragen</span>
+                <span>Wunschtermin anfragen</span>
               </button>
             </motion.div>
 
@@ -1113,7 +1113,7 @@ export default function Home() {
                   className="block hover:opacity-95 transition-opacity"
                 >
                 {/* Product Image / Emoji */}
-                <div className="relative h-48 overflow-hidden bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.88_0.02_85)]">
+                <div className="relative h-40 overflow-hidden bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.88_0.02_85)]">
                   {product.image ? (
                     <img
                       src={product.image}
@@ -1136,16 +1136,16 @@ export default function Home() {
                 </div>
 
                 {/* Content */}
-                <div className="p-5">
+                <div className="p-4">
                   <h3 className="text-lg font-bold mb-2 text-foreground hover:text-[oklch(0.32_0.07_155)] transition-colors" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                     {product.name}
                   </h3>
-                  <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                  <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
                     {product.description}
                   </p>
 
                   {/* Occasions */}
-                  <div className="flex flex-wrap gap-1.5 mb-5">
+                  <div className="flex flex-wrap gap-1.5">
                     {product.occasions.map((occ) => (
                       <span key={occ} className="text-xs bg-[oklch(0.93_0.015_85)] text-[oklch(0.32_0.07_155)] px-2 py-0.5 rounded-full font-medium">
                         {occ}
@@ -1154,16 +1154,6 @@ export default function Home() {
                   </div>
                 </div>
                 </Link>
-                <div className="px-5 pb-5">
-                  <button
-                    type="button"
-                    onClick={() => handleProductInquiry(product)}
-                    className="w-full btn-gold py-2.5 px-4 rounded-lg text-sm font-bold flex items-center justify-center gap-2 group-hover:scale-[1.02] transition-transform"
-                  >
-                    <WhatsAppIcon />
-                    Jetzt anfragen
-                  </button>
-                </div>
               </motion.div>
             );
             })}
@@ -1194,7 +1184,7 @@ export default function Home() {
                       className="block hover:opacity-95 transition-opacity"
                     >
                     {/* Product Image / Emoji */}
-                    <div className="relative h-48 overflow-hidden bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.88_0.02_85)]">
+                    <div className="relative h-40 overflow-hidden bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.88_0.02_85)]">
                       {product.image ? (
                         <img
                           src={product.image}
@@ -1217,16 +1207,16 @@ export default function Home() {
                     </div>
 
                     {/* Content */}
-                    <div className="p-5">
+                    <div className="p-4">
                       <h3 className="text-lg font-bold mb-2 text-foreground hover:text-[oklch(0.32_0.07_155)] transition-colors" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                         {product.name}
                       </h3>
-                      <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                      <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
                         {product.description}
                       </p>
 
                       {/* Occasions */}
-                      <div className="flex flex-wrap gap-1.5 mb-5">
+                      <div className="flex flex-wrap gap-1.5">
                         {product.occasions.map((occ) => (
                           <span key={occ} className="text-xs bg-[oklch(0.93_0.015_85)] text-[oklch(0.32_0.07_155)] px-2 py-0.5 rounded-full font-medium">
                             {occ}
@@ -1235,16 +1225,6 @@ export default function Home() {
                       </div>
                     </div>
                     </Link>
-                    <div className="px-5 pb-5">
-                      <button
-                        type="button"
-                        onClick={() => handleProductInquiry(product)}
-                        className="w-full btn-gold py-2.5 px-4 rounded-lg text-sm font-bold flex items-center justify-center gap-2 group-hover:scale-[1.02] transition-transform"
-                      >
-                        <WhatsAppIcon />
-                        Jetzt anfragen
-                      </button>
-                    </div>
                   </motion.div>
                 );
                 })}
@@ -1521,7 +1501,7 @@ export default function Home() {
               onClick={scrollToContact}
               className="btn-gold pulse-gold px-8 py-4 rounded-xl text-base font-bold"
             >
-              ✨ Jetzt kostenlos anfragen
+              Wunschtermin anfragen
             </button>
           </motion.div>
         </div>
@@ -1547,7 +1527,7 @@ export default function Home() {
               </h2>
               <p className="text-muted-foreground mb-8 text-lg leading-relaxed">
                 Schreib uns – wir melden uns <strong>innerhalb von 2 Stunden</strong> zurück
-                und beraten dich kostenlos und unverbindlich.
+                und beraten dich gerne kostenlos und unverbindlich.
               </p>
 
               {!formSubmitted ? (
