@@ -723,19 +723,7 @@ export default function Home() {
                   >
                     Kontakt
                   </a>
-                  <a
-                    href="#warum-memora"
-                    className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsMenuOpen(false);
-                      setTimeout(() => {
-                        document.getElementById('warum-memora')?.scrollIntoView({ behavior: 'smooth' });
-                      }, 300);
-                    }}
-                  >
-                    Warum memora
-                  </a>
+
                 </nav>
                 <div className="flex flex-col gap-4 pt-4 border-t border-white/20 items-center">
                   <a
@@ -792,7 +780,6 @@ export default function Home() {
               <a href="#produkte" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Produkte</a>
               <a href="#bewertungen" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Bewertungen</a>
               <a href="#kontakt" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Kontakt</a>
-              <a href="#warum-memora" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Warum memora</a>
             </nav>
 
             {/* Nav CTA */}
@@ -1938,7 +1925,7 @@ export default function Home() {
                 <a href="#produkte" className="block hover:text-[oklch(0.75_0.14_80)] transition-colors">Produkte</a>
                 <a href="#bewertungen" className="block hover:text-[oklch(0.75_0.14_80)] transition-colors">Kundenbewertungen</a>
                 <a href="#kontakt" className="block hover:text-[oklch(0.75_0.14_80)] transition-colors">Kontakt & Anfrage</a>
-                <a href="#warum-memora" className="block hover:text-[oklch(0.75_0.14_80)] transition-colors">Warum memora</a>
+
               </div>
             </div>
 
