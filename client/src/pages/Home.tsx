@@ -74,7 +74,7 @@ const PRODUCTS = [
     tag: "Sommer-Hit",
     tagColor: "bg-cyan-600",
     description: "Buntes Slush-Eis im Handumdrehen – fruchtig, eiskalt und ein echter Hingucker. Mit optionalem Erwachsenen-Upgrade!",
-    occasions: ["Sommerparty", "Hochzeit", "Kindergeburtstag"],
+    occasions: ["Sommerfest", "Hochzeit", "Kindergeburtstag"],
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/slushmaschine-emit-HuhgPzCXyq2oCRg9XN26nA.webp",
   },
   {
@@ -96,7 +96,7 @@ const PRODUCTS = [
     tag: "Kinder-Favorit",
     tagColor: "bg-pink-500",
     description: "Der Duft, die flauschige Konsistenz, der nostalgische Flair – eure Gäste fühlen sich direkt wie auf dem Jahrmarkt.",
-    occasions: ["Kindergeburtstag", "Familienfeier", "Schulveranstaltung"],
+    occasions: ["Kindergeburtstag", "Familienfeier", "Schulfest"],
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/zuckerwattemaschine-luna-YssUQSBqzSfkyTrshDaWmk.webp",
   },
   {
@@ -123,7 +123,7 @@ const PRODUCTS = [
   },
   {
     id: 9,
-    name: "Musik-Box inkl. Mikro SUNU",
+    name: "Musik-Box SUNU",
     emoji: "🎵",
     price: "ab 99,- €",
     tag: "Audio-Highlight",
@@ -633,7 +633,7 @@ export default function Home() {
     <div className="min-h-screen bg-background font-sans overflow-x-hidden">
       <Seo
         title="Eventausstattung mieten in Karlsruhe, Rastatt & Baden-Baden | memora"
-        description="Eventausstattung mieten in Karlsruhe, Rastatt, Baden-Baden und Umgebung: Fotospiegel, Slushmaschine, Audio-Gaestebuch, Popcornmaschine und mehr. Abholung in Gaggenau oder Lieferung im Umkreis von bis zu 100 km."
+        description="Eventausstattung mieten in Karlsruhe, Rastatt, Baden-Baden und Umgebung: Fotospiegel, Slushmaschine, Audio-Gästebuch, Popcornmaschine und mehr. Abholung in Gaggenau oder Lieferung im Umkreis von bis zu 100 km."
         canonicalUrl={SITE_URL}
         image={DEFAULT_OG_IMAGE}
         structuredData={HOME_STRUCTURED_DATA}

@@ -27,7 +27,7 @@ const PRODUCTS_DETAIL = {
     name: "Fotospiegel GLOW",
     emoji: "🪞",
     tagline: "Der moderne Garant für gute Laune",
-    price: "ab 299,- €",
+    price: "299,- €",
     images: [
       "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/fotospiegel-glow-neu-mEWnc6uokeNiC4Qd7MzeJ3.webp",
       "/images/Fotospiegel_Übersichtsseite.png",
@@ -55,7 +55,7 @@ const PRODUCTS_DETAIL = {
       "Individueller Startbildschirm",
       "Individuelles Druckdesign",
     ],
-    occasions: ["Hochzeit", "Geburtstag", "Firmenfeier", "Jubiläum"],
+    occasions: ["Hochzeit", "Geburtstag", "Firmenfeier"],
     reviews: [
       {
         name: "Joshua D.",
@@ -118,13 +118,13 @@ const PRODUCTS_DETAIL = {
     id: 2,
     name: "Audio-Gästebuch VIVI",
     emoji: "📞",
-    tagline: "Persönliche Sprachnachrichten statt Einträge",
-    price: "ab 49,- €",
+    tagline: "Persönliche Sprachnachrichten statt Einträge im Gästebuch",
+    price: "49,- €",
     images: [
       "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/audio-gaestebuch-vivi-8TDr2DteLoHaGVv5GwKgqm.webp",
       "/images/Audio_Gästebuch_goldeneHochzeit.png",
       "/images/Audio-Gästebuch_Polaroid.jpg",
-      "/images/Audio-Gästebuch_Hochzeit.png",
+      //"/images/Audio-Gästebuch_Hochzeit.png",
     ],
     description: "Statt Gästebucheinträgen hinterlassen eure Gäste persönliche Sprachnachrichten – Gänsehaut garantiert!",
     longDescription: "Das Audio-Gästebuch VIVI ist eine moderne, emotionale Alternative zum klassischen Gästebuch. Deine Gäste sprechen ihre Glückwünsche, Ratschläge oder lustigen Anekdoten direkt ins Mikrofon – du erhältst eine Audio-Datei mit all diesen wertvollen Momenten.",
@@ -144,7 +144,7 @@ const PRODUCTS_DETAIL = {
       "Persönliche Erinnerungen",
       "Nachbearbeitung möglich",
     ],
-    occasions: ["Hochzeit", "Jubiläum", "Geburtstag", "Abschied"],
+    occasions: ["Hochzeit", "Jubiläum", "Geburtstag"],
     reviews: [
       {
         name: "Christine B.",
@@ -195,8 +195,8 @@ const PRODUCTS_DETAIL = {
     id: 3,
     name: "Sofortbildkamera DIOR",
     emoji: "📸",
-    tagline: "Echter Retro-Charme",
-    price: "ab 29,- €",
+    tagline: "Echter Retro-Charme und nostalgische Erinnerungen",
+    price: "29,- €",
     images: [
       "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/polaroidkamera-dior-mZPP2JPUnM27FCH5g72tbZ.webp",
       "/images/Polaroid_blanko.png",
@@ -217,7 +217,7 @@ const PRODUCTS_DETAIL = {
       "Retro-Ästhetik",
       "Gästebuch-kompatibel",
     ],
-    occasions: ["Hochzeit", "Geburtstag", "Party", "Schulveranstaltung"],
+    occasions: ["Hochzeit", "Geburtstag", "Party"],
     reviews: [
       {
         name: "Anna P.",
@@ -258,10 +258,10 @@ const PRODUCTS_DETAIL = {
     id: 4,
     name: "Slushmaschine EMIT",
     emoji: "🧊",
-    tagline: "Buntes Slush-Eis im Handumdrehen",
-    price: "ab 149,- €",
+    tagline: "Buntes Slush-Eis im Handumdrehen für Kinder und Erwachsene",
+    price: "149,- €",
     images: [
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/slushmaschine-emit-HuhgPzCXyq2oCRg9XN26nA.webp",
+      "/images/Slush-Maschine_frontal.png",
       "/images/Slush_befüllt.png",
       "/images/Slush_Alkohol.png",
       "/images/Slush_Aperol.png",
@@ -284,7 +284,7 @@ const PRODUCTS_DETAIL = {
       "Einfache Bedienung",
       "Nostalgiefaktor garantiert",
     ],
-    occasions: ["Sommerparty", "Hochzeit", "Kindergeburtstag", "Firmenfeier"],
+    occasions: ["Sommerfest", "Hochzeit", "Kindergeburtstag"],
     reviews: [
       {
         name: "Lena F.",
@@ -328,12 +328,12 @@ const PRODUCTS_DETAIL = {
     id: 5,
     name: "Karaokemaschine SING",
     emoji: "🎤",
-    tagline: "Solo oder Duett",
-    price: "ab 69,- €",
+    tagline: "Solo oder Duett singen und aus über 50.000 Songs auswählen",
+    price: "69,- €",
     images: [
       "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/karaokemaschine-sing-E68YRAvtn3s3erpgQufsH5.webp",
       "/images/Karaoke_imRaum.png",
-      "/images/Karaoke_Benutzung.png",
+      //"/images/Karaoke_Benutzung.png",
       "/images/Karaoke_Weihnachtsfeier.jpg",
     ],
     description: "Solo, im Duett oder als Chor – hier entstehen unvergessliche Momente voller Spaß, Lacher und Applaus.",
@@ -355,7 +355,7 @@ const PRODUCTS_DETAIL = {
       "Einfache Bedienung",
       "Perfekt für alle Altersgruppen",
     ],
-    occasions: ["Geburtstag", "Firmenfeier", "Party", "Hochzeit"],
+    occasions: ["Geburtstag", "Firmenfeier", "Party"],
     reviews: [
 {
    name: "Fabio G.",
@@ -411,15 +411,15 @@ const PRODUCTS_DETAIL = {
   },
   "zuckerwattemaschine-luna": {
     id: 6,
-    name: "Zuckerwatte-Maschine LUNA",
+    name: "Zuckerwattemaschine LUNA",
     emoji: "🍭",
-    tagline: "Nostalgischer Jahrmarkt-Flair",
-    price: "ab 49,- €",
+    tagline: "Nostalgischer Jahrmarkt-Flair als süßer Höhepunkt für Kinder und Erwachsene",
+    price: "49,- €",
     images: [
       "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/zuckerwattemaschine-luna-YssUQSBqzSfkyTrshDaWmk.webp",
-      "/images/Zuckerwatte_Kindergeburtstag.png",
+      //"/images/Zuckerwatte_Kindergeburtstag.png",
       "/images/Zuckerwatte_Hochzeit.png",
-      "/images/Zuckerwatte_Winterfeier.png",
+      //"/images/Zuckerwatte_Winterfeier.png",
     ],
     description: "Der Duft, die flauschige Konsistenz, der nostalgische Flair – eure Gäste sind direkt auf dem Jahrmarkt.",
     longDescription: "Die Zuckerwattemaschine LUNA bringt Jahrmarkt-Flair auf dein Event. Mit frisch gemachter, flauschiger Zuckerwatte in verschiedenen Farben und Geschmäckern – ein Hit bei Kindern und Erwachsenen!",
@@ -437,7 +437,7 @@ const PRODUCTS_DETAIL = {
       "Einfache Bedienung",
       "50 Stäbchen inklusive",
     ],
-    occasions: ["Kindergeburtstag", "Familienfeier", "Schulveranstaltung", "Sommerfest"],
+    occasions: ["Kindergeburtstag", "Familienfeier", "Schulfest"],
     reviews: [
       {
         name: "Celine Z.",
@@ -485,13 +485,13 @@ const PRODUCTS_DETAIL = {
   },
   "seifenblasenmaschine-lilo": {
     id: 7,
-    name: "Seifenblasen-Maschine LILO",
+    name: "Seifenblasenmaschine LILO",
     emoji: "🫧",
-    tagline: "Magie in der Luft",
-    price: "ab 59,- €",
+    tagline: "Bring zusätzliche Magie auf deine Tanzfläche",
+    price: "59,- €",
     images: [
       "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/seifenblasenmaschine-lilo-o6z2zHGSXkLJAPjW43bzS5.webp",
-      "/images/Seifenblasen_blau.png",
+      //"/images/Seifenblasen_blau.png",
       "/images/Seifenblasenmaschine_Hochzeit.png",
       "/images/Seifenblasen_Hochzeit_Kuss.png",
     ],
@@ -515,7 +515,7 @@ const PRODUCTS_DETAIL = {
       "Je nach Bedarf klassische Seifenblasen oder mit Nebel gefüllte Blasen",
       "Erzeugt eine magische Atmosphäre auf jeder Feier",
     ],
-    occasions: ["Hochzeit", "Verlobung", "Geburtstag", "Sommerfest"],
+    occasions: ["Hochzeit", "Verlobung", "Geburtstag"],
      reviews: [
       {
        name: "Anonym",
@@ -557,8 +557,8 @@ const PRODUCTS_DETAIL = {
     id: 8,
     name: "Nebelmaschine MIRA",
     emoji: "☁️",
-    tagline: "Tanzfläche wird zur Showbühne",
-    price: "ab 49,- €",
+    tagline: "Verwandele deine Tanzfläche in eine Showbühne",
+    price: "49,- €",
     images: [
       "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/nebelmaschine-mira-DNAQuYqcf66FgucyiTU5iB.webp",
       "/images/Nebelmaschine_rechts.png",
@@ -583,7 +583,7 @@ const PRODUCTS_DETAIL = {
       "Nebelflüssigkeit inklusive",
       "Professionelle Qualität",
     ],
-    occasions: ["Hochzeit", "Party", "Firmenfeier", "DJ-Event"],
+    occasions: ["Hochzeit", "Party", "Firmenfeier"],
     reviews: [
       {
         name: "Manuel D.",
@@ -620,17 +620,17 @@ const PRODUCTS_DETAIL = {
       },
     ],
   },
-  "musik-box-inkl-mikro-sunu": {
+  "musik-box-sunu": {
     id: 9,
-    name: "Musik-Box inkl. Mikro SUNU",
+    name: "Musik-Box SUNU",
     emoji: "🎵",
-    tagline: "Dezente Hintergrundmusik",
-    price: "ab 99,- €",
+    tagline: "Für dezente Hintergrundmusik und spontane Ansprachen",
+    price: "99,- €",
     images: [
       "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/musikbox-sunu-YzchpMLmbyfqh4DufPyvkD.webp",
        "/images/Musikbox_unten.png",
       "/images/Musikbox_oben.png",
-      "/images/Musikbox_Szene.png",
+      //"/images/Musikbox_Szene.png",
     ],
     description: "Dezente Hintergrundmusik beim Sektempfang oder Dinner – Mikro für Reden inklusive.",
     longDescription: "Die Musik-Box SUNU ist das perfekte Audio-System für elegante Events. Mit hochwertigen Lautsprechern für Hintergrundmusik und einem professionellen Mikrofon für Reden und Ansprachen.",
@@ -650,7 +650,7 @@ const PRODUCTS_DETAIL = {
       "Leichter Transport durch integrierte Rollen",
       "Professionelle Qualität",
     ],
-    occasions: ["Hochzeit", "Firmenfeier", "Jubiläum", "Gala"],
+    occasions: ["Hochzeit", "Firmenfeier", "Jubiläum"],
     reviews: [
       {
         name: "Angelika S.",
@@ -690,13 +690,13 @@ const PRODUCTS_DETAIL = {
     id: 10,
     name: "Hot-Dog-Wärmer SJEN",
     emoji: "🌭",
-    tagline: "Leckere, warme Snacks",
-    price: "ab 59,- €",
+    tagline: "Leckere, warme Snacks, die jeden Geschmack treffen",
+    price: "59,- €",
     images: [
       "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/hotdogwarmer-sjen-4DJ6cgoBWB5cKTqHNYryL3.webp",
       "/images/Hot_dog_leer.png",
       "/images/Hot_Dog_links.png",
-      "/images/Hot_Dog_Hochzeit.png",
+      //"/images/Hot_Dog_Hochzeit.png",
     ],
     description: "Leckere, warme Snacks – heiß, frisch und perfekt für den kleinen Hunger.",
     longDescription: "Der Hot-Dog-Wärmer SJEN ist das perfekte Snack-Highlight für dein Event. Mit professionellem Wärmesystem hältst du Hot Dogs, Würstchen und andere Snacks warm und appetitlich.",
@@ -716,7 +716,7 @@ const PRODUCTS_DETAIL = {
       "Hygienisch",
       "Ideal als Mitternachtssnack",
     ],
-    occasions: ["Party", "Hochzeit", "Firmenfeier", "Sommerfest"],
+    occasions: ["Party", "Hochzeit", "Firmenfeier"],
     reviews: [
       {
         name: "Daniel K.",
@@ -762,8 +762,8 @@ const PRODUCTS_DETAIL = {
     id: 11,
     name: "Nacho-Wärmer SALA",
     emoji: "🦦",
-    tagline: "Knusprige Nachos mit warmer Käsesoe",
-    price: "ab 49,- €",
+    tagline: "Der perfekte Snack an der Candybar oder für zwischendurch",
+    price: "49,- €",
     images: [
       "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/nachowarmer-sala-65QjBzSrDUQNoGexkDjxQr.webp",
        "/images/Nacho-Wärmer_rechts.png",
@@ -788,7 +788,7 @@ const PRODUCTS_DETAIL = {
       "Hygienisch",
       "Professionelle Qualität",
     ],
-    occasions: ["Party", "Geburtstag", "Firmenfeier", "Sportveranstaltung"],
+    occasions: ["Party", "Geburtstag", "Firmenfeier"],
     reviews: [
       {
         name: "Daniela M.",
@@ -832,8 +832,8 @@ const PRODUCTS_DETAIL = {
     id: 12,
     name: "Popcornmaschine KENO",
     emoji: "🍿",
-    tagline: "Frisch, knusprig, unwiderstehlich",
-    price: "ab 59,- €",
+    tagline: "Frisch, knusprig, unwiderstehlich - der perfekte Snack für jede Feier",
+    price: "59,- €",
     images: [
       "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/popcornmaschine-keno-CFunR82z9YowPtJfffpUAz.webp",
      "/images/Popcorn_leer.jpg",
@@ -858,7 +858,7 @@ const PRODUCTS_DETAIL = {
       "Nostalgisches Design",
       "Highlight für Kinder & Erwachsene",
     ],
-    occasions: ["Party", "Hochzeit", "Kindergeburtstag", "Sommerfest"],
+    occasions: ["Party", "Hochzeit", "Kindergeburtstag"],
     reviews: [
       {
          name: "Julian Z.",
@@ -1154,9 +1154,10 @@ export default function ProductDetail() {
   const seoDescription = `${product.name} ab ${product.price.replace("ab ", "")} fuer Hochzeiten, Geburtstage und Firmenfeiern in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten. ${product.description}`;
   const seoImage = product.images[0] ? toAbsoluteUrl(product.images[0]) : DEFAULT_OG_IMAGE;
   const structuredData = buildProductStructuredData(product, slug);
+  const isFotospiegelGlow = slug === "fotospiegel-glow";
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen bg-background overflow-x-hidden pb-20 md:pb-0">
       <Seo
         title={seoTitle}
         description={seoDescription}
@@ -1258,9 +1259,9 @@ export default function ProductDetail() {
       {/* ═══════════════════════════════════════════════════
           HERO / PRODUCT OVERVIEW
       ═══════════════════════════════════════════════════ */}
-      <section className="pt-28 pb-12 bg-[oklch(0.95_0.012_85)]">
+      <section className="pt-20 md:pt-28 pb-6 md:pb-8 bg-[oklch(0.95_0.012_85)]">
         <div className="container">
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-10">
             {/* Image Carousel */}
             <motion.div
               initial={{ opacity: 0, x: -32 }}
@@ -1336,7 +1337,7 @@ export default function ProductDetail() {
               initial={{ opacity: 0, x: 32 }}
               animate={{ opacity: 1, x: 0 }}
             >
-              <h1 className="text-5xl font-bold text-foreground mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              <h1 className="text-4xl font-bold text-foreground mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                 {product.name}
               </h1>
               <p className="text-lg text-[oklch(0.75_0.14_80)] italic mb-4">{product.tagline}</p>
@@ -1349,21 +1350,29 @@ export default function ProductDetail() {
                 </span>
               </div>
 
-              {/* Description */}
-              <p className="text-base text-muted-foreground leading-relaxed mb-6">
-                {product.longDescription}
-              </p>
-
               {/* Price */}
-              <div className="bg-[oklch(0.32_0.07_155)] text-white rounded-xl p-6 mb-6">
-                <div className="text-sm text-white/70 mb-1">Ab</div>
-                <div className="text-3xl font-bold mb-3">{product.price}</div>
-                <p className="text-sm text-white/80">zzgl. Lieferung (Abholung kostenlos)</p>
-              </div>
+              {isFotospiegelGlow ? (
+                <div className="grid gap-3 mb-6 sm:grid-cols-2">
+                  <div className="bg-[oklch(0.32_0.07_155)] text-white rounded-xl p-6">
+                    <div className="text-sm text-white/70 mb-1">Ohne Druckflatrate</div>
+                    <div className="text-3xl font-bold mb-3">299,- €</div>
+                    <p className="text-sm text-white/80">zzgl. Lieferung (Abholung kostenlos)</p>
+                  </div>
+                  <div className="bg-[oklch(0.32_0.07_155)] text-white rounded-xl p-6">
+                    <div className="text-sm text-white/70 mb-1">Mit Druckflatrate</div>
+                    <div className="text-3xl font-bold mb-3">399,- €</div>
+                    <p className="text-sm text-white/80">zzgl. Lieferung (Abholung kostenlos)</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-[oklch(0.32_0.07_155)] text-white rounded-xl p-6 mb-6">
+                  <div className="text-3xl font-bold mb-3">{product.price}</div>
+                  <p className="text-sm text-white/80">zzgl. Lieferung (Abholung kostenlos)</p>
+                </div>
+              )}
 
               {/* Occasions */}
               <div className="mb-6">
-                <h3 className="text-sm font-semibold text-foreground mb-2">Perfekt für:</h3>
                 <div className="flex flex-wrap gap-2">
                   {product.occasions.map((occ) => (
                     <span key={occ} className="bg-[oklch(0.93_0.015_85)] text-[oklch(0.32_0.07_155)] px-3 py-1 rounded-full text-sm font-medium">
@@ -1373,15 +1382,20 @@ export default function ProductDetail() {
                 </div>
               </div>
 
+              {/* Description */}
+              <p className="text-base text-muted-foreground leading-relaxed mb-6">
+                {product.longDescription}
+              </p>
+
               {/* CTA */}
               <button
                 onClick={handleFormInquiryClick}
-                className="w-full btn-gold pulse-gold py-4 rounded-xl text-lg font-bold flex items-center justify-center gap-2 mb-3"
+                className="hidden md:flex w-full btn-gold pulse-gold py-4 rounded-xl text-lg font-bold items-center justify-center gap-2 mb-3"
               >
                 <WhatsAppIcon />
                 Jetzt anfragen
               </button>
-              <p className="text-xs text-muted-foreground text-center">
+              <p className="hidden md:block text-xs text-muted-foreground text-center">
                 ✓ Kostenlos & unverbindlich · ✓ Antwort innerhalb von 2h
               </p>
             </motion.div>
@@ -1392,7 +1406,7 @@ export default function ProductDetail() {
       {/* ═══════════════════════════════════════════════════
           PREISBERECHNUNG
       ═══════════════════════════════════════════════════ */}
-      <section className="py-16 bg-background">
+      <section className="pt-6 md:pt-8 pb-16 bg-background">
         <div className="container max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -1659,16 +1673,24 @@ export default function ProductDetail() {
             <p className="text-white/80 mb-8 text-lg leading-relaxed">
               Stell uns eine kostenlose Anfrage zu {product.name}. Wir melden uns innerhalb von 2 Stunden zurück.
             </p>
-            <button
-              onClick={handleFormInquiryClick}
-              className="btn-gold pulse-gold px-8 py-4 rounded-xl text-lg font-bold flex items-center justify-center gap-2 mx-auto"
-            >
-              <WhatsAppIcon />
-              Jetzt anfragen
-            </button>
           </motion.div>
         </div>
       </section>
+
+      <motion.div
+        initial={{ y: 100 }}
+        animate={{ y: scrolled ? 0 : 100 }}
+        transition={{ duration: 0.3 }}
+        className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-[oklch(0.22_0.06_155)] border-t border-[oklch(0.75_0.14_80/0.3)] px-3 py-2"
+      >
+        <button
+          onClick={handleFormInquiryClick}
+          className="btn-gold pulse-gold w-full py-3 rounded-lg font-bold text-sm flex items-center justify-center gap-2"
+        >
+          <WhatsAppIcon />
+          Jetzt anfragen
+        </button>
+      </motion.div>
     </div>
   );
 }
