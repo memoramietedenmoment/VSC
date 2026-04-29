@@ -5,7 +5,6 @@ export const PRODUCT_COMBINATIONS = {
     related: [
       "audio-gaestebuch-vivi",
       "sofortbildkamera-dior",
-      "musik-box-sunu",
     ],
     bundleTitle: "Das Hochzeits-Gesamtpaket",
     bundleDescription: "Fotospiegel für Erinnerungen + Audio-Gästebuch für Stimmen + Seifenblasen für die perfekte Stimmung",
@@ -14,7 +13,6 @@ export const PRODUCT_COMBINATIONS = {
     related: [
       "fotospiegel-glow",
       "sofortbildkamera-dior",
-      "musik-box-sunu",
     ],
     bundleTitle: "Erinnerungen sammeln",
     bundleDescription: "Audio-Nachrichten + Sofortfotos + Musik für das perfekte Gästebuch-Erlebnis",
@@ -23,7 +21,6 @@ export const PRODUCT_COMBINATIONS = {
     related: [
       "fotospiegel-glow",
       "audio-gaestebuch-vivi",
-      "seifenblasenmaschine-lilo",
     ],
     bundleTitle: "Die Foto-Kombination",
     bundleDescription: "Sofortdruck + Fotospiegel + Seifenblasen = unvergessliche Erinnerungen",
@@ -39,7 +36,6 @@ export const PRODUCT_COMBINATIONS = {
   },
   "karaokemaschine-sing": {
     related: [
-      "musik-box-sunu",
       "nebelmaschine-mira",
       "seifenblasenmaschine-lilo",
     ],
@@ -57,8 +53,7 @@ export const PRODUCT_COMBINATIONS = {
   },
   "seifenblasenmaschine-lilo": {
     related: [
-      "fotospiegel-glow",
-      "musik-box-sunu",
+      "karaokemaschine-sing",
       "nebelmaschine-mira",
     ],
     bundleTitle: "Die Atmosphären-Kombi",
@@ -67,7 +62,6 @@ export const PRODUCT_COMBINATIONS = {
   "nebelmaschine-mira": {
     related: [
       "seifenblasenmaschine-lilo",
-      "musik-box-sunu",
       "karaokemaschine-sing",
     ],
     bundleTitle: "Die Show-Effekte",
