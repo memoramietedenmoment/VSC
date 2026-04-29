@@ -492,10 +492,32 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
 
 // ─── Hauptkomponente ──────────────────────────────────────────────────────────
 
+// ─── Lieferkosten-Rechner ───────────────────────────────────────────────────
+const GAGGENAU_LAT = 48.8025;
+const GAGGENAU_LNG = 8.3336;
+
+function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
+  const R = 6371;
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLng = ((lng2 - lng1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLng / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [formData, setFormData] = useState({ name: "", phone: "", date: "", products: [] as string[], message: "" });
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [deliveryPlz, setDeliveryPlz] = useState("");
+  const [deliveryInfo, setDeliveryInfo] = useState<{
+    status: "idle" | "loading" | "done" | "error";
+    cost: number | null;
+    distance: number | null;
+  }>({ status: "idle", cost: null, distance: null });
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [showAllProducts, setShowAllProducts] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -613,6 +635,27 @@ export default function Home() {
     }
   };
 
+  const calculateDelivery = async (plz: string) => {
+    setDeliveryInfo({ status: "loading", cost: null, distance: null });
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?postalcode=${plz}&country=DE&format=json&limit=1`,
+        { headers: { "Accept-Language": "de" } }
+      );
+      const data = await res.json();
+      if (!Array.isArray(data) || data.length === 0) {
+        setDeliveryInfo({ status: "error", cost: null, distance: null });
+        return;
+      }
+      const km = haversineKm(GAGGENAU_LAT, GAGGENAU_LNG, parseFloat(data[0].lat), parseFloat(data[0].lon));
+      const rounded = Math.round(km);
+      const cost = km <= 50 ? 50 : km <= 100 ? 100 : null;
+      setDeliveryInfo({ status: "done", cost, distance: rounded });
+    } catch {
+      setDeliveryInfo({ status: "error", cost: null, distance: null });
+    }
+  };
+
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.products.length === 0) {
@@ -621,9 +664,16 @@ export default function Home() {
     }
 
     const productList = formData.products.join(" | ");
-    // Öffnet WhatsApp mit vorausgefüllter Nachricht
+    const deliveryLine =
+      deliveryInfo.status === "done" && deliveryInfo.cost !== null
+        ? `Lieferung: ${deliveryInfo.cost},- € (ca. ${deliveryInfo.distance} km, PLZ ${deliveryPlz})`
+        : deliveryInfo.status === "done" && deliveryInfo.cost === null
+        ? `Lieferung: Außerhalb des Liefergebiets (PLZ ${deliveryPlz}) – Abholung bevorzugt`
+        : deliveryPlz
+        ? `Liefer-PLZ: ${deliveryPlz} (nicht berechnet)`
+        : "Lieferung/Abholung: Noch nicht angegeben";
     const msg = encodeURIComponent(
-      `Hallo memora-Team,\n\nName: ${formData.name}\nTelefon: ${formData.phone}\nEvent-Datum: ${formData.date}\nProdukte: ${productList}\nNachricht: ${formData.message}`
+      `Hallo memora-Team,\n\nName: ${formData.name}\nTelefon: ${formData.phone}\nEvent-Datum: ${formData.date}\nProdukte: ${productList}\n${deliveryLine}\nNachricht: ${formData.message}`
     );
     window.open(`https://wa.me/4915225896570?text=${msg}`, "_blank");
     setFormSubmitted(true);
@@ -1559,6 +1609,53 @@ export default function Home() {
                       value={formData.date}
                       onChange={e => setFormData({ ...formData, date: e.target.value })}
                     />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-foreground mb-1.5">
+                      Lieferkosten berechnen
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        maxLength={5}
+                        placeholder="Deine PLZ, z.B. 76131"
+                        className="form-input flex-1"
+                        value={deliveryPlz}
+                        onChange={e => {
+                          const v = e.target.value.replace(/\D/g, "").slice(0, 5);
+                          setDeliveryPlz(v);
+                          if (v.length === 5) calculateDelivery(v);
+                          else setDeliveryInfo({ status: "idle", cost: null, distance: null });
+                        }}
+                      />
+                      {deliveryInfo.status === "loading" && (
+                        <div className="flex items-center px-3 text-sm text-muted-foreground whitespace-nowrap">Berechne…</div>
+                      )}
+                    </div>
+                    {deliveryInfo.status === "done" && deliveryInfo.cost !== null && (
+                      <div className="mt-2 rounded-lg bg-[oklch(0.93_0.015_85)] px-4 py-2.5 text-sm font-medium flex items-start gap-2">
+                        <span className="text-[oklch(0.58_0.18_145)] mt-0.5">✓</span>
+                        <span>
+                          Lieferung möglich – ca. {deliveryInfo.distance} km ·{" "}
+                          <strong>{deliveryInfo.cost},- €</strong>{" "}
+                          (Abholung in Gaggenau kostenlos)
+                        </span>
+                      </div>
+                    )}
+                    {deliveryInfo.status === "done" && deliveryInfo.cost === null && (
+                      <div className="mt-2 rounded-lg bg-amber-50 px-4 py-2.5 text-sm font-medium flex items-start gap-2 text-amber-800">
+                        <span className="mt-0.5">⚠️</span>
+                        <span>
+                          Leider außerhalb unseres Liefergebiets (max. 100 km ab Gaggenau).{" "}
+                          Abholung in Gaggenau ist kostenlos – melde dich gerne bei uns!
+                        </span>
+                      </div>
+                    )}
+                    {deliveryInfo.status === "error" && (
+                      <p className="mt-2 text-sm text-red-600">PLZ nicht gefunden. Bitte prüfe deine Eingabe.</p>
+                    )}
                   </div>
 
                   <div>
