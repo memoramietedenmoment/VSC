@@ -327,10 +327,45 @@
     font-size: 0.95rem;
     transition: border-color 0.2s;
     width: 100%;
+    box-sizing: border-box;
   }
   .form-input:focus {
     outline: none;
     border-color: oklch(0.75 0.14 80);
     box-shadow: 0 0 0 3px oklch(0.75 0.14 80 / 0.15);
+  }
+  .form-select {
+    background: white;
+    border: 1.5px solid oklch(0.88 0.015 85);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+    width: 100%;
+    height: auto;
+    min-height: calc(0.95rem * 1.5 + 1.5rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    cursor: pointer;
+    appearance: none;
+  }
+  .form-select:hover {
+    border-color: oklch(0.75 0.14 80);
+  }
+  .form-select:focus {
+    outline: none;
+    border-color: oklch(0.75 0.14 80);
+    box-shadow: 0 0 0 3px oklch(0.75 0.14 80 / 0.15);
+  }
+  /* Date input styles */
+  input[type="date"] {
+    box-sizing: border-box;
+  }
+  /* Hide default date input icon/picker button */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
   }
 }

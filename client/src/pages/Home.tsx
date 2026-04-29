@@ -15,9 +15,10 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { MenuIcon, Instagram } from "lucide-react";
+import { MenuIcon, Instagram, ChevronDownIcon, CalendarIcon } from "lucide-react";
 import Seo from "@/components/Seo";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import {
   DEFAULT_OG_IMAGE,
@@ -1569,51 +1570,83 @@ export default function Home() {
 
               {!formSubmitted ? (
                 <form onSubmit={handleFormSubmit} className="space-y-4">
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-semibold text-foreground mb-1.5">
-                        Dein Name *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="Max Mustermann"
-                        className="form-input"
-                        value={formData.name}
-                        onChange={e => setFormData({ ...formData, name: e.target.value })}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-foreground mb-1.5">
-                        Telefon / WhatsApp *
-                      </label>
-                      <input
-                        type="tel"
-                        required
-                        placeholder="+49 152 ..."
-                        className="form-input"
-                        value={formData.phone}
-                        onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                      />
-                    </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-foreground mb-1.5">
+                      Dein Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Max Mustermann"
+                      className="form-input"
+                      value={formData.name}
+                      onChange={e => setFormData({ ...formData, name: e.target.value })}
+                    />
                   </div>
 
                   <div>
                     <label className="block text-sm font-semibold text-foreground mb-1.5">
                       Wann ist dein Event? *
                     </label>
-                    <input
-                      type="date"
-                      required
-                      className="form-input"
-                      value={formData.date}
-                      onChange={e => setFormData({ ...formData, date: e.target.value })}
-                    />
+                    <div className="relative">
+                      <input
+                        type="date"
+                        required
+                        className="form-input max-w-xs sm:max-w-none sm:pr-10"
+                        value={formData.date}
+                        onChange={e => setFormData({ ...formData, date: e.target.value })}
+                      />
+                      <CalendarIcon className="hidden sm:block absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+                    </div>
                   </div>
 
                   <div>
                     <label className="block text-sm font-semibold text-foreground mb-1.5">
-                      Lieferkosten berechnen
+                      Für welche Produkte interessierst du dich? *
+                    </label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <button
+                          type="button"
+                          className="form-select text-left text-foreground"
+                        >
+                          <span>
+                            {formData.products.length === 0
+                              ? "Produkte auswählen..."
+                              : `${formData.products.length} ${formData.products.length === 1 ? "Produkt" : "Produkte"} ausgewählt`}
+                          </span>
+                          <ChevronDownIcon className="h-4 w-4 opacity-50 flex-shrink-0" />
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-80 p-0" align="start">
+                        <div className="grid gap-2 p-4">
+                          {PRODUCTS.map((product) => (
+                            <label key={product.id} className="flex items-center gap-3 text-sm text-foreground cursor-pointer">
+                              <input
+                                type="checkbox"
+                                className="h-4 w-4 rounded border-border text-amber-500 focus:ring-amber-300"
+                                checked={formData.products.includes(`${product.name} (${product.price})`)}
+                                onChange={(e) => {
+                                  const value = `${product.name} (${product.price})`;
+                                  setFormData((prev) => ({
+                                    ...prev,
+                                    products: e.target.checked
+                                      ? [...prev.products, value]
+                                      : prev.products.filter((item) => item !== value),
+                                  }));
+                                }}
+                              />
+                              <span>{product.name} – {product.price}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-foreground mb-1.5">
+                      Lieferkosten berechnen (optional)
                     </label>
                     <div className="flex gap-2">
                       <input
@@ -1656,34 +1689,6 @@ export default function Home() {
                     {deliveryInfo.status === "error" && (
                       <p className="mt-2 text-sm text-red-600">PLZ nicht gefunden. Bitte prüfe deine Eingabe.</p>
                     )}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-semibold text-foreground mb-1.5">
-                      Für welche Produkte interessierst du dich? *
-                    </label>
-                    <div className="grid gap-2 p-4 rounded-3xl border border-border bg-[oklch(0.97_0.012_85)]">
-                      {PRODUCTS.map((product) => (
-                        <label key={product.id} className="flex items-center gap-3 text-sm text-foreground">
-                          <input
-                            type="checkbox"
-                            className="h-4 w-4 rounded border-border text-amber-500 focus:ring-amber-300"
-                            checked={formData.products.includes(`${product.name} (${product.price})`)}
-                            onChange={(e) => {
-                              const value = `${product.name} (${product.price})`;
-                              setFormData((prev) => ({
-                                ...prev,
-                                products: e.target.checked
-                                  ? [...prev.products, value]
-                                  : prev.products.filter((item) => item !== value),
-                              }));
-                            }}
-                          />
-                          <span>{product.name} – {product.price}</span>
-                        </label>
-                      ))}
-                    </div>
-                    <p className="mt-2 text-xs text-muted-foreground">Mehrfachauswahl möglich. Das Feld ist erforderlich.</p>
                   </div>
 
                   <div>
