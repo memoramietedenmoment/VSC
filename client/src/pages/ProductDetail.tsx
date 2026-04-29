@@ -26,7 +26,7 @@ const PRODUCTS_DETAIL = {
     id: 1,
     name: "Fotospiegel GLOW",
     emoji: "🪞",
-    tagline: "Der moderne Garant für gute Laune",
+    tagline: "Der moderne Garant für gute Laune und unvergessliche Erinnerungen",
     price: "299,- €",
     images: [
       "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/fotospiegel-glow-neu-mEWnc6uokeNiC4Qd7MzeJ3.webp",
@@ -1352,17 +1352,18 @@ export default function ProductDetail() {
 
               {/* Price */}
               {isFotospiegelGlow ? (
-                <div className="grid gap-3 mb-6 sm:grid-cols-2">
-                  <div className="bg-[oklch(0.32_0.07_155)] text-white rounded-xl p-6">
-                    <div className="text-sm text-white/70 mb-1">Ohne Druckflatrate</div>
-                    <div className="text-3xl font-bold mb-3">299,- €</div>
-                    <p className="text-sm text-white/80">zzgl. Lieferung (Abholung kostenlos)</p>
+                <div className="bg-[oklch(0.32_0.07_155)] text-white rounded-xl px-6 py-5 mb-6">
+                  <div className="divide-y divide-white/20 rounded-lg border border-white/20 overflow-hidden bg-white/5">
+                    <div className="flex items-start justify-between px-4 py-2.5">
+                      <span className="shrink-0 pr-4 text-left text-2xl font-bold leading-none">299,- €</span>
+                      <span className="flex-1 text-right text-sm font-medium text-white/85">Ohne Druckflatrate</span>
+                    </div>
+                    <div className="flex items-start justify-between px-4 py-2.5">
+                      <span className="shrink-0 pr-4 text-left text-2xl font-bold leading-none">399,- €</span>
+                      <span className="flex-1 text-right text-sm font-medium text-white/85">Mit Druckflatrate</span>
+                    </div>
                   </div>
-                  <div className="bg-[oklch(0.32_0.07_155)] text-white rounded-xl p-6">
-                    <div className="text-sm text-white/70 mb-1">Mit Druckflatrate</div>
-                    <div className="text-3xl font-bold mb-3">399,- €</div>
-                    <p className="text-sm text-white/80">zzgl. Lieferung (Abholung kostenlos)</p>
-                  </div>
+                  <p className="text-sm text-white/80 mt-2">zzgl. Lieferung (Abholung kostenlos)</p>
                 </div>
               ) : (
                 <div className="bg-[oklch(0.32_0.07_155)] text-white rounded-xl p-6 mb-6">
