@@ -1682,7 +1682,7 @@ export default function Home() {
                         <span className="mt-0.5">⚠️</span>
                         <span>
                           Leider außerhalb unseres Liefergebiets (max. 100 km ab Gaggenau).{" "}
-                          Abholung in Gaggenau ist kostenlos – melde dich gerne bei uns!
+                          Gerne machen wir dir ein individuelles Angebot!
                         </span>
                       </div>
                     )}
