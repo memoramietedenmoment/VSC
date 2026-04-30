@@ -1469,7 +1469,12 @@ export default function Home() {
             <div className="flex items-center justify-center gap-2">
               <StarRating />
               <span className="font-bold text-lg">5.0</span>
-              <span className="text-muted-foreground">· Google Bewertungen</span>
+              <a
+                href="https://www.google.com/maps/place/memora+-+miete+den+moment/@48.8127,8.3072651,17z/data=!4m8!3m7!1s0x4797192b3c74fe5b:0x66e2b0053af1538e!8m2!3d48.8127!4d8.30984!9m1!1b1!16s%2Fg%2F11ykx8schl?entry=ttu&g_ep=EgoyMDI2MDQyNy4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-[oklch(0.75_0.14_80)] transition-colors"
+              >· Google Bewertungen</a>
             </div>
           </motion.div>
 
