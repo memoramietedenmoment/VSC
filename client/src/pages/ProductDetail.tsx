@@ -1395,7 +1395,7 @@ export default function ProductDetail() {
                 Jetzt anfragen
               </button>
               <p className="hidden md:block text-xs text-muted-foreground text-center">
-                ✓ Kostenlos & unverbindlich · ✓ Antwort innerhalb von 2h
+                ✓ Kostenlos & unverbindlich · ✓ Antwort innerhalb von 2                <label key={product.id} className="flex items-center gap-3 text-sm text-foreground"></label>h
               </p>
             </motion.div>
           </div>
@@ -1672,6 +1672,13 @@ export default function ProductDetail() {
             <p className="text-white/80 mb-8 text-lg leading-relaxed">
               Stell uns eine kostenlose Anfrage zu {product.name}. Wir melden uns innerhalb von 2 Stunden zurück.
             </p>
+            <button
+              onClick={handleFormInquiryClick}
+              className="hidden md:flex btn-gold pulse-gold px-10 py-4 rounded-xl font-bold text-lg items-center justify-center gap-3 mx-auto"
+            >
+              <WhatsAppIcon />
+              Jetzt anfragen
+            </button>
           </motion.div>
         </div>
       </section>
