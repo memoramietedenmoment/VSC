@@ -19,6 +19,7 @@ import { MenuIcon, Instagram, ChevronDownIcon } from "lucide-react";
 import Seo from "@/components/Seo";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import {
   DEFAULT_OG_IMAGE,
@@ -204,8 +205,8 @@ const GALLERY_IMAGES = [
 const PHOTO_MIRROR_PRODUCT_NAME = "Fotospiegel GLOW";
 const DIOR_PRODUCT_NAME = "Sofortbildkamera DIOR";
 
-const PHOTO_MIRROR_PRINT_FLATRATE_LABEL = "Mit Druckflatrate - 399,- €";
-const DIOR_TRIPLE_PACK_LABEL = "Dreierpack - 79,- €";
+const PHOTO_MIRROR_PRINT_FLATRATE_LABEL = "+ Druckflatrate (Fotospiegel GLOW) - 399,- €";
+const DIOR_TRIPLE_PACK_LABEL = "Dreierpack (Sofortbildkamera DIOR) - 79,- €";
 
 const TESTIMONIALS = [
   {
@@ -878,6 +879,19 @@ export default function Home() {
                   >
                     Kontakt
                   </a>
+                  <a
+                    href="#faq"
+                    className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsMenuOpen(false);
+                      setTimeout(() => {
+                        document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
+                      }, 300);
+                    }}
+                  >
+                    FAQ
+                  </a>
 
                 </nav>
                 <div className="flex flex-col gap-4 pt-4 border-t border-white/20 items-center">
@@ -935,6 +949,7 @@ export default function Home() {
               <a href="#produkte" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Produkte</a>
               <a href="#bewertungen" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Bewertungen</a>
               <a href="#kontakt" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Kontakt</a>
+              <a href="#faq" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">FAQ</a>
             </nav>
 
             {/* Nav CTA */}
@@ -2107,27 +2122,38 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {HOME_FAQ_ITEMS.map((item, index) => (
-              <motion.div
-                key={item.question}
-                id={index === 1 ? "faq-lieferung" : undefined}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.08 }}
-                className="rounded-2xl border border-border bg-[oklch(0.97_0.012_85)] p-6 shadow-sm"
-              >
-                <h3
-                  className="text-2xl font-bold text-foreground mb-3"
-                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-5xl mx-auto rounded-2xl border border-border bg-[oklch(0.97_0.012_85)] p-2 md:p-4 shadow-sm"
+          >
+            <Accordion type="single" collapsible className="w-full">
+              {HOME_FAQ_ITEMS.map((item, index) => (
+                <AccordionItem
+                  key={item.question}
+                  id={index === 1 ? "faq-lieferung" : undefined}
+                  value={`faq-${index}`}
+                  className="border-border px-3 md:px-4"
                 >
-                  {item.question}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">{item.answer}</p>
-              </motion.div>
-            ))}
-          </div>
+                  <AccordionTrigger
+                    className="text-left text-xl md:text-2xl font-bold text-foreground hover:no-underline"
+                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                  >
+                    <span className="flex items-start gap-3">
+                      <span className="text-[oklch(0.38_0.08_155)] min-w-[2.4ch]">
+                        {index + 1}.
+                      </span>
+                      <span>{item.question}</span>
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="text-base text-muted-foreground leading-relaxed pb-5">
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </motion.div>
         </div>
       </section>
 
@@ -2150,7 +2176,7 @@ export default function Home() {
               Abholung ist in Gaggenau möglich, auf Wunsch liefern wir zu eurer Location im Umkreis von bis zu 100 km.
             </p>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-left">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 text-left">
               {[
                 "Karlsruhe",
                 "Rastatt",
