@@ -97,10 +97,6 @@ const PRODUCTS_DETAIL = {
         a: "Ja, alle Fotos werden digital archiviert und dir nach dem Event per USB oder Cloud-Link zur Verfügung gestellt.",
       },
       {
-        q: "Ist ein Techniker vor Ort?",
-        a: "Wir kümmern uns auf Wunsch um Aufbau, Betreuung und Abbau. Du brauchst dich um nichts zu kümmern.",
-      },
-      {
         q: "Kann man die Drucke individualisieren?",
         a: "Ja! Wir können die Ausdrucke mit deinem Namen, Logo oder Motiv bedrucken lassen.",
         },
@@ -228,7 +224,8 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-      { label: "Mietgebühr (1 Tag)", value: "29,- €" },
+      { label: "Mietgebühr Einzeln (1 Tag)", value: "29,- €" },
+      { label: "Mietgebühr Dreierpack (1 Tag)", value: "79,- €" },
       { label: "Jeder weitere Tag", value: "+15,- €" },
       { label: "Film 10er Pack (bei Bedarf)", value: "+15,- €" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
@@ -1155,6 +1152,7 @@ export default function ProductDetail() {
   const seoImage = product.images[0] ? toAbsoluteUrl(product.images[0]) : DEFAULT_OG_IMAGE;
   const structuredData = buildProductStructuredData(product, slug);
   const isFotospiegelGlow = slug === "fotospiegel-glow";
+  const isSofortbildkameraDior = slug === "sofortbildkamera-dior";
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden pb-20 md:pb-0">
@@ -1354,11 +1352,25 @@ export default function ProductDetail() {
                   <div className="divide-y divide-white/20 rounded-lg border border-white/20 overflow-hidden bg-white/5">
                     <div className="flex items-start justify-between px-4 py-2.5">
                       <span className="shrink-0 pr-4 text-left text-2xl font-bold leading-none">299,- €</span>
-                      <span className="flex-1 text-right text-sm font-medium text-white/85">Ohne Druckflatrate</span>
+                      <span className="flex-1 text-right text-sm font-medium text-white/85">Alle Bilder digital</span>
                     </div>
                     <div className="flex items-start justify-between px-4 py-2.5">
                       <span className="shrink-0 pr-4 text-left text-2xl font-bold leading-none">399,- €</span>
-                      <span className="flex-1 text-right text-sm font-medium text-white/85">Mit Druckflatrate</span>
+                      <span className="flex-1 text-right text-sm font-medium text-white/85">Alle Bilder digital und ausgedruckt</span>
+                    </div>
+                  </div>
+                  <p className="text-sm text-white/80 mt-2">zzgl. Lieferung (Abholung kostenlos)</p>
+                </div>
+              ) : isSofortbildkameraDior ? (
+                <div className="bg-[oklch(0.32_0.07_155)] text-white rounded-xl px-6 py-5 mb-6">
+                  <div className="divide-y divide-white/20 rounded-lg border border-white/20 overflow-hidden bg-white/5">
+                    <div className="flex items-start justify-between px-4 py-2.5">
+                      <span className="shrink-0 pr-4 text-left text-2xl font-bold leading-none">29,- €</span>
+                      <span className="flex-1 text-right text-sm font-medium text-white/85">Einzeln</span>
+                    </div>
+                    <div className="flex items-start justify-between px-4 py-2.5">
+                      <span className="shrink-0 pr-4 text-left text-2xl font-bold leading-none">79,- €</span>
+                      <span className="flex-1 text-right text-sm font-medium text-white/85">Dreierpack</span>
                     </div>
                   </div>
                   <p className="text-sm text-white/80 mt-2">zzgl. Lieferung (Abholung kostenlos)</p>

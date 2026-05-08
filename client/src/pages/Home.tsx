@@ -15,7 +15,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { MenuIcon, Instagram, ChevronDownIcon, CalendarIcon } from "lucide-react";
+import { MenuIcon, Instagram, ChevronDownIcon } from "lucide-react";
 import Seo from "@/components/Seo";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -201,6 +201,12 @@ const GALLERY_IMAGES = [
   },
 ];
 
+const PHOTO_MIRROR_PRODUCT_NAME = "Fotospiegel GLOW";
+const DIOR_PRODUCT_NAME = "Sofortbildkamera DIOR";
+
+const PHOTO_MIRROR_PRINT_FLATRATE_LABEL = "Mit Druckflatrate - 399,- €";
+const DIOR_TRIPLE_PACK_LABEL = "Dreierpack - 79,- €";
+
 const TESTIMONIALS = [
   {
     name: "Lena Fellmoser",
@@ -324,6 +330,11 @@ const HOME_FAQ_ITEMS = [
     question: "Kann ich die Produkte abholen oder liefern lassen?",
     answer:
       "Ja. Du kannst die Produkte kostenlos in Gaggenau abholen oder dir die Ausstattung bequem liefern lassen. Auf Wunsch liefern wir zu eurer Location im Umkreis von bis zu 100 km.",
+      },
+  {
+    question: "Was kostet die Lieferung?",
+    answer:
+      "Die Lieferung richtet sich nach der Entfernung von unserem Standort in Gaggenau zu deiner Location. Für Lieferungen innerhalb von 50 km berechnen wir eine Pauschale von 50,- €. Für Lieferungen innerhalb von 100 km berechnen wir eine Pauschale von 100,- €.",
   },
   {
     question: "In welchem Gebiet liefert ihr?",
@@ -334,6 +345,21 @@ const HOME_FAQ_ITEMS = [
     question: "Ist eine Einweisung bei den Geräten dabei?",
     answer:
       "Ja. Alle Geräte sind sofort einsatzbereit und wir erklären euch alles in wenigen Minuten, damit ihr direkt loslegen könnt.",
+  },
+  {
+    question: "Wie früh sollte ich buchen?",
+    answer: 
+    "Am besten so früh wie möglich. Gerade in der Hauptsaison sind viele Termine schnell vergeben. Je früher du anfragst, desto größer ist die Auswahl an verfügbaren Produkten.",
+     },
+  {
+    question: "Was passiert, wenn ein Gerät nicht funktioniert?",
+    answer: 
+    "Sollte es wider Erwarten zu einem Problem kommen, lassen wir dich nicht allein. Wir sind während deines Events für dich erreichbar und helfen schnell weiter. In den meisten Fällen lassen sich kleine Probleme direkt lösen – damit dein Event reibungslos weiterläuft.",
+     },
+  {
+    question: "Für welche Events kann ich die Produkte mieten?",
+    answer:
+      "Unsere Produkte eignen sich für eine Vielzahl von Events. Besonders häufig werden sie für Hochzeiten, Geburtstage, Firmenfeiern und Jubiläen gebucht. Aber auch auf Messen, Sommerfesten oder privaten Partys sorgen sie für echte Highlights.",
   },
 ];
 
@@ -509,9 +535,33 @@ function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): nu
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
+function getContactProductPrice(price: string): string {
+  return price.replace(/^ab\s+/i, "");
+}
+
+function getContactProductValue(product: Product): string {
+  return `${product.name} (${getContactProductPrice(product.price)})`;
+}
+
+function openDatePickerOnInteraction(event: React.FocusEvent<HTMLInputElement> | React.MouseEvent<HTMLInputElement>) {
+  const input = event.currentTarget as HTMLInputElement & { showPicker?: () => void };
+  input.showPicker?.();
+}
+
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
-  const [formData, setFormData] = useState({ name: "", phone: "", date: "", products: [] as string[], message: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    date: "",
+    products: [] as string[],
+    message: "",
+    selfPickup: false,
+    addOns: {
+      photoMirrorPrintFlatrate: false,
+      diorTriplePack: false,
+    },
+  });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [deliveryPlz, setDeliveryPlz] = useState("");
   const [deliveryInfo, setDeliveryInfo] = useState<{
@@ -526,6 +576,32 @@ export default function Home() {
   const testimonialRef = useRef<HTMLDivElement>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const isPhotoMirrorSelected = formData.products.some((product) =>
+    product.startsWith(`${PHOTO_MIRROR_PRODUCT_NAME} (`)
+  );
+  const isDiorSelected = formData.products.some((product) =>
+    product.startsWith(`${DIOR_PRODUCT_NAME} (`)
+  );
+
+  useEffect(() => {
+    setFormData((prev) => {
+      let hasChanges = false;
+      const nextAddOns = { ...prev.addOns };
+
+      if (!isPhotoMirrorSelected && prev.addOns.photoMirrorPrintFlatrate) {
+        nextAddOns.photoMirrorPrintFlatrate = false;
+        hasChanges = true;
+      }
+
+      if (!isDiorSelected && prev.addOns.diorTriplePack) {
+        nextAddOns.diorTriplePack = false;
+        hasChanges = true;
+      }
+
+      return hasChanges ? { ...prev, addOns: nextAddOns } : prev;
+    });
+  }, [isPhotoMirrorSelected, isDiorSelected]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 80);
@@ -563,7 +639,7 @@ export default function Home() {
     const selectedProduct = PRODUCTS.find((product) => product.id === productId);
     if (!selectedProduct) return;
 
-    const value = `${selectedProduct.name} (${selectedProduct.price})`;
+    const value = getContactProductValue(selectedProduct);
 
     setFormSubmitted(false);
     setFormData((prev) => ({
@@ -584,7 +660,7 @@ export default function Home() {
   };
 
   const handleProductInquiry = (product: Product) => {
-    const value = `${product.name} (${product.price})`;
+    const value = getContactProductValue(product);
 
     setFormSubmitted(false);
     setFormData((prev) => ({
@@ -599,7 +675,7 @@ export default function Home() {
     const bundleProducts = productSlugs
       .map(slug => PRODUCTS.find(p => toProductSlug(p.name) === slug))
       .filter(Boolean)
-      .map(p => `${p!.name} (${p!.price})`)
+      .map(p => getContactProductValue(p!))
       .filter(val => !formData.products.includes(val));
     
     setFormData((prev) => ({
@@ -664,7 +740,28 @@ export default function Home() {
       return;
     }
 
-    const productList = formData.products.join(" | ");
+    const formattedEventDate = formData.date
+      ? formData.date.split("-").reverse().join(".")
+      : "";
+
+    const messageProducts = formData.products.map((product) => {
+      if (
+        formData.addOns.photoMirrorPrintFlatrate &&
+        product.startsWith(`${PHOTO_MIRROR_PRODUCT_NAME} (`)
+      ) {
+        return "Fotospiegel GLOW mit Druckflatrate (399,- €)";
+      }
+
+      if (
+        formData.addOns.diorTriplePack &&
+        product.startsWith(`${DIOR_PRODUCT_NAME} (`)
+      ) {
+        return "Sofortbildkamera DIOR im Dreierpack (79,- €)";
+      }
+
+      return product;
+    });
+    const productList = messageProducts.join(" | ");
     const deliveryLine =
       deliveryInfo.status === "done" && deliveryInfo.cost !== null
         ? `Lieferung: ${deliveryInfo.cost},- € (ca. ${deliveryInfo.distance} km, PLZ ${deliveryPlz})`
@@ -672,9 +769,16 @@ export default function Home() {
         ? `Lieferung: Außerhalb des Liefergebiets (PLZ ${deliveryPlz}) – Abholung bevorzugt`
         : deliveryPlz
         ? `Liefer-PLZ: ${deliveryPlz} (nicht berechnet)`
-        : "Lieferung/Abholung: Noch nicht angegeben";
+        : null;
+    const pickupLine = formData.selfPickup ? "Abholung: Ich hole selbst ab" : null;
+    const messageLine = formData.message.trim()
+      ? `Nachricht: ${formData.message.trim()}`
+      : null;
+    const optionalLines = [deliveryLine, pickupLine, messageLine]
+      .filter(Boolean)
+      .join("\n");
     const msg = encodeURIComponent(
-      `Hallo memora-Team,\n\nName: ${formData.name}\nTelefon: ${formData.phone}\nEvent-Datum: ${formData.date}\nProdukte: ${productList}\n${deliveryLine}\nNachricht: ${formData.message}`
+      `Hallo memora-Team, ich möchte folgende Anfrage stellen: \n\nName: ${formData.name}\nEvent-Datum: ${formattedEventDate}\nProdukte: ${productList}${optionalLines ? `\n${optionalLines}` : ""}`
     );
     window.open(`https://wa.me/4915225896570?text=${msg}`, "_blank");
     setFormSubmitted(true);
@@ -834,7 +938,7 @@ export default function Home() {
             </nav>
 
             {/* Nav CTA */}
-            <div className="flex items-center gap-2">
+            <div className="hidden items-center gap-2">
               <a
                 href="tel:+4915225896570"
                 className="hidden sm:flex items-center gap-1.5 text-white/80 hover:text-white text-sm transition-colors"
@@ -865,10 +969,13 @@ export default function Home() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/hero-wedding-bxuza95kZppK3iMUgEStpR.webp')` }}
         />
+        <div className="absolute right-4 bottom-4 z-20 whitespace-nowrap rounded-full border border-white/10 bg-black/15 px-1.5 py-[1px] text-[5px] font-normal uppercase tracking-[0.06em] text-white/45 [writing-mode:horizontal-tb] [direction:ltr] backdrop-blur-[1px] md:right-6 md:bottom-6 md:px-2 md:py-[2px] md:text-[9px] md:tracking-[0.08em]">
+          Bild: KI-generiert
+        </div>
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.12_0.06_155/0.85)] via-[oklch(0.12_0.06_155/0.65)] to-[oklch(0.12_0.06_155/0.3)]" />
 
-        <div className="container relative z-10 pt-12 md:pt-24 pb-16">
+        <div className="container relative z-10 pt-1 md:pt-24 pb-16">
           {/* H1 for SEO - visually hidden */}
           <h1 className="sr-only">Eventausstattung mieten in Karlsruhe, Rastatt und Baden-Baden | memora - miete den moment</h1>
           <div className="max-w-2xl">
@@ -877,7 +984,7 @@ export default function Home() {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 mb-6"
+              className="inline-flex items-center gap-2 mb-8 sm:mb-6"
             >
               <span className="urgency-badge">🔥 Sommersaison – Jetzt Termin sichern</span>
             </motion.div>
@@ -887,7 +994,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.7 }}
-              className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-2"
+              className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-10 sm:mb-2"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
               Mach dein Event
@@ -900,7 +1007,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.7 }}
-              className="text-lg md:text-xl text-white/85 mb-8 leading-relaxed max-w-xl"
+              className="text-lg md:text-xl text-white/85 mb-20 sm:mb-12 leading-relaxed max-w-xl"
             >
               Hochwertige Eventausstattung mieten in Karlsruhe, Rastatt & erweiterter Umgebung.
               Fotospiegel, Slushmaschinen, Audio-Gästebücher und mehr –
@@ -912,7 +1019,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.65 }}
-              className="flex items-center gap-3 mb-8"
+              className="flex items-center gap-3 mb-10 sm:mb-8"
             >
               <div className="flex -space-x-2">
                 {["L", "C", "J"].map((letter, i) => (
@@ -939,7 +1046,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
-              className="sm:hidden mb-8"
+              className="hidden"
             >
               <button
                 onClick={scrollToContact}
@@ -954,7 +1061,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
-              className="hidden sm:flex"
+              className="hidden"
             >
               <button
                 onClick={scrollToContact}
@@ -969,9 +1076,9 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.1 }}
-              className="text-white/50 text-sm mt-8"
+              className="text-white/50 text-sm mt-10 sm:mt-8"
             >
-              ✓ Unverbindliche Anfrage &nbsp;·&nbsp; ✓ Kostenlose Beratung &nbsp;·&nbsp; ✓ Top bewertete Dienstleistungen & Produkte
+              ✓ Produkte entdecken &nbsp;&nbsp; ✓ Unverbindlich anfragen <br className="sm:hidden" /><span className="hidden sm:inline">&nbsp;&nbsp;</span>✓ Abholen oder stressfrei liefern lassen
             </motion.p>
           </div>
         </div>
@@ -981,9 +1088,9 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/40"
+          className="absolute bottom-14 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/40"
         >
-          <span className="text-xs">Mehr entdecken</span>
+          <span className="text-xs">Jetzt entdecken</span>
           <motion.div
             animate={{ y: [0, 6, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
@@ -1031,7 +1138,7 @@ export default function Home() {
                 step: "02",
                 icon: "💬",
                 title: "Unverbindlich anfragen",
-                desc: "Stell uns eine unverbindliche Anfrage direkt per WhatsApp, E-Mail oder Telefon. Wir prüfen die Verfügbarkeit und melden uns innerhalb von 2 Stunden.",
+                desc: "Stell uns eine unverbindliche Anfrage direkt per WhatsApp, E-Mail oder Anruf. Wir prüfen die Verfügbarkeit und melden uns innerhalb von 2 Stunden.",
                 cta: "Jetzt anfragen",
                 href: "#kontakt",
                 highlight: true,
@@ -1597,11 +1704,12 @@ export default function Home() {
                       <input
                         type="date"
                         required
-                        className="form-input max-w-xs sm:max-w-none sm:pr-10"
+                        className="form-input max-w-xs sm:max-w-none cursor-pointer"
                         value={formData.date}
                         onChange={e => setFormData({ ...formData, date: e.target.value })}
+                        onFocus={openDatePickerOnInteraction}
+                        onClick={openDatePickerOnInteraction}
                       />
-                      <CalendarIcon className="hidden sm:block absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
                     </div>
                   </div>
 
@@ -1630,9 +1738,9 @@ export default function Home() {
                               <input
                                 type="checkbox"
                                 className="h-4 w-4 rounded border-border text-amber-500 focus:ring-amber-300"
-                                checked={formData.products.includes(`${product.name} (${product.price})`)}
+                                checked={formData.products.includes(getContactProductValue(product))}
                                 onChange={(e) => {
-                                  const value = `${product.name} (${product.price})`;
+                                  const value = getContactProductValue(product);
                                   setFormData((prev) => ({
                                     ...prev,
                                     products: e.target.checked
@@ -1641,13 +1749,57 @@ export default function Home() {
                                   }));
                                 }}
                               />
-                              <span>{product.name} – {product.price}</span>
+                              <span>{product.name} – {getContactProductPrice(product.price)}</span>
                             </label>
                           ))}
                         </div>
                       </PopoverContent>
                     </Popover>
                   </div>
+
+                  {(isPhotoMirrorSelected || isDiorSelected) && (
+                    <div className="rounded-lg border border-border bg-[oklch(0.97_0.006_85)] p-4 space-y-2">
+                      <p className="text-sm font-semibold text-foreground">Zusatzoptionen</p>
+                      {isPhotoMirrorSelected && (
+                        <label className="flex items-center gap-3 text-sm text-foreground cursor-pointer">
+                          <input
+                            type="checkbox"
+                            className="h-4 w-4 rounded border-border text-amber-500 focus:ring-amber-300"
+                            checked={formData.addOns.photoMirrorPrintFlatrate}
+                            onChange={(e) =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                addOns: {
+                                  ...prev.addOns,
+                                  photoMirrorPrintFlatrate: e.target.checked,
+                                },
+                              }))
+                            }
+                          />
+                          <span>{PHOTO_MIRROR_PRINT_FLATRATE_LABEL}</span>
+                        </label>
+                      )}
+                      {isDiorSelected && (
+                        <label className="flex items-center gap-3 text-sm text-foreground cursor-pointer">
+                          <input
+                            type="checkbox"
+                            className="h-4 w-4 rounded border-border text-amber-500 focus:ring-amber-300"
+                            checked={formData.addOns.diorTriplePack}
+                            onChange={(e) =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                addOns: {
+                                  ...prev.addOns,
+                                  diorTriplePack: e.target.checked,
+                                },
+                              }))
+                            }
+                          />
+                          <span>{DIOR_TRIPLE_PACK_LABEL}</span>
+                        </label>
+                      )}
+                    </div>
+                  )}
 
                   <div>
                     <label className="block text-sm font-semibold text-foreground mb-1.5">
@@ -1694,6 +1846,21 @@ export default function Home() {
                     {deliveryInfo.status === "error" && (
                       <p className="mt-2 text-sm text-red-600">PLZ nicht gefunden. Bitte prüfe deine Eingabe.</p>
                     )}
+
+                    <label className="mt-3 flex items-center gap-3 text-sm text-foreground cursor-pointer">
+                      <input
+                        type="checkbox"
+                        className="h-4 w-4 rounded border-border text-amber-500 focus:ring-amber-300"
+                        checked={formData.selfPickup}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            selfPickup: e.target.checked,
+                          }))
+                        }
+                      />
+                      <span>Ich hole selbst ab.</span>
+                    </label>
                   </div>
 
                   <div>
@@ -1726,7 +1893,7 @@ export default function Home() {
                   <p className="text-xs text-muted-foreground text-center">
                     Oder direkt anrufen:{" "}
                     <a href="tel:+4915225896570" className="text-[oklch(0.32_0.07_155)] font-semibold hover:underline">
-                      0152 258 96570
+                      01522 589 6570
                     </a>
                     {" "}· E-Mail:{" "}
                     <a href="mailto:info@mietedenmoment.de" className="text-[oklch(0.32_0.07_155)] font-semibold hover:underline">
@@ -1795,14 +1962,14 @@ export default function Home() {
                     className="btn-whatsapp pulse-whatsapp w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2"
                   >
                     <WhatsAppIcon />
-                    WhatsApp: 0152 258 96570
+                    WhatsApp: 01522 589 6570
                   </a>
                   <a
                     href="tel:+4915225896570"
                     className="w-full bg-white/10 hover:bg-white/20 transition-colors py-3 rounded-xl font-semibold flex items-center justify-center gap-2 text-white"
                   >
                     <PhoneIcon />
-                    Anrufen: 0152 258 96570
+                    Anrufen: 01522 589 6570
                   </a>
                   <a
                     href="mailto:info@mietedenmoment.de"
@@ -2041,7 +2208,7 @@ export default function Home() {
               <h4 className="text-white font-semibold mb-3">Kontakt</h4>
               <div className="space-y-2 text-sm">
                 <a href="tel:+4915225896570" className="flex items-center gap-2 hover:text-[oklch(0.75_0.14_80)] transition-colors">
-                  <PhoneIcon /> 0152 258 96570
+                  <PhoneIcon /> 01522 589 6570
                 </a>
                 <a href="mailto:info@mietedenmoment.de" className="flex items-center gap-2 hover:text-[oklch(0.75_0.14_80)] transition-colors">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -2129,7 +2296,7 @@ export default function Home() {
         initial={{ y: 100 }}
         animate={{ y: scrolled ? 0 : 100 }}
         transition={{ duration: 0.3 }}
-        className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-[oklch(0.22_0.06_155)] border-t border-[oklch(0.75_0.14_80/0.3)] px-3 py-2 flex gap-2"
+        className="hidden fixed bottom-0 left-0 right-0 z-40 md:hidden bg-[oklch(0.22_0.06_155)] border-t border-[oklch(0.75_0.14_80/0.3)] px-3 py-2 flex gap-2"
       >
         <a
           href="https://wa.me/4915225896570?text=Hallo%20memora-Team,%20"

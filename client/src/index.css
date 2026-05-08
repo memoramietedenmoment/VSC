@@ -364,8 +364,4 @@
   input[type="date"] {
     box-sizing: border-box;
   }
-  /* Hide default date input icon/picker button */
-  input[type="date"]::-webkit-calendar-picker-indicator {
-    display: none;
-  }
 }
