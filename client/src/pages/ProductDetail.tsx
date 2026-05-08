@@ -1406,9 +1406,6 @@ export default function ProductDetail() {
                 <WhatsAppIcon />
                 Jetzt anfragen
               </button>
-              <p className="hidden md:block text-xs text-muted-foreground text-center">
-                ✓ Kostenlos & unverbindlich · ✓ Antwort innerhalb von 2                <label key={product.id} className="flex items-center gap-3 text-sm text-foreground"></label>h
-              </p>
             </motion.div>
           </div>
         </div>
