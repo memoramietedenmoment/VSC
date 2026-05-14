@@ -8,6 +8,8 @@ export const PRODUCT_COMBINATIONS = {
     ],
     bundleTitle: "Das Hochzeits-Gesamtpaket",
     bundleDescription: "Fotospiegel für Erinnerungen + Audio-Gästebuch für Stimmen + Seifenblasen für die perfekte Stimmung",
+    bundleOriginalPrice: 377,
+    bundleDiscountedPrice: 349,
   },
   "audio-gaestebuch-vivi": {
     related: [
@@ -16,6 +18,8 @@ export const PRODUCT_COMBINATIONS = {
     ],
     bundleTitle: "Erinnerungen sammeln",
     bundleDescription: "Audio-Nachrichten + Sofortfotos + Musik für das perfekte Gästebuch-Erlebnis",
+    bundleOriginalPrice: 377,
+    bundleDiscountedPrice: 349,
   },
   "sofortbildkamera-dior": {
     related: [
@@ -24,6 +28,8 @@ export const PRODUCT_COMBINATIONS = {
     ],
     bundleTitle: "Die Foto-Kombination",
     bundleDescription: "Sofortdruck + Fotospiegel + Seifenblasen = unvergessliche Erinnerungen",
+    bundleOriginalPrice: 377,
+    bundleDiscountedPrice: 349,
   },
   "slushmaschine-emit": {
     related: [
@@ -33,6 +39,8 @@ export const PRODUCT_COMBINATIONS = {
     ],
     bundleTitle: "Das Snack-Buffet",
     bundleDescription: "Kalte Slushies + knusprige Snacks + warme Leckereien für hungrige Gäste",
+    bundleOriginalPrice: 267,
+    bundleDiscountedPrice: 239,
   },
   "karaokemaschine-sing": {
     related: [
@@ -41,6 +49,8 @@ export const PRODUCT_COMBINATIONS = {
     ],
     bundleTitle: "Die Party-Essentials",
     bundleDescription: "Karaoke-Spaß + Musik + Nebeleffekte = unvergessliche Nacht",
+    bundleOriginalPrice: 177,
+    bundleDiscountedPrice: 159,
   },
   "zuckerwattemaschine-luna": {
     related: [
@@ -50,6 +60,8 @@ export const PRODUCT_COMBINATIONS = {
     ],
     bundleTitle: "Das Kinder-Party-Paket",
     bundleDescription: "Zuckerwatte + Popcorn + Slusheis + Seifenblasen = glückliche Kinderaugen",
+    bundleOriginalPrice: 267,
+    bundleDiscountedPrice: 239,
   },
   "seifenblasenmaschine-lilo": {
     related: [
@@ -58,6 +70,8 @@ export const PRODUCT_COMBINATIONS = {
     ],
     bundleTitle: "Die Atmosphären-Kombi",
     bundleDescription: "Seifenblasen + Musik + Nebeleffekte für märchenhafte Momente",
+    bundleOriginalPrice: 177,
+    bundleDiscountedPrice: 159,
   },
   "nebelmaschine-mira": {
     related: [
@@ -66,6 +80,8 @@ export const PRODUCT_COMBINATIONS = {
     ],
     bundleTitle: "Die Show-Effekte",
     bundleDescription: "Nebelmaschine + Seifenblasen + Musik für professionelle Atmosphäre",
+    bundleOriginalPrice: 177,
+    bundleDiscountedPrice: 159,
   },
   "musik-box-sunu": {
     related: [
@@ -75,6 +91,8 @@ export const PRODUCT_COMBINATIONS = {
     ],
     bundleTitle: "Die Audio-Lösung",
     bundleDescription: "Musik + Effekte + Gästebuch für das perfekte Soundtracking",
+    bundleOriginalPrice: 247,
+    bundleDiscountedPrice: 219,
   },
   "hot-dog-waermer-sjen": {
     related: [
@@ -84,6 +102,8 @@ export const PRODUCT_COMBINATIONS = {
     ],
     bundleTitle: "Das Snack-Bundle",
     bundleDescription: "Hot Dogs + Nachos + Popcorn = perfekte Snack-Bar",
+    bundleOriginalPrice: 267,
+    bundleDiscountedPrice: 239,
   },
   "nacho-waermer-sala": {
     related: [
@@ -93,6 +113,8 @@ export const PRODUCT_COMBINATIONS = {
     ],
     bundleTitle: "Das Würzige Snack-Paket",
     bundleDescription: "Nachos + Hot Dogs + Popcorn für die kulinarische Party",
+    bundleOriginalPrice: 267,
+    bundleDiscountedPrice: 239,
   },
   "popcornmaschine-keno": {
     related: [
@@ -102,5 +124,7 @@ export const PRODUCT_COMBINATIONS = {
     ],
     bundleTitle: "Das Klassiker-Snack-Paket",
     bundleDescription: "Popcorn + warme Snacks + Zuckerwatte für Candy-Bar und mehr",
+    bundleOriginalPrice: 267,
+    bundleDiscountedPrice: 239,
   },
 };

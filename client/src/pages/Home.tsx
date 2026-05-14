@@ -312,6 +312,57 @@ const TESTIMONIALS = [
 
 type Product = (typeof PRODUCTS)[number];
 
+type ContactAddOns = {
+  photoMirrorPrintFlatrate: boolean;
+  diorTriplePack: boolean;
+};
+
+type ProductSelectionSummary = {
+  label: string;
+  price: number;
+};
+
+type ContactBundlePricing = {
+  name: string;
+  productSlugs: string[];
+  originalPrice: number;
+  discountedPrice: number;
+};
+
+const CONTACT_ADD_ON_PRICING = {
+  photoMirrorPrintFlatrate: {
+    productName: PHOTO_MIRROR_PRODUCT_NAME,
+    label: "Fotospiegel GLOW mit Druckflatrate",
+    price: 399,
+  },
+  diorTriplePack: {
+    productName: DIOR_PRODUCT_NAME,
+    label: "Sofortbildkamera DIOR im Dreierpack",
+    price: 79,
+  },
+} as const;
+
+const CONTACT_BUNDLE_PRICING: ContactBundlePricing[] = [
+  {
+    name: "Das Hochzeits-Paket",
+    productSlugs: ["fotospiegel-glow", "audio-gaestebuch-vivi", "sofortbildkamera-dior"],
+    originalPrice: 527,
+    discountedPrice: 475,
+  },
+  {
+    name: "Das Geburtstags-Paket",
+    productSlugs: ["fotospiegel-glow", "karaokemaschine-sing", "popcornmaschine-keno"],
+    originalPrice: 527,
+    discountedPrice: 475,
+  },
+  {
+    name: "Das Gastro-Paket",
+    productSlugs: ["slushmaschine-emit", "hot-dog-waermer-sjen", "popcornmaschine-keno"],
+    originalPrice: 267,
+    discountedPrice: 239,
+  },
+];
+
 const SERVICE_AREAS = [
   "Karlsruhe",
   "Rastatt",
@@ -540,8 +591,73 @@ function getContactProductPrice(price: string): string {
   return price.replace(/^ab\s+/i, "");
 }
 
+function parseContactProductPrice(price: string): number {
+  const numericPrice = extractNumericPrice(price);
+  return numericPrice ? Number(numericPrice) : 0;
+}
+
 function getContactProductValue(product: Product): string {
   return `${product.name} (${getContactProductPrice(product.price)})`;
+}
+
+function getContactProductSummary(product: Product, addOns: ContactAddOns): ProductSelectionSummary {
+  const addOnEntry = Object.values(CONTACT_ADD_ON_PRICING).find(
+    (entry) => entry.productName === product.name
+  );
+
+  if (addOnEntry) {
+    const isSelected =
+      addOnEntry.productName === PHOTO_MIRROR_PRODUCT_NAME
+        ? addOns.photoMirrorPrintFlatrate
+        : addOns.diorTriplePack;
+
+    if (isSelected) {
+      return {
+        label: addOnEntry.label,
+        price: addOnEntry.price,
+      };
+    }
+  }
+
+  return {
+    label: product.name,
+    price: parseContactProductPrice(product.price),
+  };
+}
+
+function getContactSelectedProductSummaries(
+  selectedValues: string[],
+  addOns: ContactAddOns
+): ProductSelectionSummary[] {
+  return selectedValues
+    .map((value) => {
+      const product = PRODUCTS.find((entry) => value.startsWith(`${entry.name} (`));
+      return product ? getContactProductSummary(product, addOns) : null;
+    })
+    .filter((summary): summary is ProductSelectionSummary => summary !== null);
+}
+
+function getActiveContactBundle(selectedValues: string[]): ContactBundlePricing | null {
+  const selectedSlugs = new Set(
+    selectedValues
+      .map((value) => {
+        const product = PRODUCTS.find((entry) => value.startsWith(`${entry.name} (`));
+        return product ? toProductSlug(product.name) : null;
+      })
+      .filter((slug): slug is string => slug !== null)
+  );
+
+  return (
+    CONTACT_BUNDLE_PRICING.find((bundle) =>
+      bundle.productSlugs.every((slug) => selectedSlugs.has(slug))
+    ) ?? null
+  );
+}
+
+function getBundleProductNames(bundle: ContactBundlePricing): string[] {
+  return bundle.productSlugs
+    .map((slug) => PRODUCTS.find((product) => toProductSlug(product.name) === slug)?.name)
+    .filter((name): name is string => Boolean(name));
 }
 
 function openDatePickerOnInteraction(event: React.FocusEvent<HTMLInputElement> | React.MouseEvent<HTMLInputElement>) {
@@ -551,6 +667,10 @@ function openDatePickerOnInteraction(event: React.FocusEvent<HTMLInputElement> |
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
+  const scrolledRef = useRef(false);
+  const [showScrollButtons, setShowScrollButtons] = useState(false);
+  const [canScrollUp, setCanScrollUp] = useState(false);
+  const [canScrollDown, setCanScrollDown] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -577,6 +697,7 @@ export default function Home() {
   const testimonialRef = useRef<HTMLDivElement>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const isTestimonialsInView = useInView(testimonialRef, { amount: 0.35 });
 
   const isPhotoMirrorSelected = formData.products.some((product) =>
     product.startsWith(`${PHOTO_MIRROR_PRODUCT_NAME} (`)
@@ -584,6 +705,19 @@ export default function Home() {
   const isDiorSelected = formData.products.some((product) =>
     product.startsWith(`${DIOR_PRODUCT_NAME} (`)
   );
+  const selectedProductSummaries = getContactSelectedProductSummaries(
+    formData.products,
+    formData.addOns
+  );
+  const selectedProductTotal = selectedProductSummaries.reduce(
+    (sum, summary) => sum + summary.price,
+    0
+  );
+  const activeContactBundle = getActiveContactBundle(formData.products);
+  const shouldAutoSelectPhotoMirrorAddOn =
+    activeContactBundle?.productSlugs.includes("fotospiegel-glow") ?? false;
+  const shouldAutoSelectDiorAddOn =
+    activeContactBundle?.productSlugs.includes("sofortbildkamera-dior") ?? false;
 
   useEffect(() => {
     setFormData((prev) => {
@@ -605,9 +739,111 @@ export default function Home() {
   }, [isPhotoMirrorSelected, isDiorSelected]);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 80);
-    window.addEventListener("scroll", handleScroll);
+    if (!shouldAutoSelectPhotoMirrorAddOn && !shouldAutoSelectDiorAddOn) {
+      return;
+    }
+
+    setFormData((prev) => {
+      let hasChanges = false;
+      const nextAddOns = { ...prev.addOns };
+
+      if (
+        shouldAutoSelectPhotoMirrorAddOn &&
+        isPhotoMirrorSelected &&
+        !prev.addOns.photoMirrorPrintFlatrate
+      ) {
+        nextAddOns.photoMirrorPrintFlatrate = true;
+        hasChanges = true;
+      }
+
+      if (
+        shouldAutoSelectDiorAddOn &&
+        isDiorSelected &&
+        !prev.addOns.diorTriplePack
+      ) {
+        nextAddOns.diorTriplePack = true;
+        hasChanges = true;
+      }
+
+      return hasChanges ? { ...prev, addOns: nextAddOns } : prev;
+    });
+  }, [
+    shouldAutoSelectPhotoMirrorAddOn,
+    shouldAutoSelectDiorAddOn,
+    isPhotoMirrorSelected,
+    isDiorSelected,
+    formData.addOns.photoMirrorPrintFlatrate,
+    formData.addOns.diorTriplePack,
+  ]);
+
+  useEffect(() => {
+    // Auf Mobile: Header-Scroll-State nicht toggeln, um Viewport-Jitter zu vermeiden.
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    if (isMobile) {
+      scrolledRef.current = true;
+      setScrolled(true);
+      return;
+    }
+
+    let ticking = false;
+
+    const updateScrolled = () => {
+      const next = window.scrollY > 80;
+      if (next !== scrolledRef.current) {
+        scrolledRef.current = next;
+        setScrolled(next);
+      }
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(updateScrolled);
+    };
+
+    updateScrolled();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const threshold = 180;
+    const epsilon = 8;
+
+    const updateScrollButtons = () => {
+      const isMobile = window.matchMedia("(max-width: 767px)").matches;
+      if (!isMobile) {
+        setShowScrollButtons(false);
+        setCanScrollUp(false);
+        setCanScrollDown(false);
+        return;
+      }
+
+      const scrollY = window.scrollY;
+      const viewportHeight = window.innerHeight;
+      const pageHeight = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+      );
+
+      const atTop = scrollY <= epsilon;
+      const atBottom = scrollY + viewportHeight >= pageHeight - epsilon;
+      const canScroll = pageHeight > viewportHeight + epsilon;
+
+      setShowScrollButtons(canScroll && scrollY > threshold);
+      setCanScrollUp(!atTop);
+      setCanScrollDown(!atBottom);
+    };
+
+    updateScrollButtons();
+    window.addEventListener("scroll", updateScrollButtons, { passive: true });
+    window.addEventListener("resize", updateScrollButtons);
+
+    return () => {
+      window.removeEventListener("scroll", updateScrollButtons);
+      window.removeEventListener("resize", updateScrollButtons);
+    };
   }, []);
 
   // Restore scroll position when navigating back from a product page
@@ -617,19 +853,35 @@ export default function Home() {
     window.sessionStorage.removeItem("restore-home-scroll");
     const scrollY = Number(saved);
     if (!Number.isFinite(scrollY) || scrollY <= 0) return;
-    const timer = setTimeout(() => {
+
+    let cancelled = false;
+    const restore = () => {
+      if (cancelled) return;
       window.scrollTo({ top: scrollY, behavior: "auto" });
-    }, 200);
-    return () => clearTimeout(timer);
+    };
+
+    // Erst nach Paint und mit kleinem Delay ausfuehren,
+    // damit Mobile-Layouts bereits stabil sind.
+    const frame = requestAnimationFrame(restore);
+    const timeout = window.setTimeout(restore, 120);
+
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(frame);
+      window.clearTimeout(timeout);
+    };
   }, []);
 
   // Testimonial Karussell
   useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    if (isMobile || !isTestimonialsInView) return;
+
     const timer = setInterval(() => {
       setActiveTestimonial(prev => (prev + 1) % TESTIMONIALS.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [isTestimonialsInView]);
 
   useEffect(() => {
     const productIdParam = window.location.search ? new URLSearchParams(window.location.search).get("productId") : null;
@@ -660,6 +912,18 @@ export default function Home() {
     contactRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const scrollToBottom = () => {
+    const pageHeight = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight
+    );
+    window.scrollTo({ top: pageHeight, behavior: "smooth" });
+  };
+
   const handleProductInquiry = (product: Product) => {
     const value = getContactProductValue(product);
 
@@ -678,15 +942,25 @@ export default function Home() {
       .filter(Boolean)
       .map(p => getContactProductValue(p!))
       .filter(val => !formData.products.includes(val));
+
+    const includesPhotoMirror = productSlugs.includes("fotospiegel-glow");
+    const includesDior = productSlugs.includes("sofortbildkamera-dior");
     
     setFormData((prev) => ({
       ...prev,
       products: [...prev.products, ...bundleProducts],
+      addOns: {
+        ...prev.addOns,
+        photoMirrorPrintFlatrate:
+          prev.addOns.photoMirrorPrintFlatrate || includesPhotoMirror,
+        diorTriplePack: prev.addOns.diorTriplePack || includesDior,
+      },
     }));
     
-    setTimeout(() => {
+    // Scroll zum Kontaktformular mit requestAnimationFrame statt setTimeout
+    requestAnimationFrame(() => {
       document.getElementById("kontakt")?.scrollIntoView({ behavior: "smooth" });
-    }, 100);
+    });
   };
 
   // Touch handlers for testimonial swiping
@@ -745,24 +1019,49 @@ export default function Home() {
       ? formData.date.split("-").reverse().join(".")
       : "";
 
-    const messageProducts = formData.products.map((product) => {
-      if (
-        formData.addOns.photoMirrorPrintFlatrate &&
-        product.startsWith(`${PHOTO_MIRROR_PRODUCT_NAME} (`)
-      ) {
-        return "Fotospiegel GLOW mit Druckflatrate (399,- €)";
-      }
+    const messageProducts = getContactSelectedProductSummaries(
+      formData.products,
+      formData.addOns
+    );
+    const productList = messageProducts
+      .map((item) => `${item.label} (${item.price},- €)`)
+      .join(" | ");
 
-      if (
-        formData.addOns.diorTriplePack &&
-        product.startsWith(`${DIOR_PRODUCT_NAME} (`)
-      ) {
-        return "Sofortbildkamera DIOR im Dreierpack (79,- €)";
-      }
+    const bundleProductNames = activeContactBundle
+      ? new Set(getBundleProductNames(activeContactBundle))
+      : null;
+    const activeBundleSubtotal = bundleProductNames
+      ? selectedProductSummaries.reduce((sum, summary) => {
+          const belongsToPhotoMirror =
+            summary.label === CONTACT_ADD_ON_PRICING.photoMirrorPrintFlatrate.label &&
+            bundleProductNames.has(PHOTO_MIRROR_PRODUCT_NAME);
+          const belongsToDior =
+            summary.label === CONTACT_ADD_ON_PRICING.diorTriplePack.label &&
+            bundleProductNames.has(DIOR_PRODUCT_NAME);
+          const belongsToBaseProduct = bundleProductNames.has(summary.label);
 
-      return product;
-    });
-    const productList = messageProducts.join(" | ");
+          return belongsToPhotoMirror || belongsToDior || belongsToBaseProduct
+            ? sum + summary.price
+            : sum;
+        }, 0)
+      : 0;
+    const bundleSavings =
+      activeContactBundle && activeBundleSubtotal > activeContactBundle.discountedPrice
+        ? activeBundleSubtotal - activeContactBundle.discountedPrice
+        : 0;
+    const effectiveProductsTotal = selectedProductTotal - bundleSavings;
+
+    const deliveryCostForTotal =
+      deliveryInfo.status === "done" && deliveryInfo.cost !== null ? deliveryInfo.cost : 0;
+    const totalPriceWithDelivery = effectiveProductsTotal + deliveryCostForTotal;
+    const totalPriceLine =
+      deliveryCostForTotal > 0
+        ? bundleSavings > 0
+          ? `Gesamtpreis: ${totalPriceWithDelivery},- € (Produkte ${effectiveProductsTotal},- € statt ${selectedProductTotal},- € + Lieferung ${deliveryCostForTotal},- €)`
+          : `Gesamtpreis: ${totalPriceWithDelivery},- € (Produkte ${effectiveProductsTotal},- € + Lieferung ${deliveryCostForTotal},- €)`
+        : bundleSavings > 0
+        ? `Gesamtpreis Produkte: ${effectiveProductsTotal},- € (statt ${selectedProductTotal},- €)`
+        : `Gesamtpreis Produkte: ${effectiveProductsTotal},- €`;
     const deliveryLine =
       deliveryInfo.status === "done" && deliveryInfo.cost !== null
         ? `Lieferung: ${deliveryInfo.cost},- € (ca. ${deliveryInfo.distance} km, PLZ ${deliveryPlz})`
@@ -775,18 +1074,21 @@ export default function Home() {
     const messageLine = formData.message.trim()
       ? `Nachricht: ${formData.message.trim()}`
       : null;
-    const optionalLines = [deliveryLine, pickupLine, messageLine]
+    const priceLines = [deliveryLine, totalPriceLine]
+      .filter(Boolean)
+      .join("\n");
+    const optionalLines = [pickupLine, messageLine]
       .filter(Boolean)
       .join("\n");
     const msg = encodeURIComponent(
-      `Hallo memora-Team, ich möchte folgende Anfrage stellen: \n\nName: ${formData.name}\nEvent-Datum: ${formattedEventDate}\nProdukte: ${productList}${optionalLines ? `\n${optionalLines}` : ""}`
+      `Hallo memora-Team, ich möchte folgende Anfrage stellen: \n\nName: ${formData.name}\nEvent-Datum: ${formattedEventDate}\nProdukte: ${productList}\n${priceLines}${optionalLines ? `\n${optionalLines}` : ""}`
     );
     window.open(`https://wa.me/4915225896570?text=${msg}`, "_blank");
     setFormSubmitted(true);
   };
 
   return (
-    <div className="min-h-screen bg-background font-sans overflow-x-hidden">
+    <div className="min-h-[100svh] md:min-h-screen bg-background font-sans overflow-x-hidden">
       <Seo
         title="Eventausstattung mieten in Karlsruhe, Rastatt & Baden-Baden | memora"
         description="Eventausstattung mieten in Karlsruhe, Rastatt, Baden-Baden und Umgebung: Fotospiegel, Slushmaschine, Audio-Gästebuch, Popcornmaschine und mehr. Abholung in Gaggenau oder Lieferung im Umkreis von bis zu 100 km."
@@ -799,10 +1101,10 @@ export default function Home() {
           STICKY NAVIGATION
       ═══════════════════════════════════════════════════ */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-16 ${
           scrolled
             ? "bg-[oklch(0.22_0.06_155)] shadow-lg"
-            : "bg-transparent"
+            : "bg-[oklch(0.22_0.06_155)]"
         }`}
       >
         <div className="container relative flex items-center h-16">
@@ -833,9 +1135,9 @@ export default function Home() {
                     onClick={(e) => {
                       e.preventDefault();
                       setIsMenuOpen(false);
-                      setTimeout(() => {
+                      requestAnimationFrame(() => {
                         document.getElementById('wie-es-funktioniert')?.scrollIntoView({ behavior: 'smooth' });
-                      }, 300);
+                      });
                     }}
                   >
                     So geht's
@@ -846,9 +1148,9 @@ export default function Home() {
                     onClick={(e) => {
                       e.preventDefault();
                       setIsMenuOpen(false);
-                      setTimeout(() => {
+                      requestAnimationFrame(() => {
                         document.getElementById('produkte')?.scrollIntoView({ behavior: 'smooth' });
-                      }, 300);
+                      });
                     }}
                   >
                     Produkte
@@ -859,9 +1161,9 @@ export default function Home() {
                     onClick={(e) => {
                       e.preventDefault();
                       setIsMenuOpen(false);
-                      setTimeout(() => {
+                      requestAnimationFrame(() => {
                         document.getElementById('bewertungen')?.scrollIntoView({ behavior: 'smooth' });
-                      }, 300);
+                      });
                     }}
                   >
                     Bewertungen
@@ -872,9 +1174,9 @@ export default function Home() {
                     onClick={(e) => {
                       e.preventDefault();
                       setIsMenuOpen(false);
-                      setTimeout(() => {
+                      requestAnimationFrame(() => {
                         document.getElementById('kontakt')?.scrollIntoView({ behavior: 'smooth' });
-                      }, 300);
+                      });
                     }}
                   >
                     Kontakt
@@ -885,9 +1187,9 @@ export default function Home() {
                     onClick={(e) => {
                       e.preventDefault();
                       setIsMenuOpen(false);
-                      setTimeout(() => {
+                      requestAnimationFrame(() => {
                         document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
-                      }, 300);
+                      });
                     }}
                   >
                     FAQ
@@ -905,9 +1207,9 @@ export default function Home() {
                   <button
                     onClick={() => {
                       setIsMenuOpen(false);
-                      setTimeout(() => {
+                      requestAnimationFrame(() => {
                         scrollToContact();
-                      }, 300);
+                      });
                     }}
                     className="btn-gold px-4 py-3 rounded-lg text-sm font-bold pulse-gold w-full text-center max-w-xs"
                   >
@@ -975,10 +1277,13 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Navigation Spacer - verhindert Content unter Fixed Navigation */}
+      <div className="h-16" />
+
       {/* ═══════════════════════════════════════════════════
           HERO SECTION
       ═══════════════════════════════════════════════════ */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-[100svh] md:min-h-screen flex items-center overflow-hidden">
         {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -1425,7 +1730,7 @@ export default function Home() {
               Gerne kombiniert
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Diese Produkte ergänzen sich perfekt – für noch mehr Spaß und Abwechslung auf eurer Feier.
+              Diese Produkte ergänzen sich perfekt.
             </p>
           </motion.div>
 
@@ -1447,16 +1752,44 @@ export default function Home() {
                   Erinnerungen & Atmosphäre
                 </p>
               </div>
+
+              {/* Bundle-Preis mit Streichpreis */}
+              <div className="text-center mb-6 p-4 bg-[oklch(0.97_0.012_85)] rounded-lg">
+                <div className="flex items-center justify-center gap-3 mb-2">
+                  <span className="text-sm font-semibold text-muted-foreground line-through">
+                    Gesamtpreis: 527,- €
+                  </span>
+                  <span className="inline-block bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+                    -10%
+                  </span>
+                </div>
+                <div className="text-3xl font-bold" style={{ color: "oklch(0.75 0.14 80)" }}>
+                  475,- €
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">Du sparst 52,- € im Bundle</p>
+              </div>
+
               <div className="space-y-3 mb-8">
                 {["fotospiegel-glow", "audio-gaestebuch-vivi", "sofortbildkamera-dior"].map((slug) => {
                   const product = PRODUCTS.find(p => toProductSlug(p.name) === slug);
+                  let displayPrice = product?.price.replace("ab ", "");
+                  if (slug === "fotospiegel-glow") displayPrice = "399,- €";
+                  if (slug === "sofortbildkamera-dior") displayPrice = "79,- €";
                   return (
                     <Link key={slug} href={`/produkt/${slug}`} className="block">
                       <div className="flex items-center gap-3 p-3 rounded-lg bg-[oklch(0.97_0.012_85)] hover:bg-[oklch(0.93_0.015_85)] transition-colors">
-                        <span className="text-2xl">{product?.emoji}</span>
+                        <img
+                          src={product?.image}
+                          alt={product?.name ?? "Produktbild"}
+                          className="h-10 w-10 rounded-md object-cover bg-white"
+                        />
                         <div className="flex-1">
                           <div className="font-semibold text-foreground text-sm">{product?.name}</div>
-                          <div className="text-xs text-muted-foreground">{product?.price}</div>
+                          <div className="text-xs text-muted-foreground">
+                            {displayPrice}
+                            {slug === "fotospiegel-glow" && <span className="text-[0.65rem] text-muted-foreground block mt-0.5">inkl. Druckflatrate</span>}
+                            {slug === "sofortbildkamera-dior" && <span className="text-[0.65rem] text-muted-foreground block mt-0.5">Dreierpack</span>}
+                          </div>
                         </div>
                         <span className="text-[oklch(0.75_0.14_80)] text-lg">→</span>
                       </div>
@@ -1474,7 +1807,7 @@ export default function Home() {
               </button>
             </motion.div>
 
-            {/* Party-Bundle */}
+            {/* Geburtstag-Bundle */}
             <motion.div
               initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -1485,22 +1818,47 @@ export default function Home() {
               <div className="text-center mb-6">
                 <div className="text-5xl mb-3">🎉</div>
                 <h3 className="text-2xl font-bold text-foreground mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                  Das Party-Paket
+                  Das Geburtstags-Paket
                 </h3>
                 <p className="text-muted-foreground text-sm">
-                  Karaoke & Show-Effekte
+                  Feiern & Snacken
                 </p>
               </div>
+
+              {/* Bundle-Preis mit Streichpreis */}
+              <div className="text-center mb-6 p-4 bg-[oklch(0.97_0.012_85)] rounded-lg">
+                <div className="flex items-center justify-center gap-3 mb-2">
+                  <span className="text-sm font-semibold text-muted-foreground line-through">
+                    Gesamtpreis: 527,- €
+                  </span>
+                  <span className="inline-block bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+                    -52€
+                  </span>
+                </div>
+                <div className="text-3xl font-bold" style={{ color: "oklch(0.75 0.14 80)" }}>
+                  475,- €
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">Du sparst 10% im Bundle</p>
+              </div>
+
               <div className="space-y-3 mb-8">
-                {["karaokemaschine-sing", "seifenblasenmaschine-lilo", "nebelmaschine-mira"].map((slug) => {
+                {["fotospiegel-glow", "karaokemaschine-sing", "popcornmaschine-keno"].map((slug) => {
                   const product = PRODUCTS.find(p => toProductSlug(p.name) === slug);
+                  const displayPrice = slug === "fotospiegel-glow" ? "399,- €" : product?.price.replace("ab ", "");
                   return (
                     <Link key={slug} href={`/produkt/${slug}`} className="block">
                       <div className="flex items-center gap-3 p-3 rounded-lg bg-[oklch(0.97_0.012_85)] hover:bg-[oklch(0.93_0.015_85)] transition-colors">
-                        <span className="text-2xl">{product?.emoji}</span>
+                        <img
+                          src={product?.image}
+                          alt={product?.name ?? "Produktbild"}
+                          className="h-10 w-10 rounded-md object-cover bg-white"
+                        />
                         <div className="flex-1">
                           <div className="font-semibold text-foreground text-sm">{product?.name}</div>
-                          <div className="text-xs text-muted-foreground">{product?.price}</div>
+                          <div className="text-xs text-muted-foreground">
+                            {displayPrice}
+                            {slug === "fotospiegel-glow" && <span className="text-[0.65rem] text-muted-foreground block mt-0.5">inkl. Druckflatrate</span>}
+                          </div>
                         </div>
                         <span className="text-[oklch(0.75_0.14_80)] text-lg">→</span>
                       </div>
@@ -1510,7 +1868,7 @@ export default function Home() {
               </div>
               <button
                 type="button"
-                onClick={() => handleBundleInquiry(["karaokemaschine-sing", "seifenblasenmaschine-lilo", "nebelmaschine-mira"])}
+                onClick={() => handleBundleInquiry(["fotospiegel-glow", "karaokemaschine-sing", "popcornmaschine-keno"])}
                 className="w-full btn-gold py-2.5 px-4 rounded-lg text-sm font-bold flex items-center justify-center gap-2"
               >
                 <WhatsAppIcon />
@@ -1535,16 +1893,38 @@ export default function Home() {
                   Getränke & Snacks
                 </p>
               </div>
+
+              {/* Bundle-Preis mit Streichpreis */}
+              <div className="text-center mb-6 p-4 bg-[oklch(0.97_0.012_85)] rounded-lg">
+                <div className="flex items-center justify-center gap-3 mb-2">
+                  <span className="text-sm font-semibold text-muted-foreground line-through">
+                    Gesamtpreis: 267,- €
+                  </span>
+                  <span className="inline-block bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+                    -28€
+                  </span>
+                </div>
+                <div className="text-3xl font-bold" style={{ color: "oklch(0.75 0.14 80)" }}>
+                  239,- €
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">Du sparst 10% im Bundle</p>
+              </div>
+
               <div className="space-y-3 mb-8">
                 {["slushmaschine-emit", "hot-dog-waermer-sjen", "popcornmaschine-keno"].map((slug) => {
                   const product = PRODUCTS.find(p => toProductSlug(p.name) === slug);
+                  const displayPrice = product?.price.replace("ab ", "");
                   return (
                     <Link key={slug} href={`/produkt/${slug}`} className="block">
                       <div className="flex items-center gap-3 p-3 rounded-lg bg-[oklch(0.97_0.012_85)] hover:bg-[oklch(0.93_0.015_85)] transition-colors">
-                        <span className="text-2xl">{product?.emoji}</span>
+                        <img
+                          src={product?.image}
+                          alt={product?.name ?? "Produktbild"}
+                          className="h-10 w-10 rounded-md object-cover bg-white"
+                        />
                         <div className="flex-1">
                           <div className="font-semibold text-foreground text-sm">{product?.name}</div>
-                          <div className="text-xs text-muted-foreground">{product?.price}</div>
+                          <div className="text-xs text-muted-foreground">{displayPrice}</div>
                         </div>
                         <span className="text-[oklch(0.75_0.14_80)] text-lg">→</span>
                       </div>
@@ -1614,7 +1994,7 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4 }}
-              className="bg-white rounded-2xl p-8 shadow-xl border border-border"
+              className="bg-white rounded-2xl p-8 shadow-xl border border-border min-h-[280px] md:min-h-[240px]"
             >
               <div className="flex items-start gap-4 mb-4">
                 <div className={`w-12 h-12 rounded-full ${TESTIMONIALS[activeTestimonial].avatarColor} flex items-center justify-center text-white font-bold text-lg flex-shrink-0`}>
@@ -1739,20 +2119,41 @@ export default function Home() {
                           className="form-select text-left text-foreground"
                         >
                           <span>
-                            {formData.products.length === 0
-                              ? "Produkte auswählen..."
-                              : `${formData.products.length} ${formData.products.length === 1 ? "Produkt" : "Produkte"} ausgewählt`}
+                            {formData.products.length === 0 ? (
+                              "Produkte auswählen..."
+                            ) : activeContactBundle ? (
+                              <span className="inline-flex flex-wrap items-center gap-1.5">
+                                <span>
+                                  {`${formData.products.length} ${formData.products.length === 1 ? "Produkt" : "Produkte"} ausgewählt · Gesamt ${activeContactBundle.discountedPrice},- €`}
+                                </span>
+                                <span className="text-xs text-muted-foreground line-through">
+                                  {`${activeContactBundle.originalPrice},- €`}
+                                </span>
+                              </span>
+                            ) : (
+                              `${formData.products.length} ${formData.products.length === 1 ? "Produkt" : "Produkte"} ausgewählt · Gesamt ${selectedProductTotal},- €`
+                            )}
                           </span>
                           <ChevronDownIcon className="h-4 w-4 opacity-50 flex-shrink-0" />
                         </button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-80 p-0" align="start">
+                      <PopoverContent className="w-[22rem] p-0" align="start">
+                        {activeContactBundle && (
+                          <div className="border-b border-border bg-[oklch(0.97_0.012_85)] px-4 py-2.5 text-sm">
+                            <div className="font-semibold text-foreground">
+                              {activeContactBundle.name}: {activeContactBundle.discountedPrice},- €
+                            </div>
+                            <div className="text-muted-foreground line-through text-xs">
+                              Statt {activeContactBundle.originalPrice},- €
+                            </div>
+                          </div>
+                        )}
                         <div className="grid gap-2 p-4">
                           {PRODUCTS.map((product) => (
-                            <label key={product.id} className="flex items-center gap-3 text-sm text-foreground cursor-pointer">
+                            <label key={product.id} className="flex items-center gap-3.5 text-base text-foreground cursor-pointer leading-snug">
                               <input
                                 type="checkbox"
-                                className="h-4 w-4 rounded border-border text-amber-500 focus:ring-amber-300"
+                                className="h-5 w-5 shrink-0 rounded border-border text-amber-500 focus:ring-amber-300"
                                 checked={formData.products.includes(getContactProductValue(product))}
                                 onChange={(e) => {
                                   const value = getContactProductValue(product);
@@ -1764,7 +2165,7 @@ export default function Home() {
                                   }));
                                 }}
                               />
-                              <span>{product.name} – {getContactProductPrice(product.price)}</span>
+                              <span className="text-base">{product.name} – {getContactProductPrice(product.price)}</span>
                             </label>
                           ))}
                         </div>
@@ -1831,6 +2232,16 @@ export default function Home() {
                         onChange={e => {
                           const v = e.target.value.replace(/\D/g, "").slice(0, 5);
                           setDeliveryPlz(v);
+                          if (v.length > 0) {
+                            setFormData((prev) =>
+                              prev.selfPickup
+                                ? {
+                                    ...prev,
+                                    selfPickup: false,
+                                  }
+                                : prev
+                            );
+                          }
                           if (v.length === 5) calculateDelivery(v);
                           else setDeliveryInfo({ status: "idle", cost: null, distance: null });
                         }}
@@ -1867,12 +2278,19 @@ export default function Home() {
                         type="checkbox"
                         className="h-4 w-4 rounded border-border text-amber-500 focus:ring-amber-300"
                         checked={formData.selfPickup}
-                        onChange={(e) =>
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setDeliveryPlz("");
+                            setDeliveryInfo({ status: "idle", cost: null, distance: null });
+                          }
+
+                          return (
                           setFormData((prev) => ({
                             ...prev,
                             selfPickup: e.target.checked,
                           }))
-                        }
+                          );
+                        }}
                       />
                       <span>Ich hole selbst ab.</span>
                     </label>
@@ -1884,7 +2302,7 @@ export default function Home() {
                     </label>
                     <textarea
                       rows={3}
-                      placeholder="z.B. Hochzeit mit 80 Personen in Karlsruhe, möchte die Produkte gerne selbst abholen, etc."
+                      placeholder="z.B. Hochzeit mit 80 Personen im Seehaus Forst"
                       className="form-input resize-none"
                       value={formData.message}
                       onChange={e => setFormData({ ...formData, message: e.target.value })}
@@ -2315,6 +2733,33 @@ export default function Home() {
         </svg>
       </motion.a>
 
+      {showScrollButtons && (canScrollUp || canScrollDown) && (
+        <div className="fixed right-4 bottom-20 z-50 md:hidden flex flex-col gap-2">
+          {canScrollUp && (
+            <button
+              type="button"
+              onClick={scrollToTop}
+              aria-label="Nach oben scrollen"
+              title="Nach oben"
+              className="w-11 h-11 rounded-full bg-[oklch(0.22_0.06_155)]/95 text-white border border-[oklch(0.75_0.14_80/0.45)] shadow-lg backdrop-blur flex items-center justify-center"
+            >
+              <ChevronDownIcon className="w-5 h-5 rotate-180" />
+            </button>
+          )}
+          {canScrollDown && (
+            <button
+              type="button"
+              onClick={scrollToBottom}
+              aria-label="Nach unten scrollen"
+              title="Nach unten"
+              className="w-11 h-11 rounded-full bg-[oklch(0.22_0.06_155)]/95 text-white border border-[oklch(0.75_0.14_80/0.45)] shadow-lg backdrop-blur flex items-center justify-center"
+            >
+              <ChevronDownIcon className="w-5 h-5" />
+            </button>
+          )}
+        </div>
+      )}
+
       {/* ═══════════════════════════════════════════════════
           STICKY BOTTOM CTA BAR (Mobile)
       ═══════════════════════════════════════════════════ */}
@@ -2335,7 +2780,7 @@ export default function Home() {
         </a>
         <button
           onClick={scrollToContact}
-          className="btn-gold pulse-gold flex-1 py-2 rounded-lg font-bold text-xs"
+          className="btn-gold flex-1 py-2 rounded-lg font-bold text-xs"
         >
           Jetzt anfragen
         </button>

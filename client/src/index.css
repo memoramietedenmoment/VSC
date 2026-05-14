@@ -118,10 +118,24 @@
     /* stylelint-disable-next-line at-rule-no-unknown */
     @apply border-border outline-ring/50;
   }
+  html {
+    /* Verhindert Layout Shifts durch Scrollbar-Breite */
+    scrollbar-gutter: stable;
+    /* Verhindert unerwünschten horizontalen Scroll auf Mobile */
+    overflow-x: hidden;
+    /* Verhindert Jumping durch dynamische Viewport-Höhe auf Mobile */
+    height: 100%;
+  }
+
   body {
     /* stylelint-disable-next-line at-rule-no-unknown */
     @apply bg-background text-foreground;
     font-family: 'Plus Jakarta Sans', sans-serif;
+    /* Sicherstellen, dass kein horizontales Scrolling möglich ist */
+    overflow-x: hidden;
+    /* Stabilisiert die Höhe auf Mobile wenn Browser-UI sich zeigt/versteckt */
+    position: relative;
+    min-height: 100%;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),

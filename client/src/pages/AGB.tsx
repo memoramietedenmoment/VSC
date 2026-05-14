@@ -54,6 +54,7 @@ function SiteNav() {
                   <Link href="/#produkte" className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center" onClick={() => setIsMenuOpen(false)}>Produkte</Link>
                   <Link href="/#bewertungen" className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center" onClick={() => setIsMenuOpen(false)}>Bewertungen</Link>
                   <Link href="/#kontakt" className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center" onClick={() => setIsMenuOpen(false)}>Kontakt</Link>
+                  <Link href="/#faq" className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center" onClick={() => setIsMenuOpen(false)}>FAQ</Link>
                 </nav>
                 <div className="flex flex-col gap-4 pt-4 border-t border-white/20 items-center">
                   <a href="tel:+4915225896570" className="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
@@ -83,6 +84,7 @@ function SiteNav() {
             <Link href="/#produkte" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Produkte</Link>
             <Link href="/#bewertungen" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Bewertungen</Link>
             <Link href="/#kontakt" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Kontakt</Link>
+            <Link href="/#faq" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">FAQ</Link>
           </nav>
           <div className="flex items-center gap-2">
             <a href="tel:+4915225896570" className="hidden sm:flex items-center gap-1.5 text-white/80 hover:text-white text-sm transition-colors">
@@ -102,7 +104,7 @@ function SiteNav() {
 
 export default function Agb() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-[100svh] md:min-h-screen bg-background">
       <SiteNav />
       <Seo
         title="AGB - Allgemeine Geschäftsbedingungen | memora Eventausstattung"

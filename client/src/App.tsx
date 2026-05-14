@@ -25,6 +25,18 @@ function ScrollManager() {
   const [location] = useLocation();
   const prevLocation = useRef(location);
   const isBack = useRef(false);
+  const isMobileRef = useRef(false);
+
+  // Dynamische Mobile Detection - wird bei Resize aktualisiert
+  useEffect(() => {
+    const checkMobile = () => {
+      isMobileRef.current = window.innerWidth < 768;
+    };
+
+    checkMobile(); // Initial check
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const getSavedScroll = (path: string) => {
     const inMemory = scrollPositions[path];
@@ -41,12 +53,13 @@ function ScrollManager() {
     const saved = getSavedScroll(path);
     if (saved === undefined) return false;
 
+    // Auf Mobile nur für die Startseite erlauben
+    if (isMobileRef.current && path !== "/") {
+      return false;
+    }
+
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          window.scrollTo({ top: saved, behavior: "auto" });
-        }, 50);
-      });
+      window.scrollTo({ top: saved, behavior: "auto" });
     });
 
     return true;
@@ -85,16 +98,27 @@ function ScrollManager() {
       }
 
       if (isBack.current) {
-        // For the home page, also set a dedicated key so Home.tsx can restore
-        // more reliably with a longer delay after full render
-        if (next === "/") {
-          const savedForHome = getSavedScroll("/");
-          if (savedForHome !== undefined && savedForHome > 0) {
-            window.sessionStorage.setItem("restore-home-scroll", String(savedForHome));
+        if (isMobileRef.current) {
+          if (next === "/") {
+            const savedForHome = getSavedScroll("/");
+            if (savedForHome !== undefined && savedForHome > 0) {
+              window.sessionStorage.setItem("restore-home-scroll", String(savedForHome));
+            }
+          } else {
+            window.scrollTo(0, 0);
           }
-        }
-        if (!restoreScroll(next)) {
-          window.scrollTo(0, 0);
+        } else {
+          // For the home page, also set a dedicated key so Home.tsx can restore
+          // more reliably with a longer delay after full render
+          if (next === "/") {
+            const savedForHome = getSavedScroll("/");
+            if (savedForHome !== undefined && savedForHome > 0) {
+              window.sessionStorage.setItem("restore-home-scroll", String(savedForHome));
+            }
+          }
+          if (!restoreScroll(next)) {
+            window.scrollTo(0, 0);
+          }
         }
         isBack.current = false;
         window.sessionStorage.removeItem("restore-scroll-once");
