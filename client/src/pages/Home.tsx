@@ -1832,13 +1832,13 @@ export default function Home() {
                     Gesamtpreis: 527,- €
                   </span>
                   <span className="inline-block bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-                    -52€
+                    -10%
                   </span>
                 </div>
                 <div className="text-3xl font-bold" style={{ color: "oklch(0.75 0.14 80)" }}>
                   475,- €
                 </div>
-                <p className="text-xs text-muted-foreground mt-1">Du sparst 10% im Bundle</p>
+                <p className="text-xs text-muted-foreground mt-1">Du sparst 52,- € im Bundle</p>
               </div>
 
               <div className="space-y-3 mb-8">
@@ -1901,13 +1901,13 @@ export default function Home() {
                     Gesamtpreis: 267,- €
                   </span>
                   <span className="inline-block bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-                    -28€
+                    -10%
                   </span>
                 </div>
                 <div className="text-3xl font-bold" style={{ color: "oklch(0.75 0.14 80)" }}>
                   239,- €
                 </div>
-                <p className="text-xs text-muted-foreground mt-1">Du sparst 10% im Bundle</p>
+                <p className="text-xs text-muted-foreground mt-1">Du sparst 28,- € im Bundle</p>
               </div>
 
               <div className="space-y-3 mb-8">
