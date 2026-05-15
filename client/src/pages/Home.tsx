@@ -363,6 +363,12 @@ const CONTACT_BUNDLE_PRICING: ContactBundlePricing[] = [
   },
 ];
 
+const MOBILE_INITIAL_PRODUCT_SLUGS = [
+  "fotospiegel-glow",
+  "audio-gaestebuch-vivi",
+  "popcornmaschine-keno",
+] as const;
+
 const SERVICE_AREAS = [
   "Karlsruhe",
   "Rastatt",
@@ -692,9 +698,16 @@ export default function Home() {
   }>({ status: "idle", cost: null, distance: null });
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [showAllProducts, setShowAllProducts] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia("(max-width: 767px)").matches
+      : false
+  );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeBundleSlide, setActiveBundleSlide] = useState(0);
   const contactRef = useRef<HTMLDivElement>(null);
   const testimonialRef = useRef<HTMLDivElement>(null);
+  const bundleCarouselRef = useRef<HTMLDivElement>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const isTestimonialsInView = useInView(testimonialRef, { amount: 0.35 });
@@ -718,6 +731,28 @@ export default function Home() {
     activeContactBundle?.productSlugs.includes("fotospiegel-glow") ?? false;
   const shouldAutoSelectDiorAddOn =
     activeContactBundle?.productSlugs.includes("sofortbildkamera-dior") ?? false;
+  const mobileInitialProducts = MOBILE_INITIAL_PRODUCT_SLUGS
+    .map((slug) => PRODUCTS.find((product) => toProductSlug(product.name) === slug))
+    .filter((product): product is Product => Boolean(product));
+  const initialProducts = isMobileViewport ? mobileInitialProducts : PRODUCTS.slice(0, 6);
+  const expandedProducts = isMobileViewport
+    ? PRODUCTS.filter(
+        (product) =>
+          !mobileInitialProducts.some((mobileProduct) => mobileProduct.id === product.id)
+      )
+    : PRODUCTS.slice(6, 12);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const handleChange = (event: MediaQueryListEvent) => {
+      setIsMobileViewport(event.matches);
+    };
+
+    setIsMobileViewport(mediaQuery.matches);
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   useEffect(() => {
     setFormData((prev) => {
@@ -987,6 +1022,28 @@ export default function Home() {
     }
   };
 
+  const handleBundleCarouselScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    if (!isMobileViewport) return;
+
+    const container = event.currentTarget;
+    const slideWidth = container.clientWidth;
+    if (slideWidth === 0) return;
+
+    const nextIndex = Math.round(container.scrollLeft / slideWidth);
+    setActiveBundleSlide(Math.max(0, Math.min(2, nextIndex)));
+  };
+
+  const scrollToBundleSlide = (index: number) => {
+    const container = bundleCarouselRef.current;
+    if (!container) return;
+
+    container.scrollTo({
+      left: index * container.clientWidth,
+      behavior: "smooth",
+    });
+    setActiveBundleSlide(index);
+  };
+
   const calculateDelivery = async (plz: string) => {
     setDeliveryInfo({ status: "loading", cost: null, distance: null });
     try {
@@ -1112,6 +1169,13 @@ export default function Home() {
           <a href="#" className="flex items-center gap-2 group">
             <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/memora_Logo_9da7fd54.png" alt="memora Logo" className="h-10 w-auto filter invert" />
           </a>
+
+          <p
+            className="md:hidden absolute left-1/2 -translate-x-1/2 text-[1.15rem] leading-none text-white/90 whitespace-nowrap pointer-events-none"
+            style={{ fontFamily: "'Dancing Script', cursive" }}
+          >
+            - miete den moment - 
+          </p>
 
           {/* Mobile Menu - rechts */}
           <div className="md:hidden absolute right-4">
@@ -1330,7 +1394,7 @@ export default function Home() {
               className="text-lg md:text-xl text-white/85 mb-20 sm:mb-12 leading-relaxed max-w-xl"
             >
               Hochwertige Eventausstattung mieten in Karlsruhe, Rastatt & erweiterter Umgebung.
-              Fotospiegel, Slushmaschinen, Audio-Gästebücher und mehr –
+              Fotospiegel, Audio-Gästebücher, Popcornmaschinen und mehr –
               <strong className="text-white"> einfach, schnell, unkompliziert.</strong>
             </motion.p>
 
@@ -1448,15 +1512,15 @@ export default function Home() {
             {([
               {
                 step: "01",
-                icon: "🔍",
                 title: "Stöbern & auswählen",
-                desc: "Entdecke unsere 12 Highlights und wähle die passenden Produkte für dein nächstes Event – von Fotospiegel bis Slushmaschine.",
+                desc: "Entdecke unsere Produkte sowie unsere Produktpakete und wähle das passende für dein Event aus. Für Hochzeiten, Geburtstage, Firmenfeiern und mehr.",
                 cta: "Produkte ansehen",
                 href: "#produkte",
+                secondaryCta: "Pakete ansehen",
+                secondaryHref: "#gerne-kombiniert",
               },
               {
                 step: "02",
-                icon: "💬",
                 title: "Unverbindlich anfragen",
                 desc: "Stell uns eine unverbindliche Anfrage direkt per WhatsApp, E-Mail oder Anruf. Wir prüfen die Verfügbarkeit und melden uns innerhalb von 2 Stunden.",
                 cta: "Jetzt anfragen",
@@ -1465,7 +1529,6 @@ export default function Home() {
               },
               {
                 step: "03",
-                icon: "🚀",
                 title: "Abholen oder liefern",
                 desc: "Kostenlose Abholung bei uns oder bequeme Lieferung & Aufbau – du entscheidest. Wir machen dein Event zum Erlebnis.",
                 cta: "Lieferinfo",
@@ -1484,8 +1547,6 @@ export default function Home() {
                     : "bg-white border border-border shadow-sm"
                 }`}
               >
-
-                <div className="text-4xl mb-4">{step.icon}</div>
                 <div className={`text-sm font-bold mb-2 ${step.highlight ? "text-[oklch(0.75_0.14_80)]" : "text-[oklch(0.75_0.14_80)]"}`}>
                   Schritt {step.step}
                 </div>
@@ -1496,16 +1557,30 @@ export default function Home() {
                 <p className={`text-sm leading-relaxed mb-6 ${step.highlight ? "text-white/80" : "text-muted-foreground"}`}>
                   {step.desc}
                 </p>
-                <a
-                  href={step.href}
-                  className={`inline-flex items-center gap-1 text-sm font-semibold ${
-                    step.highlight
-                      ? "text-[oklch(0.75_0.14_80)]"
-                      : "text-[oklch(0.32_0.07_155)]"
-                  } hover:underline`}
-                >
-                  {step.cta} →
-                </a>
+                <div className="inline-flex items-center gap-4">
+                  <a
+                    href={step.href}
+                    className={`inline-flex items-center gap-1 text-sm font-semibold ${
+                      step.highlight
+                        ? "text-[oklch(0.75_0.14_80)]"
+                        : "text-[oklch(0.32_0.07_155)]"
+                    } hover:underline`}
+                  >
+                    {step.cta} →
+                  </a>
+                  {step.secondaryCta && step.secondaryHref && (
+                    <a
+                      href={step.secondaryHref}
+                      className={`inline-flex items-center gap-1 text-sm font-semibold ${
+                        step.highlight
+                          ? "text-[oklch(0.75_0.14_80)]"
+                          : "text-[oklch(0.32_0.07_155)]"
+                      } hover:underline`}
+                    >
+                      {step.secondaryCta} →
+                    </a>
+                  )}
+                </div>
               </motion.div>
             ))}
           </div>
@@ -1554,16 +1629,15 @@ export default function Home() {
             className="text-center mb-14"
           >
             <h2 className="section-headline centered text-4xl md:text-5xl mb-4 mx-auto inline-block">
-              Unsere Highlights für dein Event
+              Unsere Highlights
             </h2>
             <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-              Hochwertige Ausstattung für Hochzeiten, Geburtstage und Firmenfeiern –
-              Region Karlsruhe, Rastatt, Baden-Baden.
+              Miete den Moment und mach dein Event unvergesslich.
             </p>
           </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {PRODUCTS.slice(0, 6).map((product, i) => {
+            {initialProducts.map((product, i) => {
               const slug = toProductSlug(product.name);
               return (
               <motion.div
@@ -1634,7 +1708,7 @@ export default function Home() {
               className="mt-8 overflow-hidden"
             >
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {PRODUCTS.slice(6, 12).map((product, i) => {
+                {expandedProducts.map((product, i) => {
                   const slug = toProductSlug(product.name);
                   return (
                   <motion.div
@@ -1718,34 +1792,38 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════
           HÄUFIG KOMBINIERT - PRODUKT-BUNDLES
       ═══════════════════════════════════════════════════ */}
-      <section className="py-20 bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.95_0.01_85)]">
+      <section id="gerne-kombiniert" className="py-20 bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.95_0.01_85)]">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-10 md:mb-16"
           >
             <h2 className="section-headline centered text-4xl md:text-5xl mb-4 mx-auto inline-block">
               Gerne kombiniert
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Diese Produkte ergänzen sich perfekt.
+              Mit unseren Paketen hast du alles, was du für dein Event brauchst, in einem praktischen Bundle.
             </p>
           </motion.div>
 
           {/* Featured Combinations */}
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div
+            ref={bundleCarouselRef}
+            onScroll={handleBundleCarouselScroll}
+            className="flex gap-0 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-3 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-3 md:gap-8 md:overflow-visible max-w-6xl mx-auto"
+          >
             {/* Hochzeit-Bundle */}
             <motion.div
               initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="rounded-2xl border border-border bg-white p-8 shadow-lg hover:shadow-xl transition-shadow"
+              className="min-w-full snap-start md:min-w-0 overflow-hidden rounded-2xl border border-border bg-white p-5 md:p-8 shadow-lg hover:shadow-xl transition-shadow"
             >
               <div className="text-center mb-6">
-                <div className="text-5xl mb-3">💍</div>
-                <h3 className="text-2xl font-bold text-foreground mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                <div className="text-4xl md:text-5xl mb-2 md:mb-3">💍</div>
+                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-1.5 md:mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                   Das Hochzeits-Paket
                 </h3>
                 <p className="text-muted-foreground text-sm">
@@ -1754,7 +1832,7 @@ export default function Home() {
               </div>
 
               {/* Bundle-Preis mit Streichpreis */}
-              <div className="text-center mb-6 p-4 bg-[oklch(0.97_0.012_85)] rounded-lg">
+              <div className="text-center mb-4 md:mb-6 p-3 md:p-4 bg-[oklch(0.97_0.012_85)] rounded-lg">
                 <div className="flex items-center justify-center gap-3 mb-2">
                   <span className="text-sm font-semibold text-muted-foreground line-through">
                     Gesamtpreis: 527,- €
@@ -1763,13 +1841,13 @@ export default function Home() {
                     -10%
                   </span>
                 </div>
-                <div className="text-3xl font-bold" style={{ color: "oklch(0.75 0.14 80)" }}>
+                <div className="text-2xl md:text-3xl font-bold" style={{ color: "oklch(0.75 0.14 80)" }}>
                   475,- €
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">Du sparst 52,- € im Bundle</p>
               </div>
 
-              <div className="space-y-3 mb-8">
+              <div className="space-y-2 md:space-y-3 mb-6 md:mb-8">
                 {["fotospiegel-glow", "audio-gaestebuch-vivi", "sofortbildkamera-dior"].map((slug) => {
                   const product = PRODUCTS.find(p => toProductSlug(p.name) === slug);
                   let displayPrice = product?.price.replace("ab ", "");
@@ -1777,11 +1855,11 @@ export default function Home() {
                   if (slug === "sofortbildkamera-dior") displayPrice = "79,- €";
                   return (
                     <Link key={slug} href={`/produkt/${slug}`} className="block">
-                      <div className="flex items-center gap-3 p-3 rounded-lg bg-[oklch(0.97_0.012_85)] hover:bg-[oklch(0.93_0.015_85)] transition-colors">
+                      <div className="flex items-center gap-2.5 md:gap-3 p-2.5 md:p-3 rounded-lg bg-[oklch(0.97_0.012_85)] hover:bg-[oklch(0.93_0.015_85)] transition-colors">
                         <img
                           src={product?.image}
                           alt={product?.name ?? "Produktbild"}
-                          className="h-10 w-10 rounded-md object-cover bg-white"
+                          className="h-9 w-9 md:h-10 md:w-10 rounded-md object-cover bg-white"
                         />
                         <div className="flex-1">
                           <div className="font-semibold text-foreground text-sm">{product?.name}</div>
@@ -1813,11 +1891,11 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="rounded-2xl border border-border bg-white p-8 shadow-lg hover:shadow-xl transition-shadow"
+              className="min-w-full snap-start md:min-w-0 overflow-hidden rounded-2xl border border-border bg-white p-5 md:p-8 shadow-lg hover:shadow-xl transition-shadow"
             >
               <div className="text-center mb-6">
-                <div className="text-5xl mb-3">🎉</div>
-                <h3 className="text-2xl font-bold text-foreground mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                <div className="text-4xl md:text-5xl mb-2 md:mb-3">🎉</div>
+                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-1.5 md:mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                   Das Geburtstags-Paket
                 </h3>
                 <p className="text-muted-foreground text-sm">
@@ -1826,7 +1904,7 @@ export default function Home() {
               </div>
 
               {/* Bundle-Preis mit Streichpreis */}
-              <div className="text-center mb-6 p-4 bg-[oklch(0.97_0.012_85)] rounded-lg">
+              <div className="text-center mb-4 md:mb-6 p-3 md:p-4 bg-[oklch(0.97_0.012_85)] rounded-lg">
                 <div className="flex items-center justify-center gap-3 mb-2">
                   <span className="text-sm font-semibold text-muted-foreground line-through">
                     Gesamtpreis: 527,- €
@@ -1835,23 +1913,23 @@ export default function Home() {
                     -10%
                   </span>
                 </div>
-                <div className="text-3xl font-bold" style={{ color: "oklch(0.75 0.14 80)" }}>
+                <div className="text-2xl md:text-3xl font-bold" style={{ color: "oklch(0.75 0.14 80)" }}>
                   475,- €
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">Du sparst 52,- € im Bundle</p>
               </div>
 
-              <div className="space-y-3 mb-8">
+              <div className="space-y-2 md:space-y-3 mb-6 md:mb-8">
                 {["fotospiegel-glow", "karaokemaschine-sing", "popcornmaschine-keno"].map((slug) => {
                   const product = PRODUCTS.find(p => toProductSlug(p.name) === slug);
                   const displayPrice = slug === "fotospiegel-glow" ? "399,- €" : product?.price.replace("ab ", "");
                   return (
                     <Link key={slug} href={`/produkt/${slug}`} className="block">
-                      <div className="flex items-center gap-3 p-3 rounded-lg bg-[oklch(0.97_0.012_85)] hover:bg-[oklch(0.93_0.015_85)] transition-colors">
+                      <div className="flex items-center gap-2.5 md:gap-3 p-2.5 md:p-3 rounded-lg bg-[oklch(0.97_0.012_85)] hover:bg-[oklch(0.93_0.015_85)] transition-colors">
                         <img
                           src={product?.image}
                           alt={product?.name ?? "Produktbild"}
-                          className="h-10 w-10 rounded-md object-cover bg-white"
+                          className="h-9 w-9 md:h-10 md:w-10 rounded-md object-cover bg-white"
                         />
                         <div className="flex-1">
                           <div className="font-semibold text-foreground text-sm">{product?.name}</div>
@@ -1882,11 +1960,11 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="rounded-2xl border border-border bg-white p-8 shadow-lg hover:shadow-xl transition-shadow"
+              className="min-w-full snap-start md:min-w-0 overflow-hidden rounded-2xl border border-border bg-white p-5 md:p-8 shadow-lg hover:shadow-xl transition-shadow"
             >
               <div className="text-center mb-6">
-                <div className="text-5xl mb-3">🍿</div>
-                <h3 className="text-2xl font-bold text-foreground mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                <div className="text-4xl md:text-5xl mb-2 md:mb-3">🍿</div>
+                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-1.5 md:mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                   Das Gastro-Paket
                 </h3>
                 <p className="text-muted-foreground text-sm">
@@ -1895,7 +1973,7 @@ export default function Home() {
               </div>
 
               {/* Bundle-Preis mit Streichpreis */}
-              <div className="text-center mb-6 p-4 bg-[oklch(0.97_0.012_85)] rounded-lg">
+              <div className="text-center mb-4 md:mb-6 p-3 md:p-4 bg-[oklch(0.97_0.012_85)] rounded-lg">
                 <div className="flex items-center justify-center gap-3 mb-2">
                   <span className="text-sm font-semibold text-muted-foreground line-through">
                     Gesamtpreis: 267,- €
@@ -1904,23 +1982,23 @@ export default function Home() {
                     -10%
                   </span>
                 </div>
-                <div className="text-3xl font-bold" style={{ color: "oklch(0.75 0.14 80)" }}>
+                <div className="text-2xl md:text-3xl font-bold" style={{ color: "oklch(0.75 0.14 80)" }}>
                   239,- €
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">Du sparst 28,- € im Bundle</p>
               </div>
 
-              <div className="space-y-3 mb-8">
+              <div className="space-y-2 md:space-y-3 mb-6 md:mb-8">
                 {["slushmaschine-emit", "hot-dog-waermer-sjen", "popcornmaschine-keno"].map((slug) => {
                   const product = PRODUCTS.find(p => toProductSlug(p.name) === slug);
                   const displayPrice = product?.price.replace("ab ", "");
                   return (
                     <Link key={slug} href={`/produkt/${slug}`} className="block">
-                      <div className="flex items-center gap-3 p-3 rounded-lg bg-[oklch(0.97_0.012_85)] hover:bg-[oklch(0.93_0.015_85)] transition-colors">
+                      <div className="flex items-center gap-2.5 md:gap-3 p-2.5 md:p-3 rounded-lg bg-[oklch(0.97_0.012_85)] hover:bg-[oklch(0.93_0.015_85)] transition-colors">
                         <img
                           src={product?.image}
                           alt={product?.name ?? "Produktbild"}
-                          className="h-10 w-10 rounded-md object-cover bg-white"
+                          className="h-9 w-9 md:h-10 md:w-10 rounded-md object-cover bg-white"
                         />
                         <div className="flex-1">
                           <div className="font-semibold text-foreground text-sm">{product?.name}</div>
@@ -1941,6 +2019,22 @@ export default function Home() {
                 Paket anfragen
               </button>
             </motion.div>
+          </div>
+
+          <div className="flex justify-center gap-2 mt-1 md:hidden">
+            {[0, 1, 2].map((index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => scrollToBundleSlide(index)}
+                aria-label={`Paket ${index + 1} anzeigen`}
+                className={`h-2.5 rounded-full transition-all ${
+                  index === activeBundleSlide
+                    ? "bg-[oklch(0.75_0.14_80)] w-6"
+                    : "bg-[oklch(0.75_0.14_80/0.3)] w-2.5"
+                }`}
+              />
+            ))}
           </div>
         </div>
       </section>
