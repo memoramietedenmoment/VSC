@@ -354,6 +354,13 @@ const PRODUCTS_DETAIL = {
     ],
     occasions: ["Geburtstag", "Firmenfeier", "Party"],
     reviews: [
+      {
+   name: "Julia G.",
+  rating: 5,
+  date: "Mai 2026",
+  text: "Ich habe die Karaokemaschine für einen Geburtstag gebucht. Es hat alles super und unkompliziert geklappt und es war das Highlight der Party :) ich kann memora jedem empfehlen!",
+  event: "30. Geburtstag (40 Gäste)",
+},
 {
    name: "Fabio G.",
   rating: 5,
