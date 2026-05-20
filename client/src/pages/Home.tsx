@@ -210,6 +210,15 @@ const DIOR_TRIPLE_PACK_LABEL = "Dreierpack (Sofortbildkamera DIOR) - 79,- €";
 
 const TESTIMONIALS = [
   {
+     name: "Julia G.",
+    date: "Mai 2026",
+    rating: 5,
+    text: "Ich habe die Karaokemaschine für einen Geburtstag gebucht. Es hat alles super und unkompliziert geklappt und es war das Highlight der Party :) ich kann memora jedem empfehlen!",
+    event: "30. Geburtstag",
+    avatar: "J",
+    avatarColor: "bg-sky-600",
+  },
+  {
     name: "Lena Fellmoser",
     date: "Februar 2026",
     rating: 5,
@@ -1462,7 +1471,7 @@ export default function Home() {
               transition={{ delay: 1.1 }}
               className="text-white/50 text-sm mt-10 sm:mt-8"
             >
-              ✓ Produkte entdecken &nbsp;&nbsp; ✓ Unverbindlich anfragen <br className="sm:hidden" /><span className="hidden sm:inline">&nbsp;&nbsp;</span>✓ Abholen oder stressfrei liefern lassen
+              ✓ Hochwertige Produkte &nbsp;&nbsp; ✓ Schneller Kontakt <br className="sm:hidden" /><span className="hidden sm:inline">&nbsp;&nbsp;</span>✓ Einfacher Buchungsprozess
             </motion.p>
           </div>
         </div>
@@ -2461,7 +2470,7 @@ export default function Home() {
               {/* Trust Points */}
               <div className="order-3 lg:order-2 space-y-3">
                 {([
-                  { icon: "⚡", title: "Schnelle Antwort", desc: "Wir melden uns innerhalb von 2 Stunden – auch abends und am Wochenende." },
+                  { icon: "⚡", title: "Schnelle Antwort", desc: "Wir melden uns innerhalb von 2 Stunden und sind auch während der gesamten Mietdauer für euch erreichbar." },
                   { icon: "🚚", title: "Lieferung & Abholung", desc: "Kostenlose Abholung oder bequeme Lieferung im 100-km-Umkreis von Gaggenau." },
                   { icon: "🎓", title: "Einweisung inklusive", desc: "Alle Geräte sind sofort einsatzbereit – wir erklären alles in wenigen Minuten." },
                   { icon: "💚", title: "Faire Preise", desc: "Transparente Preise ohne versteckte Kosten. Schon ab 29,- € für dein Event." },
@@ -2557,17 +2566,17 @@ export default function Home() {
               {
                 icon: "⭐",
                 title: "5.0 Sterne Bewertung",
-                desc: "100% zufriedene Kunden – Qualität und Service sind unser Versprechen.",
+                desc: "100% zufriedene Kunden – Qualität und Service sind unser Versprechen. Weil uns jede Veranstaltung am Herzen liegt, geben wir immer unser Bestes.",
               },
               {
                 icon: "🚀",
                 title: "Produkte für sämtliche Anlässe",
-                desc: "Hochzeiten, Geburtstage, Firmenfeiern – wir haben Erfahrung.",
+                desc: "Unsere Produkte wählen wir mit Sorgfalt und einem klaren Blick für Qualität aus – nur was uns selbst begeistert, kommt in unser Sortiment.",
               },
               {
                 icon: "🎯",
                 title: "Unkompliziert & zuverlässig",
-                desc: "Schnelle Reaktion, faire Preise, persönlicher Service.",
+                desc: "Verlass dich auf uns – von der Planung bis zur Übergabe läuft alles reibungslos und pünktlich. Wir liefern die Highlights, ihr die strahlenden Gesichter.",
               },
               {
                 icon: "🏆",
