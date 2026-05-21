@@ -1327,6 +1327,13 @@ export default function Home() {
               <a href="#faq" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">FAQ</a>
             </nav>
 
+            <p
+              className="text-white/90 text-[1.15rem] leading-none whitespace-nowrap ml-8"
+              style={{ fontFamily: "'Dancing Script', cursive" }}
+            >
+              - miete den moment -
+            </p>
+
             {/* Nav CTA */}
             <div className="hidden items-center gap-2">
               <a
@@ -1641,7 +1648,7 @@ export default function Home() {
               Unsere Highlights
             </h2>
             <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-              Miete den Moment und mach dein Event unvergesslich.
+              miete den moment  und mach dein Event unvergesslich.
             </p>
           </motion.div>
 
@@ -1821,7 +1828,8 @@ export default function Home() {
           <div
             ref={bundleCarouselRef}
             onScroll={handleBundleCarouselScroll}
-            className="flex gap-0 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-3 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-3 md:gap-8 md:overflow-visible max-w-6xl mx-auto"
+            className="flex gap-0 overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth pb-3 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-3 md:gap-8 md:overflow-visible max-w-6xl mx-auto"
+            style={{ touchAction: "pan-x pan-y" }}
           >
             {/* Hochzeit-Bundle */}
             <motion.div
