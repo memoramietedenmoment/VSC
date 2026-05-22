@@ -309,9 +309,9 @@ Innerhalb von 50 km ab unserem Standort: 50,- €. Innerhalb von 100 km ab unser
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">§ 13 Stornierungen</h2>
               <ul className="list-disc pl-6 mb-6">
-                <li>Stornierungen bis 14 Tage vor Mietbeginn sind kostenlos.</li>
-                <li>Bei Stornierungen 13 bis 7 Tage vor Mietbeginn fallen 50 % des Mietpreises an.</li>
-                <li>Bei Stornierungen ab 6 Tage vor Mietbeginn ist der volle Mietpreis fällig.</li>
+                <li>Stornierungen bis 28 Tage vor Mietbeginn sind kostenlos.</li>
+                <li>Bei Stornierungen 27 bis 14 Tage vor Mietbeginn fallen 50 % des Mietpreises an.</li>
+                <li>Bei Stornierungen ab 13 Tage vor Mietbeginn ist der volle Mietpreis fällig.</li>
               </ul>
               <p className="mb-6">
                 Die Stornierung kann formfrei ohne Angabe von Gründen erfolgen, sollte jedoch per WhatsApp oder E-Mail erfolgen, um Missverständnisse zu vermeiden.
