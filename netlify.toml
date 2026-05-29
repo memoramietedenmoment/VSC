@@ -1,4 +1,6 @@
 # Legacy Wix URL redirects to the new Netlify product slugs and in-page anchors
+# All specific redirects MUST come before the catch-all rule
+
 [[redirects]]
 from = "/produkte"
 to = "/#produkte"
@@ -35,14 +37,64 @@ to = "/produkt/audio-gaestebuch-vivi"
 status = 301
 
 [[redirects]]
-from = "/produkt/audio-gstebuch-vivi"
+from = "/audio-gaestebuch-vivi"
 to = "/produkt/audio-gaestebuch-vivi"
 status = 301
 
 [[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200
+from = "/polaroid-kamera-dior"
+to = "/produkt/sofortbildkamera-dior"
+status = 301
+
+[[redirects]]
+from = "/slushmaschine-emit"
+to = "/produkt/slushmaschine-emit"
+status = 301
+
+[[redirects]]
+from = "/karaokemaschine-sing"
+to = "/produkt/karaokemaschine-sing"
+status = 301
+
+[[redirects]]
+from = "/zuckerwattemaschine-luna"
+to = "/produkt/zuckerwattemaschine-luna"
+status = 301
+
+[[redirects]]
+from = "/popcornmaschine-keno"
+to = "/produkt/popcornmaschine-keno"
+status = 301
+
+[[redirects]]
+from = "/seifenblasenmaschine-lilo"
+to = "/produkt/seifenblasenmaschine-lilo"
+status = 301
+
+[[redirects]]
+from = "/nebelmaschine-mira"
+to = "/produkt/nebelmaschine-mira"
+status = 301
+
+[[redirects]]
+from = "/musik-box-sunu"
+to = "/produkt/musik-box-sunu"
+status = 301
+
+[[redirects]]
+from = "/hot-dog-wärmer-sjen"
+to = "/produkt/hot-dog-waermer-sjen"
+status = 301
+
+[[redirects]]
+from = "/nacho-wärmer-sala"
+to = "/produkt/nacho-waermer-sala"
+status = 301
+
+[[redirects]]
+from = "/produkt/audio-gstebuch-vivi"
+to = "/produkt/audio-gaestebuch-vivi"
+status = 301
 
 [[redirects]]
 from = "/produkt/hot-dog-wrmer-sjen"
@@ -54,6 +106,7 @@ from = "/produkt/nacho-wrmer-sala"
 to = "/produkt/nacho-waermer-sala"
 status = 301
 
+# Catch-all for SPA - must be LAST
 [[redirects]]
 from = "/*"
 to = "/index.html"

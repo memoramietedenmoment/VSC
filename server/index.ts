@@ -18,6 +18,7 @@ async function startServer() {
     "/über-uns": "/#kontakt",
     "/fotospiegel-glow": "/produkt/fotospiegel-glow",
     "/audio-gaestebuch-vivi": "/produkt/audio-gaestebuch-vivi",
+    "/audio-gästebuch-vivi": "/produkt/audio-gaestebuch-vivi",
     "/polaroid-kamera-dior": "/produkt/sofortbildkamera-dior",
     "/slushmaschine-emit": "/produkt/slushmaschine-emit",
     "/karaokemaschine-sing": "/produkt/karaokemaschine-sing",
@@ -39,11 +40,16 @@ async function startServer() {
       ? path.resolve(__dirname, "public")
       : path.resolve(__dirname, "..", "dist", "public");
 
-  app.use(express.static(staticPath));
-
-  app.get(Object.keys(legacySlugRedirects), (req, res) => {
-    res.redirect(301, legacySlugRedirects[req.path]);
+  // Redirect middleware - must come BEFORE static to intercept legacy URLs
+  app.use((req, res, next) => {
+    if (legacySlugRedirects[req.path]) {
+      res.redirect(301, legacySlugRedirects[req.path]);
+    } else {
+      next();
+    }
   });
+
+  app.use(express.static(staticPath));
 
   // Handle client-side routing - serve index.html for all routes
   app.get("*", (_req, res) => {

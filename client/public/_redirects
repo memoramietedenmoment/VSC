@@ -1,4 +1,6 @@
 # Legacy Wix URL redirects to the new Netlify product slugs and in-page anchors
+# All specific redirects MUST come before the catch-all rule
+
 /produkte /#produkte 301
 /kontakt /#kontakt 301
 /faq /#faq 301
@@ -6,8 +8,20 @@
 /über-uns /#kontakt 301
 /fotospiegel-glow /produkt/fotospiegel-glow 301
 /audio-gästebuch-vivi /produkt/audio-gaestebuch-vivi 301
-/produkt/audio-gstebuch-vivi  /produkt/audio-gaestebuch-vivi  301
-/produkt/hot-dog-wrmer-sjen  /produkt/hot-dog-waermer-sjen  301
-/produkt/nacho-wrmer-sala  /produkt/nacho-waermer-sala  301
+/audio-gaestebuch-vivi /produkt/audio-gaestebuch-vivi 301
+/polaroid-kamera-dior /produkt/sofortbildkamera-dior 301
+/slushmaschine-emit /produkt/slushmaschine-emit 301
+/karaokemaschine-sing /produkt/karaokemaschine-sing 301
+/zuckerwattemaschine-luna /produkt/zuckerwattemaschine-luna 301
+/popcornmaschine-keno /produkt/popcornmaschine-keno 301
+/seifenblasenmaschine-lilo /produkt/seifenblasenmaschine-lilo 301
+/nebelmaschine-mira /produkt/nebelmaschine-mira 301
+/musik-box-sunu /produkt/musik-box-sunu 301
+/hot-dog-wärmer-sjen /produkt/hot-dog-waermer-sjen 301
+/nacho-wärmer-sala /produkt/nacho-waermer-sala 301
+/produkt/audio-gstebuch-vivi /produkt/audio-gaestebuch-vivi 301
+/produkt/hot-dog-wrmer-sjen /produkt/hot-dog-waermer-sjen 301
+/produkt/nacho-wrmer-sala /produkt/nacho-waermer-sala 301
 
+# Catch-all for SPA - must be LAST
 /* /index.html 200
