@@ -16,6 +16,8 @@ async function startServer() {
     "/faq": "/#faq",
     "/referenzen": "/#bewertungen",
     "/über-uns": "/#kontakt",
+    "/datenschutzerkl%C3%A4rung": "/datenschutz",
+    "/%C3%BCber-uns": "/#kontakt",
     "/fotospiegel-glow": "/produkt/fotospiegel-glow",
     "/audio-gaestebuch-vivi": "/produkt/audio-gaestebuch-vivi",
     "/audio-gästebuch-vivi": "/produkt/audio-gaestebuch-vivi",

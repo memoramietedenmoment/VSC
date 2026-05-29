@@ -27,6 +27,16 @@ to = "/#kontakt"
 status = 301
 
 [[redirects]]
+from = "/datenschutzerkl%C3%A4rung"
+to = "/datenschutz"
+status = 301
+
+[[redirects]]
+from = "/%C3%BCber-uns"
+to = "/#kontakt"
+status = 301
+
+[[redirects]]
 from = "/fotospiegel-glow"
 to = "/produkt/fotospiegel-glow"
 status = 301
