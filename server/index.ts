@@ -17,7 +17,7 @@ async function startServer() {
     "/referenzen": "/#bewertungen",
     "/über-uns": "/#kontakt",
     "/fotospiegel-glow": "/produkt/fotospiegel-glow",
-    "/audio-gästebuch-vivi": "/produkt/audio-gaestebuch-vivi",
+    "/audio-gaestebuch-vivi": "/produkt/audio-gaestebuch-vivi",
     "/polaroid-kamera-dior": "/produkt/sofortbildkamera-dior",
     "/slushmaschine-emit": "/produkt/slushmaschine-emit",
     "/karaokemaschine-sing": "/produkt/karaokemaschine-sing",
