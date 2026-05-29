@@ -114,7 +114,7 @@ const PRODUCTS_DETAIL = {
     id: 2,
     name: "Audio-Gästebuch VIVI",
     emoji: "📞",
-    tagline: "Persönliche Sprachnachrichten statt Einträge im Gästebuch",
+    tagline: "Persönliche Sprachnachrichten statt schriftlicher Einträge",
     price: "49,- €",
     images: [
       "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/audio-gaestebuch-vivi-8TDr2DteLoHaGVv5GwKgqm.webp",
