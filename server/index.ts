@@ -30,7 +30,7 @@ async function startServer() {
     "/nacho-wärmer-sala": "/produkt/nacho-waermer-sala",
     "/produkt/audio-gstebuch-vivi": "/produkt/audio-gaestebuch-vivi",
     "/produkt/hot-dog-wrmer-sjen": "/produkt/hot-dog-waermer-sjen",
-    "/produkt/nacho-wärmer-sala": "/produkt/nacho-waermer-sala",
+    "/produkt/nacho-wrmer-sala": "/produkt/nacho-waermer-sala",
   };
 
   // Serve static files from dist/public in production
