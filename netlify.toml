@@ -1,7 +1,48 @@
+# Legacy Wix URL redirects to the new Netlify product slugs and in-page anchors
+[[redirects]]
+from = "/produkte"
+to = "/#produkte"
+status = 301
+
+[[redirects]]
+from = "/kontakt"
+to = "/#kontakt"
+status = 301
+
+[[redirects]]
+from = "/faq"
+to = "/#faq"
+status = 301
+
+[[redirects]]
+from = "/referenzen"
+to = "/#bewertungen"
+status = 301
+
+[[redirects]]
+from = "/über-uns"
+to = "/#kontakt"
+status = 301
+
+[[redirects]]
+from = "/fotospiegel-glow"
+to = "/produkt/fotospiegel-glow"
+status = 301
+
+[[redirects]]
+from = "/audio-gästebuch-vivi"
+to = "/produkt/audio-gaestebuch-vivi"
+status = 301
+
 [[redirects]]
 from = "/produkt/audio-gstebuch-vivi"
 to = "/produkt/audio-gaestebuch-vivi"
 status = 301
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
 
 [[redirects]]
 from = "/produkt/hot-dog-wrmer-sjen"

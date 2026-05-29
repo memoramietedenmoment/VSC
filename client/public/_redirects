@@ -1,3 +1,11 @@
+# Legacy Wix URL redirects to the new Netlify product slugs and in-page anchors
+/produkte /#produkte 301
+/kontakt /#kontakt 301
+/faq /#faq 301
+/referenzen /#bewertungen 301
+/über-uns /#kontakt 301
+/fotospiegel-glow /produkt/fotospiegel-glow 301
+/audio-gästebuch-vivi /produkt/audio-gaestebuch-vivi 301
 /produkt/audio-gstebuch-vivi  /produkt/audio-gaestebuch-vivi  301
 /produkt/hot-dog-wrmer-sjen  /produkt/hot-dog-waermer-sjen  301
 /produkt/nacho-wrmer-sala  /produkt/nacho-waermer-sala  301

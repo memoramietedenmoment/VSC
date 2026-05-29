@@ -11,6 +11,13 @@ async function startServer() {
   const server = createServer(app);
 
   const legacySlugRedirects: Record<string, string> = {
+    "/produkte": "/#produkte",
+    "/kontakt": "/#kontakt",
+    "/faq": "/#faq",
+    "/referenzen": "/#bewertungen",
+    "/über-uns": "/#kontakt",
+    "/fotospiegel-glow": "/produkt/fotospiegel-glow",
+    "/audio-gästebuch-vivi": "/produkt/audio-gaestebuch-vivi",
     "/produkt/audio-gstebuch-vivi": "/produkt/audio-gaestebuch-vivi",
     "/produkt/hot-dog-wrmer-sjen": "/produkt/hot-dog-waermer-sjen",
     "/produkt/nacho-wrmer-sala": "/produkt/nacho-waermer-sala",
