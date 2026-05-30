@@ -3,6 +3,11 @@ import { useEffect, useState } from "react";
 const STORAGE_KEY = "memora_ga_cookie_consent";
 const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined;
 
+// Debug log
+if (typeof window !== "undefined") {
+  console.log("[CookieConsent] GA_MEASUREMENT_ID:", GA_MEASUREMENT_ID);
+}
+
 function disableGoogleAnalytics(measurementId: string) {
   const disableKey = `ga-disable-${measurementId}`;
   (window as any)[disableKey] = true;
