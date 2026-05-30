@@ -203,10 +203,57 @@ Außerdem habt ihr das Recht, unter bestimmten Umständen die Einschränkung der
                 denen der Verantwortliche unterliegt, vorgesehen wurde.
               </p>
 
+              <p className="mb-6">
+                Soweit für einzelne Verarbeitungen keine speziellen Aufbewahrungsfristen bestehen, gilt für die
+                pseudonymisierten und aggregierten Analysedaten (insbesondere Google Analytics) eine Aufbewahrungsdauer
+                von 14 Monaten. Nach Ablauf dieser Frist werden diese Analysedaten routinemäßig gelöscht oder so
+                anonymisiert, dass eine Personenbeziehbarkeit nicht mehr möglich ist. Andere personenbezogene Daten
+                (z. B. aus Kontaktanfragen) werden nur so lange gespeichert, wie es für die Erfüllung des jeweiligen
+                Zwecks erforderlich ist oder gesetzliche Aufbewahrungsfristen bestehen (z. B. handels- oder steuerrechtliche
+                Aufbewahrungsfristen).
+              </p>
+
               <h3 className="text-xl font-semibold text-gray-900 mb-4">2.7 Analyse-Tools und Tools von Drittanbietern </h3>
               <p className="mb-6">
                 Beim Besuch unserer Website kann euer Surfverhalten statistisch ausgewertet werden. Das passiert vor allem mit sogenannten Analyseprogrammen.
 Detaillierte Infos dazu findet ihr in dieser Datenschutzerklärung.
+              </p>
+
+              <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">Google Analytics (GA4) — Hinweise zur Rechtsgrundlage, Datenübermittlung und Widerruf</h4>
+              <p className="mb-6">
+                Wir setzen Google Analytics 4 (GA4) zur Erhebung und Auswertung von Nutzungsdaten ein, um das Nutzererlebnis
+                und die Stabilität unserer Website zu verbessern. Das Einbinden und Ausführen von Google Analytics erfolgt
+                ausschließlich auf Grundlage eurer vorherigen Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO. Ohne gültige
+                Einwilligung werden keine Analytics-Skripte geladen und es findet keine Übermittlung personenbezogener Daten
+                an Google statt.
+              </p>
+              <p className="mb-6">
+                Wir haben die IP-Anonymisierung (`anonymize_ip`) für Google Analytics aktiviert. Soweit durch Google Daten
+                in Drittländer (z. B. in die USA) übertragen werden, stützen wir uns auf die von Google bereitgestellten
+                Schutzmaßnahmen und Garantien (z. B. Standardvertragsklauseln oder andere von Google genutzte Übermittlungsmechanismen).
+                Für weitere Details zur Datenübermittlung und den von Google ergriffenen Schutzmaßnahmen verweisen wir auf
+                die Datenschutzhinweise von Google.
+              </p>
+              <p className="mb-6">
+                Die in Google Analytics gespeicherten Daten werden auf Grundlage eurer Einwilligung erhoben; die von uns
+                verwendeten, nicht-personenbezogenen und pseudonymisierten Analysedaten werden für maximal 14 Monate
+                aufbewahrt und anschließend gelöscht oder anonymisiert, sodass eine Personenbeziehbarkeit ausgeschlossen ist.
+                Die Einwilligung wird lokal im Browser (z. B. in `localStorage`) gespeichert und kann jederzeit widerrufen
+                werden. Ein Widerruf bewirkt, dass weitere Datenerhebungen unterbleiben; bereits übermittelte Daten können
+                bei dem Dienstleister verbleiben, soweit eine Löschung dort nicht unmittelbar möglich ist.
+              </p>
+              <p className="mb-6">
+                Weitere Informationen zur Datenverarbeitung durch Google sowie zu bestehenden Einstellungs- und
+                Widerspruchsmöglichkeiten findet ihr in der Google-Datenschutzerklärung:
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline"
+                >
+                  https://policies.google.com/privacy
+                </a>
+                .
               </p>
             </section>
 
