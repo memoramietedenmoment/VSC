@@ -1278,19 +1278,6 @@ export default function Home() {
                     Kontakt
                   </a>
                   <a
-                    href="#faq"
-                    className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsMenuOpen(false);
-                      requestAnimationFrame(() => {
-                        document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
-                      });
-                    }}
-                  >
-                    FAQ
-                  </a>
-                  <a
                     href="#wer-wir-sind-mobile"
                     className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center"
                     onClick={(e) => {
@@ -1302,6 +1289,19 @@ export default function Home() {
                     }}
                   >
                     Wer wir sind
+                  </a>
+                  <a
+                    href="#faq"
+                    className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsMenuOpen(false);
+                      requestAnimationFrame(() => {
+                        document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
+                      });
+                    }}
+                  >
+                    FAQ
                   </a>
 
                 </nav>
@@ -1360,8 +1360,8 @@ export default function Home() {
               <a href="#produkte" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Produkte</a>
               <a href="#bewertungen" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Bewertungen</a>
               <a href="#kontakt" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Kontakt</a>
-              <a href="#faq" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">FAQ</a>
               <a href="#wer-wir-sind" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Wer wir sind</a>
+              <a href="#faq" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">FAQ</a>
             </nav>
 
             <p
