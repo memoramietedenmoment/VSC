@@ -45,8 +45,20 @@ async function startServer() {
       ? path.resolve(__dirname, "public")
       : path.resolve(__dirname, "..", "dist", "public");
 
+  const mobileUserAgentRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+  const isMobileDevice = (userAgent?: string) =>
+    Boolean(userAgent && mobileUserAgentRegex.test(userAgent));
+
   // Redirect middleware - must come BEFORE static to intercept legacy URLs
   app.use((req, res, next) => {
+    if (
+      req.path === "/%C3%BCber-uns" &&
+      isMobileDevice(req.headers["user-agent"] as string | undefined)
+    ) {
+      res.redirect(301, "/#wer-wir-sind-mobile");
+      return;
+    }
+
     if (legacySlugRedirects[req.path]) {
       res.redirect(301, legacySlugRedirects[req.path]);
     } else {
