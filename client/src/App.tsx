@@ -27,6 +27,7 @@ function ScrollManager() {
   const prevLocation = useRef(location);
   const isBack = useRef(false);
   const isMobileRef = useRef(false);
+  const lastBackTime = useRef(0);
 
   // Dynamische Mobile Detection - wird bei Resize aktualisiert
   useEffect(() => {
@@ -38,6 +39,27 @@ function ScrollManager() {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
+
+  // Handle fragment identifier scrolling - but not immediately after back button
+  useEffect(() => {
+    const now = Date.now();
+    // Don't process fragments if we just handled a back button (within 200ms)
+    if (now - lastBackTime.current < 200) {
+      return;
+    }
+
+    const hash = window.location.hash;
+    if (hash) {
+      const elementId = hash.substring(1); // Remove the '#'
+      // Use requestAnimationFrame to ensure DOM is ready
+      requestAnimationFrame(() => {
+        const element = document.getElementById(elementId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    }
+  }, [location]); // Trigger on location changes to catch hash changes
 
   const getSavedScroll = (path: string) => {
     const inMemory = scrollPositions[path];
@@ -59,8 +81,20 @@ function ScrollManager() {
       return false;
     }
 
-    requestAnimationFrame(() => {
+    let cancelled = false;
+
+    const performRestore = () => {
+      if (cancelled) return;
       window.scrollTo({ top: saved, behavior: "auto" });
+    };
+
+    // Use multiple frames + timeout for reliable restoration
+    // First frame for layout, second for paint, then timeout for safety
+    const frameId = requestAnimationFrame(() => {
+      const frameId2 = requestAnimationFrame(performRestore);
+      const timeoutId = window.setTimeout(performRestore, 100);
+
+      return { frameId2, timeoutId };
     });
 
     return true;
@@ -77,6 +111,7 @@ function ScrollManager() {
   useEffect(() => {
     const handlePopState = () => {
       isBack.current = true;
+      lastBackTime.current = Date.now();
     };
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
@@ -99,32 +134,39 @@ function ScrollManager() {
       }
 
       if (isBack.current) {
-        if (isMobileRef.current) {
-          if (next === "/") {
-            const savedForHome = getSavedScroll("/");
-            if (savedForHome !== undefined && savedForHome > 0) {
-              window.sessionStorage.setItem("restore-home-scroll", String(savedForHome));
-            }
+        const saved = getSavedScroll(next);
+        
+        if (next === "/") {
+          // For home page, always set the restore key and let Home.tsx handle it
+          if (saved !== undefined && saved > 0) {
+            window.sessionStorage.setItem("restore-scroll-once", "1");
+            window.sessionStorage.setItem("restore-home-scroll", String(saved));
           } else {
             window.scrollTo(0, 0);
           }
         } else {
-          // For the home page, also set a dedicated key so Home.tsx can restore
-          // more reliably with a longer delay after full render
-          if (next === "/") {
-            const savedForHome = getSavedScroll("/");
-            if (savedForHome !== undefined && savedForHome > 0) {
-              window.sessionStorage.setItem("restore-home-scroll", String(savedForHome));
-            }
-          }
-          if (!restoreScroll(next)) {
+          // For other pages, restore directly with better timing
+          if (saved !== undefined && saved > 0) {
+            // Use multiple frames to ensure component is rendered
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                window.scrollTo({ top: saved, behavior: "auto" });
+              });
+            });
+          } else {
             window.scrollTo(0, 0);
           }
         }
+        
         isBack.current = false;
-        window.sessionStorage.removeItem("restore-scroll-once");
+        
       } else {
-        window.scrollTo(0, 0);
+        // Forward navigation - check for fragment
+        const hash = window.location.hash;
+        if (!hash) {
+          window.scrollTo(0, 0);
+        }
+        // Fragment will be handled by the separate fragment handler
       }
     }
   }, [location]);
