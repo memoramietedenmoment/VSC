@@ -953,15 +953,26 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const scrollToTarget = (selector: string) => {
+      const target = document.querySelector(selector) as HTMLElement | null;
+      if (!target) return;
+
+      requestAnimationFrame(() => {
+        target.scrollIntoView({ behavior: "smooth" });
+      });
+    };
+
     const hash = window.location.hash;
-    if (!hash) return;
+    if (hash) {
+      scrollToTarget(hash);
+      return;
+    }
 
-    const target = document.querySelector(hash) as HTMLElement | null;
-    if (!target) return;
+    const storedAnchor = window.sessionStorage.getItem("home-return-anchor");
+    if (!storedAnchor) return;
 
-    requestAnimationFrame(() => {
-      target.scrollIntoView({ behavior: "smooth" });
-    });
+    window.sessionStorage.removeItem("home-return-anchor");
+    scrollToTarget(`#${storedAnchor}`);
   }, []);
 
   const scrollToContact = () => {

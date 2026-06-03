@@ -1098,7 +1098,15 @@ export default function ProductDetail() {
         />
         <div className="text-center">
           <h1 className="text-3xl font-bold text-foreground mb-4">Produkt nicht gefunden</h1>
-          <Link href={`/#produkt-${slug}`} className="text-[oklch(0.32_0.07_155)] hover:underline font-semibold">
+          <Link
+            href={`/#produkt-${slug}`}
+            className="text-[oklch(0.32_0.07_155)] hover:underline font-semibold"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.sessionStorage.setItem("home-return-anchor", `produkt-${slug}`);
+              }
+            }}
+          >
             ← Zurück zur Startseite
           </Link>
         </div>
@@ -1184,7 +1192,15 @@ export default function ProductDetail() {
       >
         <div className="container relative flex items-center h-16">
           {/* Logo */}
-          <Link href={`/#produkt-${slug}`} className="flex items-center gap-2 group">
+          <Link
+            href={`/#produkt-${slug}`}
+            className="flex items-center gap-2 group"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.sessionStorage.setItem("home-return-anchor", `produkt-${slug}`);
+              }
+            }}
+          >
             <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/memora_Logo_9da7fd54.png" alt="memora Logo" className="h-10 w-auto filter invert" />
           </Link>
 
