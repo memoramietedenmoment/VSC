@@ -1267,6 +1267,19 @@ export default function Home() {
                   >
                     FAQ
                   </a>
+                  <a
+                    href="#wer-wir-sind-mobile"
+                    className="text-white/80 hover:text-[oklch(0.75_0.14_80)] transition-colors text-lg font-medium text-center"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsMenuOpen(false);
+                      requestAnimationFrame(() => {
+                        document.getElementById('wer-wir-sind-mobile')?.scrollIntoView({ behavior: 'smooth' });
+                      });
+                    }}
+                  >
+                    Wer wir sind
+                  </a>
 
                 </nav>
                 <div className="flex flex-col gap-4 pt-4 border-t border-white/20 items-center">
@@ -1325,6 +1338,7 @@ export default function Home() {
               <a href="#bewertungen" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Bewertungen</a>
               <a href="#kontakt" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Kontakt</a>
               <a href="#faq" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">FAQ</a>
+              <a href="#kontakt" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Wer wir sind</a>
             </nav>
 
             <p
@@ -2529,7 +2543,7 @@ export default function Home() {
               </div>
 
               {/* Geschäftsführer */}
-              <div className="order-1 lg:order-1 rounded-2xl border border-border bg-[oklch(0.97_0.012_85)] p-5 text-center">
+              <div id="wer-wir-sind-mobile" className="order-1 lg:order-1 rounded-2xl border border-border bg-[oklch(0.97_0.012_85)] p-5 text-center">
                 <h4
                   className="mb-4 text-xl font-bold text-foreground"
                   style={{ fontFamily: "'Cormorant Garamond', serif" }}
@@ -2551,9 +2565,9 @@ export default function Home() {
       </section>
 
       {/* ═══════════════════════════════════════════════════
-          ÜBER UNS - TRUST & E-A-T
+          WER WIR SIND - TRUST & E-A-T
       ═══════════════════════════════════════════════════ */}
-      <section id="warum-memora" className="py-20 bg-white">
+      <section id="wer-wir-sind" className="py-20 bg-white">
         <div className="container max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
