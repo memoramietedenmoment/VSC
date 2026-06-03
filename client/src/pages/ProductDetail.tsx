@@ -1082,14 +1082,6 @@ export default function ProductDetail() {
 
   const slug = params?.slug as string;
   const product = PRODUCTS_DETAIL[slug as keyof typeof PRODUCTS_DETAIL];
-
-  useEffect(() => {
-    if (!product) return;
-    if (typeof window !== "undefined") {
-      window.sessionStorage.setItem("home-return-anchor", `produkt-${slug}`);
-    }
-  }, [product, slug]);
-
   if (!product && LEGACY_SLUG_REDIRECTS[slug]) {
     window.location.replace(`/produkt/${LEGACY_SLUG_REDIRECTS[slug]}`);
     return null;
