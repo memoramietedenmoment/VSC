@@ -1675,6 +1675,14 @@ export default function Home() {
       ═══════════════════════════════════════════════════ */}
       <section id="produkte" className="py-20 bg-[oklch(0.95_0.012_85)]">
         <div className="container">
+          {PRODUCTS.map((product) => (
+            <span
+              key={product.id}
+              id={`produkt-${toProductSlug(product.name)}`}
+              className="sr-only"
+              aria-hidden="true"
+            />
+          ))}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1694,7 +1702,6 @@ export default function Home() {
               const slug = toProductSlug(product.name);
               return (
               <motion.div
-                id={`produkt-${slug}`}
                 key={product.id}
                 initial={{ opacity: 0, y: 32 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -1766,7 +1773,6 @@ export default function Home() {
                   const slug = toProductSlug(product.name);
                   return (
                   <motion.div
-                    id={`produkt-${slug}`}
                     key={product.id}
                     initial={{ opacity: 0, y: 32 }}
                     whileInView={{ opacity: 1, y: 0 }}
