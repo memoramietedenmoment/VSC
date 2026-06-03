@@ -952,6 +952,18 @@ export default function Home() {
     window.history.replaceState({}, "", `${window.location.pathname}${nextHash}`);
   }, []);
 
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash) return;
+
+    const target = document.querySelector(hash) as HTMLElement | null;
+    if (!target) return;
+
+    requestAnimationFrame(() => {
+      target.scrollIntoView({ behavior: "smooth" });
+    });
+  }, []);
+
   const scrollToContact = () => {
     contactRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -1671,6 +1683,7 @@ export default function Home() {
               const slug = toProductSlug(product.name);
               return (
               <motion.div
+                id={`produkt-${slug}`}
                 key={product.id}
                 initial={{ opacity: 0, y: 32 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -1742,6 +1755,7 @@ export default function Home() {
                   const slug = toProductSlug(product.name);
                   return (
                   <motion.div
+                    id={`produkt-${slug}`}
                     key={product.id}
                     initial={{ opacity: 0, y: 32 }}
                     whileInView={{ opacity: 1, y: 0 }}
