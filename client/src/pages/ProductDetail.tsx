@@ -1098,7 +1098,7 @@ export default function ProductDetail() {
         />
         <div className="text-center">
           <h1 className="text-3xl font-bold text-foreground mb-4">Produkt nicht gefunden</h1>
-          <Link href="/" className="text-[oklch(0.32_0.07_155)] hover:underline font-semibold">
+          <Link href="/#produkte" className="text-[oklch(0.32_0.07_155)] hover:underline font-semibold">
             ← Zurück zur Startseite
           </Link>
         </div>
@@ -1184,7 +1184,7 @@ export default function ProductDetail() {
       >
         <div className="container relative flex items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/#produkte" className="flex items-center gap-2 group">
             <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/memora_Logo_9da7fd54.png" alt="memora Logo" className="h-10 w-auto filter invert" />
           </Link>
 
