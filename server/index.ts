@@ -15,9 +15,9 @@ async function startServer() {
     "/kontakt": "/#kontakt",
     "/faq": "/#faq",
     "/referenzen": "/#bewertungen",
-    "/über-uns": "/#über-uns",
+    "/über-uns": "/#wer-wir-sind-mobile",
     "/datenschutzerkl%C3%A4rung": "/datenschutz",
-    "/%C3%BCber-uns": "/#über-uns",
+    "/%C3%BCber-uns": "/#wer-wir-sind-mobile",
     "/fotospiegel-glow": "/produkt/fotospiegel-glow",
     "/audio-gaestebuch-vivi": "/produkt/audio-gaestebuch-vivi",
     "/audio-gästebuch-vivi": "/produkt/audio-gaestebuch-vivi",
@@ -45,20 +45,8 @@ async function startServer() {
       ? path.resolve(__dirname, "public")
       : path.resolve(__dirname, "..", "dist", "public");
 
-  const mobileUserAgentRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-  const isMobileDevice = (userAgent?: string) =>
-    Boolean(userAgent && mobileUserAgentRegex.test(userAgent));
-
   // Redirect middleware - must come BEFORE static to intercept legacy URLs
   app.use((req, res, next) => {
-    if (
-      req.path === "/%C3%BCber-uns" &&
-      isMobileDevice(req.headers["user-agent"] as string | undefined)
-    ) {
-      res.redirect(301, "/#wer-wir-sind-mobile");
-      return;
-    }
-
     if (legacySlugRedirects[req.path]) {
       res.redirect(301, legacySlugRedirects[req.path]);
     } else {

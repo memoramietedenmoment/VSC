@@ -1338,7 +1338,7 @@ export default function Home() {
               <a href="#bewertungen" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Bewertungen</a>
               <a href="#kontakt" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Kontakt</a>
               <a href="#faq" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">FAQ</a>
-              <a href="#kontakt" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Wer wir sind</a>
+              <a href="#wer-wir-sind" className="hover:text-[oklch(0.75_0.14_80)] transition-colors">Wer wir sind</a>
             </nav>
 
             <p
