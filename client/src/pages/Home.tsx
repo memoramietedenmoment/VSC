@@ -23,6 +23,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Button } from "@/components/ui/button";
 import {
   DEFAULT_OG_IMAGE,
+  GOOGLE_BUSINESS_LOGO,
   SITE_NAME,
   SITE_URL,
   extractNumericPrice,
@@ -447,6 +448,7 @@ const HOME_STRUCTURED_DATA = {
         addressLocality: "Gaggenau",
         addressCountry: "DE",
       },
+      logo: toAbsoluteUrl(GOOGLE_BUSINESS_LOGO),
       areaServed: SERVICE_AREAS,
       sameAs: [
         "https://www.instagram.com/memora_miete_den_moment/?igsh=MnFhYTBtNGowMjhk",

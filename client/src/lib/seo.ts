@@ -3,6 +3,8 @@ export const SITE_NAME = "memora - miete den moment";
 export const DEFAULT_OG_IMAGE =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/memora_Logo_9da7fd54.png";
 
+export const GOOGLE_BUSINESS_LOGO = "/images/Logo_für_Google.png";
+
 export function toAbsoluteUrl(url: string) {
   if (/^https?:\/\//i.test(url)) {
     return url;
