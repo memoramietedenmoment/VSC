@@ -292,7 +292,8 @@ const PRODUCTS_DETAIL = {
     pricing: [
       { label: "Mietgebühr (1-tägiges Event)", value: "149,- €" },
       { label: "Jeder weitere Tag (bei mehrtägigen Events)", value: "+75,- €" },
-      { label: "Lieferung (deutschlandweit)", value: "+25,- €" },
+      { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
+      { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
     ],
     faq: [
