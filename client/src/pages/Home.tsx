@@ -31,6 +31,8 @@ import {
   toProductSlug,
 } from "@/lib/seo";
 import { PRODUCT_COMBINATIONS } from "@/lib/product-combinations";
+import { getDeliveryCostForSelection } from "@/lib/delivery";
+import { getActiveContactBundle as getActiveContactBundleFromSelection } from "@/lib/contact-bundles";
 import { Link } from "wouter";
 
 // ─── Daten ───────────────────────────────────────────────────────────────────
@@ -654,23 +656,6 @@ function getContactSelectedProductSummaries(
     .filter((summary): summary is ProductSelectionSummary => summary !== null);
 }
 
-function getActiveContactBundle(selectedValues: string[]): ContactBundlePricing | null {
-  const selectedSlugs = new Set(
-    selectedValues
-      .map((value) => {
-        const product = PRODUCTS.find((entry) => value.startsWith(`${entry.name} (`));
-        return product ? toProductSlug(product.name) : null;
-      })
-      .filter((slug): slug is string => slug !== null)
-  );
-
-  return (
-    CONTACT_BUNDLE_PRICING.find((bundle) =>
-      bundle.productSlugs.every((slug) => selectedSlugs.has(slug))
-    ) ?? null
-  );
-}
-
 function getBundleProductNames(bundle: ContactBundlePricing): string[] {
   return bundle.productSlugs
     .map((slug) => PRODUCTS.find((product) => toProductSlug(product.name) === slug)?.name)
@@ -737,7 +722,38 @@ export default function Home() {
     (sum, summary) => sum + summary.price,
     0
   );
-  const activeContactBundle = getActiveContactBundle(formData.products);
+  const activeContactBundle = getActiveContactBundleFromSelection(
+    formData.products
+      .map((value) => {
+        const product = PRODUCTS.find((entry) => value.startsWith(`${entry.name} (`));
+        return product ? toProductSlug(product.name) : null;
+      })
+      .filter((slug): slug is string => Boolean(slug)),
+    CONTACT_BUNDLE_PRICING
+  );
+  const bundleProductNames = activeContactBundle
+    ? new Set(getBundleProductNames(activeContactBundle))
+    : null;
+  const bundleRelatedSummaryLabels = bundleProductNames
+    ? new Set([
+        ...(Array.from(bundleProductNames) as string[]),
+        ...(bundleProductNames.has(PHOTO_MIRROR_PRODUCT_NAME)
+          ? [CONTACT_ADD_ON_PRICING.photoMirrorPrintFlatrate.label]
+          : []),
+        ...(bundleProductNames.has(DIOR_PRODUCT_NAME)
+          ? [CONTACT_ADD_ON_PRICING.diorTriplePack.label]
+          : []),
+      ])
+    : null;
+  const extraProductsTotal =
+    activeContactBundle && bundleRelatedSummaryLabels
+      ? selectedProductSummaries.reduce((sum, summary) => {
+          return bundleRelatedSummaryLabels.has(summary.label) ? sum : sum + summary.price;
+        }, 0)
+      : selectedProductTotal;
+  const effectiveProductsTotal = activeContactBundle
+    ? activeContactBundle.discountedPrice + extraProductsTotal
+    : selectedProductTotal;
   const shouldAutoSelectPhotoMirrorAddOn =
     activeContactBundle?.productSlugs.includes("fotospiegel-glow") ?? false;
   const shouldAutoSelectDiorAddOn =
@@ -764,6 +780,14 @@ export default function Home() {
 
     return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
+
+  useEffect(() => {
+    if (!deliveryPlz || deliveryPlz.length !== 5) {
+      return;
+    }
+
+    void calculateDelivery(deliveryPlz);
+  }, [formData.products, formData.addOns.photoMirrorPrintFlatrate, formData.addOns.diorTriplePack]);
 
   useEffect(() => {
     setFormData((prev) => {
@@ -1080,6 +1104,20 @@ export default function Home() {
 
   const calculateDelivery = async (plz: string) => {
     setDeliveryInfo({ status: "loading", cost: null, distance: null });
+
+    const selectedProductNames = formData.products
+      .map((value) => {
+        const product = PRODUCTS.find((entry) => value.startsWith(`${entry.name} (`));
+        return product ? product.name : null;
+      })
+      .filter((name): name is string => Boolean(name));
+
+    const specialDeliveryCost = getDeliveryCostForSelection(selectedProductNames);
+    if (specialDeliveryCost !== null) {
+      setDeliveryInfo({ status: "done", cost: specialDeliveryCost, distance: null });
+      return;
+    }
+
     try {
       const res = await fetch(
         `https://nominatim.openstreetmap.org/search?postalcode=${plz}&country=DE&format=json&limit=1`,
@@ -1121,41 +1159,53 @@ export default function Home() {
     const bundleProductNames = activeContactBundle
       ? new Set(getBundleProductNames(activeContactBundle))
       : null;
-    const activeBundleSubtotal = bundleProductNames
-      ? selectedProductSummaries.reduce((sum, summary) => {
-          const belongsToPhotoMirror =
-            summary.label === CONTACT_ADD_ON_PRICING.photoMirrorPrintFlatrate.label &&
-            bundleProductNames.has(PHOTO_MIRROR_PRODUCT_NAME);
-          const belongsToDior =
-            summary.label === CONTACT_ADD_ON_PRICING.diorTriplePack.label &&
-            bundleProductNames.has(DIOR_PRODUCT_NAME);
-          const belongsToBaseProduct = bundleProductNames.has(summary.label);
+    const bundleRelatedSummaryLabels = bundleProductNames
+      ? new Set([
+          ...(Array.from(bundleProductNames) as string[]),
+          ...(bundleProductNames.has(PHOTO_MIRROR_PRODUCT_NAME)
+            ? [CONTACT_ADD_ON_PRICING.photoMirrorPrintFlatrate.label]
+            : []),
+          ...(bundleProductNames.has(DIOR_PRODUCT_NAME)
+            ? [CONTACT_ADD_ON_PRICING.diorTriplePack.label]
+            : []),
+        ])
+      : null;
+    const extraProductsTotal =
+      activeContactBundle && bundleRelatedSummaryLabels
+        ? selectedProductSummaries.reduce((sum, summary) => {
+            return bundleRelatedSummaryLabels.has(summary.label) ? sum : sum + summary.price;
+          }, 0)
+        : selectedProductTotal;
+    const effectiveProductsTotal = activeContactBundle
+      ? activeContactBundle.discountedPrice + extraProductsTotal
+      : selectedProductTotal;
 
-          return belongsToPhotoMirror || belongsToDior || belongsToBaseProduct
-            ? sum + summary.price
-            : sum;
-        }, 0)
-      : 0;
-    const bundleSavings =
-      activeContactBundle && activeBundleSubtotal > activeContactBundle.discountedPrice
-        ? activeBundleSubtotal - activeContactBundle.discountedPrice
-        : 0;
-    const effectiveProductsTotal = selectedProductTotal - bundleSavings;
+    const selectedProductNames = formData.products
+      .map((value) => {
+        const product = PRODUCTS.find((entry) => value.startsWith(`${entry.name} (`));
+        return product ? product.name : null;
+      })
+      .filter((name): name is string => Boolean(name));
 
+    const specialDeliveryCost = getDeliveryCostForSelection(selectedProductNames);
     const deliveryCostForTotal =
-      deliveryInfo.status === "done" && deliveryInfo.cost !== null ? deliveryInfo.cost : 0;
+      deliveryInfo.status === "done" && deliveryInfo.cost !== null
+        ? deliveryInfo.cost
+        : specialDeliveryCost ?? 0;
     const totalPriceWithDelivery = effectiveProductsTotal + deliveryCostForTotal;
     const totalPriceLine =
       deliveryCostForTotal > 0
-        ? bundleSavings > 0
-          ? `Gesamtpreis: ${totalPriceWithDelivery},- € (Produkte ${effectiveProductsTotal},- € statt ${selectedProductTotal},- € + Lieferung ${deliveryCostForTotal},- €)`
+        ? activeContactBundle
+          ? `Gesamtpreis: ${totalPriceWithDelivery},- € (Paket ${activeContactBundle.discountedPrice},- € + Zusatzprodukte ${extraProductsTotal},- € + Lieferung ${deliveryCostForTotal},- €)`
           : `Gesamtpreis: ${totalPriceWithDelivery},- € (Produkte ${effectiveProductsTotal},- € + Lieferung ${deliveryCostForTotal},- €)`
-        : bundleSavings > 0
-        ? `Gesamtpreis Produkte: ${effectiveProductsTotal},- € (statt ${selectedProductTotal},- €)`
+        : activeContactBundle
+        ? `Gesamtpreis Produkte: ${effectiveProductsTotal},- € (Paket ${activeContactBundle.discountedPrice},- € + Zusatzprodukte ${extraProductsTotal},- €)`
         : `Gesamtpreis Produkte: ${effectiveProductsTotal},- €`;
     const deliveryLine =
       deliveryInfo.status === "done" && deliveryInfo.cost !== null
-        ? `Lieferung: ${deliveryInfo.cost},- € (ca. ${deliveryInfo.distance} km, PLZ ${deliveryPlz})`
+        ? specialDeliveryCost !== null
+          ? `Lieferung: ${deliveryInfo.cost},- € (Pauschalpreis für ausgewählte Geräte, PLZ ${deliveryPlz || "nicht erforderlich"})`
+          : `Lieferung: ${deliveryInfo.cost},- € (ca. ${deliveryInfo.distance} km, PLZ ${deliveryPlz})`
         : deliveryInfo.status === "done" && deliveryInfo.cost === null
         ? `Lieferung: Außerhalb des Liefergebiets (PLZ ${deliveryPlz}) – Abholung bevorzugt`
         : deliveryPlz
@@ -2276,7 +2326,7 @@ export default function Home() {
                             ) : activeContactBundle ? (
                               <span className="inline-flex flex-wrap items-center gap-1.5">
                                 <span>
-                                  {`${formData.products.length} ${formData.products.length === 1 ? "Produkt" : "Produkte"} ausgewählt · Gesamt ${activeContactBundle.discountedPrice},- €`}
+                                  {`${formData.products.length} ${formData.products.length === 1 ? "Produkt" : "Produkte"} ausgewählt · Gesamt ${effectiveProductsTotal},- €`}
                                 </span>
                                 <span className="text-xs text-muted-foreground line-through">
                                   {`${activeContactBundle.originalPrice},- €`}

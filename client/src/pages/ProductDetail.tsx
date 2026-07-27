@@ -178,8 +178,8 @@ const PRODUCTS_DETAIL = {
         a: "Ja, wir stellen dir die Rohdateien zur Verfügung. Du kannst sie mit jeder Standard-Audio-Software bearbeiten.",
          },
       {
-        q: "Könnt ihr uns das Audio-Gästebuch auch liefern?",
-        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
+        q: "Könnt ihr uns das Audio-Gästebuch auch zuschicken?",
+        a: "Ja, das Audio-Gästebuch VIVI sowie die Sofortbildkamera DIOR versenden wir deutschlandweit. Für die beiden Produkte berechnen wir je eine Pauschale von 25 Euro für den Hin- und Rückversand.",
       },
       {
         q: "Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
@@ -242,8 +242,8 @@ const PRODUCTS_DETAIL = {
         a: "Ja, die Bilder haben einen weißen Rand – perfekt zum Signieren!",
         },
       {
-        q: "Könnt ihr uns die Sofortbildkamera auch liefern?",
-        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
+        q: "Könnt ihr uns die Sofortbildkamera auch zuschicken?",
+        a: "Ja, die Sofortbildkamera DIOR sowie das Audio-Gästebuch VIVI versenden wir deutschlandweit. Für die beiden Produkte berechnen wir je eine Pauschale von 25 Euro für den Hin- und Rückversand.",
       },
       {
         q: "Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
