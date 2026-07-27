@@ -160,8 +160,7 @@ const PRODUCTS_DETAIL = {
     pricing: [
       { label: "Mietgebühr (1 Tag)", value: "49,- €" },
       { label: "Jeder weitere Tag", value: "+25,- €" },
-      { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
-      { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
+      { label: "Lieferung (deutschlandweit)", value: "+25,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
     ],
     faq: [
@@ -228,8 +227,7 @@ const PRODUCTS_DETAIL = {
       { label: "Mietgebühr Dreierpack (1 Tag)", value: "79,- €" },
       { label: "Jeder weitere Tag", value: "+15,- €" },
       { label: "Film 10er Pack (bei Bedarf)", value: "+15,- €" },
-      { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
-      { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
+      { label: "Lieferung (deutschlandweit)", value: "+25,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
     ],
     faq: [
