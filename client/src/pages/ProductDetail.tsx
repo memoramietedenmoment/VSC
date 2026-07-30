@@ -57,6 +57,13 @@ const PRODUCTS_DETAIL = {
     occasions: ["Hochzeit", "Geburtstag", "Firmenfeier"],
     reviews: [
       {
+        name: "Alessia M.",
+        rating: 5,
+        date: "Juni 2026",
+        text: "Wir hatten den Fotospiegel für unsere Hochzeit gemietet und würden es jederzeit wieder machen!🤗 Wir hatten damit wirklich sehr viel Spaß und vor allem haben wir tolle Erinnerungsbilder.",
+        event: "Hochzeit (70 Gäste)",
+      },
+      {
         name: "Joshua D.",
         rating: 5,
         date: "Februar 2026",
@@ -860,10 +867,17 @@ const PRODUCTS_DETAIL = {
     ],
     occasions: ["Party", "Hochzeit", "Kindergeburtstag"],
     reviews: [
+       {
+         name: "Celine Z.",
+        rating: 5,
+        date: "Mai 2026",
+        text: "Ich hatte die Popcorn Maschine für einen Geburtstag ausgeliehen. Es hat alles reibungslos funktioniert :)",
+        event: "Geburtstag (15 Gäste)",
+      },
       {
          name: "Julian Z.",
         rating: 5,
-        date: "Februar 2025",
+        date: "Februar 2026",
         text: "Die Popcornmaschine war in einem sehr guten, sauberen Zustand und funktionierte einwandfrei – frisches, leckeres Popcorn ohne Aufwand. Insgesamt ein toller Service mit hochwertigem Gerät. Sehr zu empfehlen!",
         event: "Private Feier (25 Gäste)",
       },

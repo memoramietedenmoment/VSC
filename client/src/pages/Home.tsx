@@ -213,6 +213,24 @@ const PHOTO_MIRROR_PRINT_FLATRATE_LABEL = "+ Druckflatrate (Fotospiegel GLOW) - 
 const DIOR_TRIPLE_PACK_LABEL = "Dreierpack (Sofortbildkamera DIOR) - 79,- €";
 
 const TESTIMONIALS = [
+   {
+     name: "Alessia M.",
+    date: "Juni 2026",
+    rating: 5,
+    text: "Wir hatten den Fotospiegel für unsere Hochzeit gemietet und würden es jederzeit wieder machen!🤗 Wir hatten damit wirklich sehr viel Spaß und vor allem haben wir tolle Erinnerungsbilder.",
+    event: "Hochzeit",
+    avatar: "A",
+    avatarColor: "bg-amber-500",
+  },
+  {
+     name: "Celine Z.",
+    date: "Mai 2026",
+    rating: 5,
+    text: "Ich hatte die Popcorn Maschine für einen Geburtstag ausgeliehen. Es hat alles reibungslos funktioniert :)",
+    event: "Geburtstag",
+    avatar: "C",
+    avatarColor: "bg-emerald-600",
+  },
   {
      name: "Julia G.",
     date: "Mai 2026",
