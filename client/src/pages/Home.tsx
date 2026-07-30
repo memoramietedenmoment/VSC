@@ -33,6 +33,7 @@ import {
 import { PRODUCT_COMBINATIONS } from "@/lib/product-combinations";
 import { getDeliveryCostForSelection } from "@/lib/delivery";
 import { getActiveContactBundle as getActiveContactBundleFromSelection } from "@/lib/contact-bundles";
+import { getSelfPickupHint, isDeliveryPlzValid } from "@/lib/contact-form";
 import { Link } from "wouter";
 
 // ─── Daten ───────────────────────────────────────────────────────────────────
@@ -714,6 +715,8 @@ export default function Home() {
   const isDiorSelected = formData.products.some((product) =>
     product.startsWith(`${DIOR_PRODUCT_NAME} (`)
   );
+  const selfPickupHint = getSelfPickupHint(isPhotoMirrorSelected);
+  const isDeliveryPlzRequired = !formData.selfPickup;
   const selectedProductSummaries = getContactSelectedProductSummaries(
     formData.products,
     formData.addOns
@@ -807,6 +810,14 @@ export default function Home() {
       return hasChanges ? { ...prev, addOns: nextAddOns } : prev;
     });
   }, [isPhotoMirrorSelected, isDiorSelected]);
+
+  useEffect(() => {
+    if (isPhotoMirrorSelected && formData.selfPickup) {
+      setFormData((prev) => (prev.selfPickup ? { ...prev, selfPickup: false } : prev));
+      setDeliveryPlz("");
+      setDeliveryInfo({ status: "idle", cost: null, distance: null });
+    }
+  }, [isPhotoMirrorSelected, formData.selfPickup]);
 
   useEffect(() => {
     if (!shouldAutoSelectPhotoMirrorAddOn && !shouldAutoSelectDiorAddOn) {
@@ -1141,6 +1152,16 @@ export default function Home() {
     e.preventDefault();
     if (formData.products.length === 0) {
       alert("Bitte wähle mindestens ein Produkt aus.");
+      return;
+    }
+
+    if (!isDeliveryPlzValid(deliveryPlz, formData.selfPickup)) {
+      alert("Bitte gib deine PLZ ein, um die Lieferkosten zu berechnen.");
+      return;
+    }
+
+    if (isPhotoMirrorSelected && formData.selfPickup) {
+      alert("Beim Fotospiegel ist keine Selbstabholung möglich. Bitte gib eine Lieferadresse oder PLZ ein.");
       return;
     }
 
@@ -2421,7 +2442,7 @@ export default function Home() {
 
                   <div>
                     <label className="block text-sm font-semibold text-foreground mb-1.5">
-                      Lieferkosten berechnen (optional)
+                      Lieferkosten berechnen {isDeliveryPlzRequired ? "*" : ""}
                     </label>
                     <div className="flex gap-2">
                       <input
@@ -2430,20 +2451,11 @@ export default function Home() {
                         maxLength={5}
                         placeholder="Deine PLZ, z.B. 76131"
                         className="form-input flex-1"
+                        required={!formData.selfPickup}
                         value={deliveryPlz}
                         onChange={e => {
                           const v = e.target.value.replace(/\D/g, "").slice(0, 5);
                           setDeliveryPlz(v);
-                          if (v.length > 0) {
-                            setFormData((prev) =>
-                              prev.selfPickup
-                                ? {
-                                    ...prev,
-                                    selfPickup: false,
-                                  }
-                                : prev
-                            );
-                          }
                           if (v.length === 5) calculateDelivery(v);
                           else setDeliveryInfo({ status: "idle", cost: null, distance: null });
                         }}
@@ -2475,11 +2487,17 @@ export default function Home() {
                       <p className="mt-2 text-sm text-red-600">PLZ nicht gefunden. Bitte prüfe deine Eingabe.</p>
                     )}
 
-                    <label className="mt-3 flex items-center gap-3 text-sm text-foreground cursor-pointer">
+                    {selfPickupHint && (
+                      <p className="mt-3 text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                        {selfPickupHint}
+                      </p>
+                    )}
+                    <label className={`mt-3 flex items-center gap-3 text-sm ${isPhotoMirrorSelected ? "text-muted-foreground cursor-not-allowed" : "text-foreground cursor-pointer"}`}>
                       <input
                         type="checkbox"
                         className="h-4 w-4 rounded border-border text-amber-500 focus:ring-amber-300"
                         checked={formData.selfPickup}
+                        disabled={isPhotoMirrorSelected}
                         onChange={(e) => {
                           if (e.target.checked) {
                             setDeliveryPlz("");

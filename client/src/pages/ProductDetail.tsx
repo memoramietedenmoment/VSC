@@ -42,7 +42,6 @@ const PRODUCTS_DETAIL = {
       { label: "Drucke", value: "Sofortdruck (10x15 cm), bis zu 700 Stück pro Event" },
       { label: "Kamera", value: "Professionelle DSLR mit Blitz" },
       { label: "Betrieb", value: "Stromanschluss erforderlich" },
-      { label: "Aufbau", value: "ca. 30 Minuten" },
       { label: "Bildschirm", value: "43″ Touch-Monitor" },
     ],
     features: [
@@ -50,7 +49,7 @@ const PRODUCTS_DETAIL = {
       "Sofortdruck auf Premium-Papier",
       "Customizable Rahmen-Design",
       "Digitale Speicherung aller Fotos",
-      "Auf Wunsch mit Aufbau",
+      "Professionelle Lieferung & Aufbau",
       "Unbegrenzte Aufnahmen",
       "Individueller Startbildschirm",
       "Individuelles Druckdesign",
@@ -85,7 +84,6 @@ const PRODUCTS_DETAIL = {
       { label: "Druckflatrate (bis zu 700 Stück)", value: "+100,- €" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
-      { label: "Abholung", value: "kostenlos (Gaggenau)" },
     ],
     faq: [
       {
@@ -101,8 +99,8 @@ const PRODUCTS_DETAIL = {
         a: "Ja! Wir können die Ausdrucke mit deinem Namen, Logo oder Motiv bedrucken lassen.",
         },
       {
-        q: "Könnt ihr uns den Fotospiegel auch liefern?",
-        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
+        q: "Liefert ihr uns den Fotospiegel?",
+        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab. Bitte beachtet: Beim Fotospiegel bieten wir keine Selbstabholung an, da der Aufbau und die Einrichtung durch unser Team erfolgt.",
         },
       {
         q: "Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
@@ -1382,7 +1380,7 @@ export default function ProductDetail() {
                       <span className="flex-1 text-right text-sm font-medium text-white/85">Alle Bilder digital und ausgedruckt</span>
                     </div>
                   </div>
-                  <p className="text-sm text-white/80 mt-2">zzgl. Lieferung (Abholung kostenlos)</p>
+                  <p className="text-sm text-white/80 mt-2">zzgl. Lieferung</p>
                 </div>
               ) : isSofortbildkameraDior ? (
                 <div className="bg-[oklch(0.32_0.07_155)] text-white rounded-xl px-6 py-5 mb-6">
