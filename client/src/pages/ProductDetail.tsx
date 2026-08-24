@@ -86,7 +86,7 @@ const PRODUCTS_DETAIL = {
     ],
     pricing: [
       { label: "Mietgebühr (1-tägiges Event)", value: "299,- €" },
-      { label: "Jeder weitere Tag (bei mehrtägigen Events)", value: "+150,- €" },
+      { label: "Jeder weitere Event-Tag", value: "+150,- €" },
       { label: "Druckflatrate (bis zu 700 Stück)", value: "+100,- €" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
@@ -163,7 +163,7 @@ const PRODUCTS_DETAIL = {
     ],
     pricing: [
       { label: "Mietgebühr (1-tägiges Event)", value: "49,- €" },
-      { label: "Jeder weitere Tag (bei mehrtägigen Events)", value: "+25,- €" },
+      { label: "Jeder weitere Event-Tag", value: "+25,- €" },
       { label: "Lieferung (deutschlandweit)", value: "+25,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
     ],
@@ -228,7 +228,7 @@ const PRODUCTS_DETAIL = {
     pricing: [
       { label: "Mietgebühr Einzeln (1-tägiges Event)", value: "29,- €" },
       { label: "Mietgebühr Dreierpack (1-tägiges Event)", value: "79,- €" },
-      { label: "Jeder weitere Tag (pro Stück, bei mehrtägigen Events)", value: "+15,- €" },
+      { label: "Jeder weitere Event-Tag", value: "+15,- €" },
       { label: "Film 10er Pack (bei Bedarf)", value: "+15,- €" },
       { label: "Lieferung (deutschlandweit)", value: "+25,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
@@ -294,7 +294,7 @@ const PRODUCTS_DETAIL = {
     ],
     pricing: [
       { label: "Mietgebühr (1-tägiges Event)", value: "149,- €" },
-      { label: "Jeder weitere Tag (bei mehrtägigen Events)", value: "+75,- €" },
+      { label: "Jeder weitere Event-Tag", value: "+75,- €" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
@@ -386,7 +386,7 @@ const PRODUCTS_DETAIL = {
     ],
     pricing: [
       { label: "Mietgebühr (1-tägiges Event)", value: "69,- €" },
-      { label: "Jeder weitere Tag (bei mehrtägigen Events)", value: "+35,- €" },
+      { label: "Jeder weitere Event-Tag", value: "+35,- €" },
        { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
@@ -454,7 +454,7 @@ const PRODUCTS_DETAIL = {
     ],
     pricing: [
       { label: "Mietgebühr (1-tägiges Event)", value: "49,- €" },
-      { label: "Jeder weitere Tag (bei mehrtägigen Events)", value: "+25,- €" },
+      { label: "Jeder weitere Event-Tag", value: "+25,- €" },
       { label: "50 Stäbchen", value: "inklusive" },
       { label: "weitere 50 Stäbchen", value: "+10,- €" },
      { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
@@ -532,7 +532,7 @@ const PRODUCTS_DETAIL = {
     ],
     pricing: [
       { label: "Mietgebühr (1-tägiges Event)", value: "59,- €" },
-      { label: "Jeder weitere Tag (bei mehrtägigen Events)", value: "+30,- €" },
+      { label: "Jeder weitere Event-Tag", value: "+30,- €" },
       { label: "Nebel- und Seifenblasenflüssigkeit", value: "inklusive" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
@@ -600,7 +600,7 @@ const PRODUCTS_DETAIL = {
     ],
     pricing: [
       { label: "Mietgebühr (1-tägiges Event)", value: "49,- €" },
-      { label: "Jeder weitere Tag (bei mehrtägigen Events)", value: "+25,- €" },
+      { label: "Jeder weitere Event-Tag", value: "+25,- €" },
       { label: "Nebelflüssigkeit", value: "inklusive" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
@@ -667,7 +667,7 @@ const PRODUCTS_DETAIL = {
     ],
     pricing: [
       { label: "Mietgebühr (1-tägiges Event)", value: "99,- €" },
-      { label: "Jeder weitere Tag (bei mehrtägigen Events)", value: "+50,- €" },
+      { label: "Jeder weitere Event-Tag", value: "+50,- €" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
@@ -733,7 +733,7 @@ const PRODUCTS_DETAIL = {
     ],
     pricing: [
       { label: "Mietgebühr (1-tägiges Event)", value: "59,- €" },
-      { label: "Jeder weitere Tag (bei mehrtägigen Events)", value: "+30,- €" },
+      { label: "Jeder weitere Event-Tag", value: "+30,- €" },
       { label: "50 Hot-Dog-Tüten", value: "inklusive" },
       { label: "weitere 50 Hot-Dog-Tüten", value: "+10,- €" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
@@ -805,7 +805,7 @@ const PRODUCTS_DETAIL = {
     ],
     pricing: [
        { label: "Mietgebühr (1-tägiges Event)", value: "49,- €" },
-      { label: "Jeder weiterer Tag (bei mehrtägigen Events)", value: "+25,- €" },
+      { label: "Jeder weitere Event-Tag", value: "+25,- €" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
@@ -889,7 +889,7 @@ const PRODUCTS_DETAIL = {
     ],
     pricing: [
       { label: "Mietgebühr (1-tägiges Event)", value: "59,- €" },
-      { label: "Jeder weitere Tag (bei mehrtägigen Events)", value: "+30,- €" },
+      { label: "Jeder weitere Event-Tag", value: "+30,- €" },
       { label: "50 Popcorn-Tüten", value: "inklusive" },
       { label: "weitere 50 Popcorn-Tüten", value: "+10,- €" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
