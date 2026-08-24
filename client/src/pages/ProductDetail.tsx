@@ -29,7 +29,6 @@ const PRODUCTS_DETAIL = {
     tagline: "Der moderne Garant für gute Laune und unvergessliche Erinnerungen",
     price: "299,- €",
     images: [
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/fotospiegel-glow-neu-mEWnc6uokeNiC4Qd7MzeJ3.webp",
       "/images/Fotospiegel_Übersichtsseite.png",
       "/images/Fotospiegel_dekoriert.png",
       "/images/Fotospiegel_mit_Koffer.png",
@@ -122,7 +121,7 @@ const PRODUCTS_DETAIL = {
     tagline: "Persönliche Sprachnachrichten statt schriftlicher Einträge",
     price: "49,- €",
     images: [
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/audio-gaestebuch-vivi-8TDr2DteLoHaGVv5GwKgqm.webp",
+      "/images/Audio-Gästebuch_frontal.png",
       "/images/Audio_Gästebuch_goldeneHochzeit.png",
       "/images/Audio-Gästebuch_Polaroid.jpg",
       //"/images/Audio-Gästebuch_Hochzeit.png",
@@ -198,7 +197,6 @@ const PRODUCTS_DETAIL = {
     tagline: "Echter Retro-Charme und nostalgische Erinnerungen",
     price: "29,- €",
     images: [
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/polaroidkamera-dior-mZPP2JPUnM27FCH5g72tbZ.webp",
       "/images/Polaroid_blanko.png",
       "/images/Polaroid_rechts.png",
       "/images/Polaroid_links.png",
@@ -331,7 +329,7 @@ const PRODUCTS_DETAIL = {
     tagline: "Solo oder Duett singen und aus über 50.000 Songs auswählen",
     price: "69,- €",
     images: [
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/karaokemaschine-sing-E68YRAvtn3s3erpgQufsH5.webp",
+      "/images/Karaokemaschine_frontal.png",
       "/images/Karaoke_imRaum.png",
       //"/images/Karaoke_Benutzung.png",
       "/images/Karaoke_Weihnachtsfeier.jpg",
@@ -423,7 +421,7 @@ const PRODUCTS_DETAIL = {
     tagline: "Nostalgischer Jahrmarkt-Flair als süßer Höhepunkt für Kinder und Erwachsene",
     price: "49,- €",
     images: [
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/zuckerwattemaschine-luna-YssUQSBqzSfkyTrshDaWmk.webp",
+      "/images/Zuckerwattemaschine_frontal.png",
       //"/images/Zuckerwatte_Kindergeburtstag.png",
       "/images/Zuckerwatte_Hochzeit.png",
       //"/images/Zuckerwatte_Winterfeier.png",
@@ -497,7 +495,7 @@ const PRODUCTS_DETAIL = {
     tagline: "Bring zusätzliche Magie auf deine Tanzfläche",
     price: "59,- €",
     images: [
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/seifenblasenmaschine-lilo-o6z2zHGSXkLJAPjW43bzS5.webp",
+      "/images/Seifenblasenmaschine_frontal.png",
       //"/images/Seifenblasen_blau.png",
       "/images/Seifenblasenmaschine_Hochzeit.png",
       "/images/Seifenblasen_Hochzeit_Kuss.png",
@@ -567,7 +565,7 @@ const PRODUCTS_DETAIL = {
     tagline: "Verwandele deine Tanzfläche in eine Showbühne",
     price: "49,- €",
     images: [
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/nebelmaschine-mira-DNAQuYqcf66FgucyiTU5iB.webp",
+      "/images/Nebelmaschine_frontal.png",
       "/images/Nebelmaschine_rechts.png",
       "/images/Nebelmaschine_links.png",
       "/images/Nebelmaschine_Hochzeit.png",
@@ -634,7 +632,7 @@ const PRODUCTS_DETAIL = {
     tagline: "Für dezente Hintergrundmusik und spontane Ansprachen",
     price: "99,- €",
     images: [
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/musikbox-sunu-YzchpMLmbyfqh4DufPyvkD.webp",
+      "/images/Musikbox_frontal.png",
        "/images/Musikbox_unten.png",
       "/images/Musikbox_oben.png",
       //"/images/Musikbox_Szene.png",
@@ -700,7 +698,7 @@ const PRODUCTS_DETAIL = {
     tagline: "Leckere, warme Snacks, die jeden Geschmack treffen",
     price: "59,- €",
     images: [
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/hotdogwarmer-sjen-4DJ6cgoBWB5cKTqHNYryL3.webp",
+      "/images/Hot-Dog-Wärmer_frontal.png",
       "/images/Hot_dog_leer.png",
       "/images/Hot_Dog_links.png",
       //"/images/Hot_Dog_Hochzeit.png",
@@ -772,7 +770,7 @@ const PRODUCTS_DETAIL = {
     tagline: "Der perfekte Snack an der Candybar oder für zwischendurch",
     price: "49,- €",
     images: [
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/nachowarmer-sala-65QjBzSrDUQNoGexkDjxQr.webp",
+      "/images/Nacho-Wärmer_frontal.png",
        "/images/Nacho-Wärmer_rechts.png",
       "/images/Nacho_Wärmer_vorne.png",
       "/images/Nacho_Wärmer_dekoriert.png",
@@ -842,7 +840,7 @@ const PRODUCTS_DETAIL = {
     tagline: "Frisch, knusprig, unwiderstehlich - der perfekte Snack für jede Feier",
     price: "59,- €",
     images: [
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/popcornmaschine-keno-CFunR82z9YowPtJfffpUAz.webp",
+      "/images/Popcornmaschine_frontal.png",
      "/images/Popcorn_leer.jpg",
       "/images/Popcorn_offen.png",
       "/images/Popcorn_dekoriert.png",
@@ -1211,7 +1209,7 @@ export default function ProductDetail() {
               }
             }}
           >
-            <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/memora_Logo_9da7fd54.png" alt="memora Logo" className="h-10 w-auto filter invert" />
+            <img src="/images/memora-logo_freigestellt.png" alt="memora Logo" className="h-10 w-auto filter invert" />
           </Link>
 
           {/* Mobile Menu */}

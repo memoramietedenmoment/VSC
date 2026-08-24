@@ -59,7 +59,7 @@ const PRODUCTS = [
     tagColor: "bg-emerald-600",
     description: "Statt geschriebenen Gästebucheinträgen hinterlassen eure Gäste persönliche Sprachnachrichten – Gänsehaut garantiert!",
     occasions: ["Hochzeit", "Jubiläum", "Geburtstag"],
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/audio-gaestebuch-vivi-8TDr2DteLoHaGVv5GwKgqm.webp",
+    image: "/images/Audio-Gästebuch_frontal.png",
   },
   {
     id: 3,
@@ -70,7 +70,7 @@ const PRODUCTS = [
     tagColor: "bg-sky-600",
     description: "Echter Retro-Charme: Gäste halten ihre Momente sofort in den Händen – perfekt für Gästebücher und Fotowände.",
     occasions: ["Geburtstag", "Hochzeit", "Party"],
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/polaroidkamera-dior-mZPP2JPUnM27FCH5g72tbZ.webp",
+    image: "/images/Polaroid_blanko.png",
   },
   {
     id: 4,
@@ -81,7 +81,7 @@ const PRODUCTS = [
     tagColor: "bg-cyan-600",
     description: "Buntes Slush-Eis im Handumdrehen – fruchtig, eiskalt und ein echter Hingucker. Mit optionalem Erwachsenen-Upgrade!",
     occasions: ["Sommerfest", "Hochzeit", "Kindergeburtstag"],
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/slushmaschine-emit-HuhgPzCXyq2oCRg9XN26nA.webp",
+    image: "/images/Slush-Maschine_frontal.png",
   },
   {
     id: 5,
@@ -92,7 +92,7 @@ const PRODUCTS = [
     tagColor: "bg-purple-600",
     description: "Solo, im Duett oder als Chor – hier entstehen unvergessliche Momente voller Spaß, Lacher und Applaus.",
     occasions: ["Geburtstag", "Firmenfeier", "Party"],
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/karaokemaschine-sing-E68YRAvtn3s3erpgQufsH5.webp",
+    image: "/images/Karaokemaschine_frontal.png",
   },
   {
     id: 6,
@@ -103,7 +103,7 @@ const PRODUCTS = [
     tagColor: "bg-pink-500",
     description: "Der Duft, die flauschige Konsistenz, der nostalgische Flair – eure Gäste fühlen sich direkt wie auf dem Jahrmarkt.",
     occasions: ["Kindergeburtstag", "Familienfeier", "Schulfest"],
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/zuckerwattemaschine-luna-YssUQSBqzSfkyTrshDaWmk.webp",
+    image: "/images/Zuckerwattemaschine_frontal.png",
   },
   {
     id: 7,
@@ -114,7 +114,7 @@ const PRODUCTS = [
     tagColor: "bg-rose-500",
     description: "Bringt Magie in die Luft – romantisch beim Hochzeitstanz oder verspielt im Freien. Märchenhafte Atmosphäre garantiert!",
     occasions: ["Hochzeit", "Verlobung", "Geburtstag"],
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/seifenblasenmaschine-lilo-o6z2zHGSXkLJAPjW43bzS5.webp",
+    image: "/images/Seifenblasenmaschine_frontal.png",
   },
   {
     id: 8,
@@ -125,7 +125,7 @@ const PRODUCTS = [
     tagColor: "bg-indigo-600",
     description: "Verwandelt die Tanzfläche zur Showbühne – kombinierbar mit Lichteffekten für atemberaubende Stimmung.",
     occasions: ["Hochzeit", "Party", "Firmenfeier"],
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/nebelmaschine-mira-DNAQuYqcf66FgucyiTU5iB.webp",
+    image: "/images/Nebelmaschine_frontal.png",
   },
   {
     id: 9,
@@ -136,7 +136,7 @@ const PRODUCTS = [
     tagColor: "bg-teal-600",
     description: "Dezente Hintergrundmusik beim Sektempfang oder Dinner – Mikrofone für Reden und Ansprachen sind inklusive.",
     occasions: ["Hochzeit", "Firmenfeier", "Jubiläum"],
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/musikbox-sunu-YzchpMLmbyfqh4DufPyvkD.webp",
+    image: "/images/Musikbox_frontal.png",
   },
   {
     id: 10,
@@ -147,7 +147,7 @@ const PRODUCTS = [
     tagColor: "bg-orange-600",
     description: "Leckere, warme Snacks – heiß, frisch und perfekt für den kleinen Hunger zwischendurch oder als Mitternachtssnack.",
     occasions: ["Party", "Hochzeit", "Firmenfeier"],
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/hotdogwarmer-sjen-4DJ6cgoBWB5cKTqHNYryL3.webp",
+    image: "/images/Hot-Dog-Wärmer_frontal.png",
   },
   {
     id: 11,
@@ -158,7 +158,7 @@ const PRODUCTS = [
     tagColor: "bg-yellow-600",
     description: "Knusprige, warme Nachos - ein ganz besonderer Snack, der garantiert schnell zum Lieblingsspot eurer Gäste wird.",
     occasions: ["Party", "Geburtstag", "Firmenfeier"],
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/nachowarmer-sala-65QjBzSrDUQNoGexkDjxQr.webp",
+    image: "/images/Nacho-Wärmer_frontal.png",
   },
   {
     id: 12,
@@ -169,7 +169,7 @@ const PRODUCTS = [
     tagColor: "bg-red-600",
     description: "Frisch, knusprig, unwiderstehlich – der Duft verbreitet sofort gute Stimmung. Ein Must-Have für die Candy-Bar!",
     occasions: ["Party", "Hochzeit", "Kindergeburtstag"],
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/popcornmaschine-keno-CFunR82z9YowPtJfffpUAz.webp",
+    image: "/images/Popcornmaschine_frontal.png",
   },
 ];
 
@@ -1290,7 +1290,7 @@ export default function Home() {
         <div className="container relative flex items-center h-16">
           {/* Logo */}
           <a href="#" className="flex items-center gap-2 group">
-            <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/memora_Logo_9da7fd54.png" alt="memora Logo" className="h-10 w-auto filter invert" />
+            <img src="/images/memora-logo_freigestellt.png" alt="memora Logo" className="h-10 w-auto filter invert" />
           </a>
 
           <p
@@ -2866,7 +2866,7 @@ export default function Home() {
             {/* Brand */}
             <div>
                 <div className="flex items-center gap-2">
-                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/memora_Logo_9da7fd54.png" alt="memora Logo" className="h-10 w-auto filter invert" />
+                <img src="/images/memora-logo_freigestellt.png" alt="memora Logo" className="h-10 w-auto filter invert" />
               </div>
               <p className="text-sm leading-relaxed">
                 Hochwertige Eventausstattung mieten in Karlsruhe, Rastatt, Baden-Baden und erweiterter Umgebung.
