@@ -331,6 +331,20 @@
     font-family: 'Great Vibes', cursive;
   }
 
+  /* Hero background - responsive focal point to prioritize face/smile on mobile */
+  .hero-bg {
+    /* Background image placed in public/images - mobile-first positioning to reveal face */
+    background-image: url('/images/pot.Header.jpg');
+    /* Shift focal point slightly up on narrow viewports so the face/smile is visible */
+    background-position: center 32%;
+  }
+  /* On medium and larger screens keep centered composition */
+  @media (min-width: 768px) {
+    .hero-bg {
+      background-position: center center;
+    }
+  }
+
   /* Form styles */
   .form-input {
     background: white;

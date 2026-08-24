@@ -1493,20 +1493,14 @@ export default function Home() {
       ═══════════════════════════════════════════════════ */}
       <section className="relative min-h-[100svh] md:min-h-screen flex items-center overflow-hidden">
         {/* Background Image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/hero-wedding-bxuza95kZppK3iMUgEStpR.webp')` }}
-        />
-        <div className="absolute right-4 bottom-4 z-20 whitespace-nowrap rounded-full border border-white/10 bg-black/15 px-1.5 py-[1px] text-[5px] font-normal uppercase tracking-[0.06em] text-white/45 [writing-mode:horizontal-tb] [direction:ltr] backdrop-blur-[1px] md:right-6 md:bottom-6 md:px-2 md:py-[2px] md:text-[9px] md:tracking-[0.08em]">
-          Bild: KI-generiert
-        </div>
+        <div className="hero-bg absolute inset-0 bg-cover bg-center bg-no-repeat" />
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.12_0.06_155/0.85)] via-[oklch(0.12_0.06_155/0.65)] to-[oklch(0.12_0.06_155/0.3)]" />
 
         <div className="container relative z-10 pt-1 md:pt-24 pb-16">
           {/* H1 for SEO - visually hidden */}
           <h1 className="sr-only">Eventausstattung mieten in Karlsruhe, Rastatt und Baden-Baden | memora - miete den moment</h1>
-          <div className="max-w-2xl">
+          <div className="max-w-2xl mt-4 md:mt-0">
             {/* Urgency Badge */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
@@ -1547,7 +1541,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.65 }}
-              className="flex items-center gap-3 mb-10 sm:mb-8"
+              className="transform -translate-y-2 md:translate-y-0 flex items-center gap-3 mb-10 sm:mb-8"
             >
               <div className="flex -space-x-2">
                 {["L", "C", "J"].map((letter, i) => (
@@ -1618,7 +1612,7 @@ export default function Home() {
           transition={{ delay: 1.5 }}
           className="absolute bottom-14 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/40"
         >
-          <span className="text-xs">Jetzt entdecken</span>
+          <span className="sr-only">Jetzt entdecken</span>
           <motion.div
             animate={{ y: [0, 6, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
@@ -3005,7 +2999,7 @@ export default function Home() {
         initial={{ y: 100 }}
         animate={{ y: scrolled ? 0 : 100 }}
         transition={{ duration: 0.3 }}
-        className="hidden fixed bottom-0 left-0 right-0 z-40 md:hidden bg-[oklch(0.22_0.06_155)] border-t border-[oklch(0.75_0.14_80/0.3)] px-3 py-2 flex gap-2"
+        className="hidden fixed bottom-4 left-0 right-0 z-40 md:hidden bg-[oklch(0.22_0.06_155)] border-t border-[oklch(0.75_0.14_80/0.3)] px-3 py-2 flex gap-2"
       >
         <a
           href="https://wa.me/4915225896570?text=Hallo%20memora-Team,%20"
