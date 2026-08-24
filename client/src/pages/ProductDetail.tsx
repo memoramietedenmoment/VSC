@@ -121,7 +121,7 @@ const PRODUCTS_DETAIL = {
     tagline: "Persönliche Sprachnachrichten statt schriftlicher Einträge",
     price: "49,- €",
     images: [
-      "/images/Audio-Gästebuch_frontal.png",
+      "/images/Audio-Gästebuch_frontal_Produktmaße.png",
       "/images/Audio_Gästebuch_goldeneHochzeit.png",
       "/images/Audio-Gästebuch_Polaroid.jpg",
       //"/images/Audio-Gästebuch_Hochzeit.png",
@@ -329,7 +329,7 @@ const PRODUCTS_DETAIL = {
     tagline: "Solo oder Duett singen und aus über 50.000 Songs auswählen",
     price: "69,- €",
     images: [
-      "/images/Karaokemaschine_frontal.png",
+      "/images/Karaokemaschine_frontal_Produktmaße.png",
       "/images/Karaoke_imRaum.png",
       //"/images/Karaoke_Benutzung.png",
       "/images/Karaoke_Weihnachtsfeier.jpg",
@@ -421,7 +421,7 @@ const PRODUCTS_DETAIL = {
     tagline: "Nostalgischer Jahrmarkt-Flair als süßer Höhepunkt für Kinder und Erwachsene",
     price: "49,- €",
     images: [
-      "/images/Zuckerwattemaschine_frontal.png",
+      "/images/Zuckerwattemaschine_frontal_Produktmaße.png",
       //"/images/Zuckerwatte_Kindergeburtstag.png",
       "/images/Zuckerwatte_Hochzeit.png",
       //"/images/Zuckerwatte_Winterfeier.png",
@@ -495,7 +495,7 @@ const PRODUCTS_DETAIL = {
     tagline: "Bring zusätzliche Magie auf deine Tanzfläche",
     price: "59,- €",
     images: [
-      "/images/Seifenblasenmaschine_frontal.png",
+      "/images/Seifenblasenmaschine_frontal_Produktmaße.png",
       //"/images/Seifenblasen_blau.png",
       "/images/Seifenblasenmaschine_Hochzeit.png",
       "/images/Seifenblasen_Hochzeit_Kuss.png",
@@ -565,7 +565,7 @@ const PRODUCTS_DETAIL = {
     tagline: "Verwandele deine Tanzfläche in eine Showbühne",
     price: "49,- €",
     images: [
-      "/images/Nebelmaschine_frontal.png",
+      "/images/Nebelmaschine_frontal_Produktmaße.png",
       "/images/Nebelmaschine_rechts.png",
       "/images/Nebelmaschine_links.png",
       "/images/Nebelmaschine_Hochzeit.png",
@@ -632,7 +632,7 @@ const PRODUCTS_DETAIL = {
     tagline: "Für dezente Hintergrundmusik und spontane Ansprachen",
     price: "99,- €",
     images: [
-      "/images/Musikbox_frontal.png",
+      "/images/Musikbox_frontal_Produktmaße.png",
        "/images/Musikbox_unten.png",
       "/images/Musikbox_oben.png",
       //"/images/Musikbox_Szene.png",
@@ -698,7 +698,7 @@ const PRODUCTS_DETAIL = {
     tagline: "Leckere, warme Snacks, die jeden Geschmack treffen",
     price: "59,- €",
     images: [
-      "/images/Hot-Dog-Wärmer_frontal.png",
+      "/images/Hot-Dog-Wärmer_frontal_Produktmaße.png",
       "/images/Hot_dog_leer.png",
       "/images/Hot_Dog_links.png",
       //"/images/Hot_Dog_Hochzeit.png",
@@ -770,7 +770,7 @@ const PRODUCTS_DETAIL = {
     tagline: "Der perfekte Snack an der Candybar oder für zwischendurch",
     price: "49,- €",
     images: [
-      "/images/Nacho-Wärmer_frontal.png",
+      "/images/Nacho-Wärmer_frontal_Produktmaße.png",
        "/images/Nacho-Wärmer_rechts.png",
       "/images/Nacho_Wärmer_vorne.png",
       "/images/Nacho_Wärmer_dekoriert.png",
@@ -840,7 +840,7 @@ const PRODUCTS_DETAIL = {
     tagline: "Frisch, knusprig, unwiderstehlich - der perfekte Snack für jede Feier",
     price: "59,- €",
     images: [
-      "/images/Popcornmaschine_frontal.png",
+      "/images/Popcornmaschine_frontal_Produktmaße.png",
      "/images/Popcorn_leer.jpg",
       "/images/Popcorn_offen.png",
       "/images/Popcorn_dekoriert.png",
