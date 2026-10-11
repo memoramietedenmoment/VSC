@@ -7,8 +7,8 @@ describe("getActiveContactBundle", () => {
       {
         name: "Das Hochzeits-Paket",
         productSlugs: ["fotospiegel-glow", "audio-gaestebuch-vivi", "sofortbildkamera-dior"],
-        originalPrice: 527,
-        discountedPrice: 475,
+        originalPrice: 657,
+        discountedPrice: 591,
       },
     ];
 

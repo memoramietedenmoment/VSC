@@ -43,7 +43,7 @@ const PRODUCTS = [
     id: 1,
     name: "Fotospiegel GLOW",
     emoji: "🪞",
-    price: "ab 299,- €",
+    price: "ab 399,- €",
     tag: "Bestseller",
     tagColor: "bg-amber-500",
     description: "Der moderne Garant für gute Laune – sofortige Schnappschüsse zum Mitnehmen. Einfach aufstellen, sofort loslegen.",
@@ -54,7 +54,7 @@ const PRODUCTS = [
     id: 2,
     name: "Audio-Gästebuch VIVI",
     emoji: "📞",
-    price: "ab 49,- €",
+    price: "ab 79,- €",
     tag: "Trend",
     tagColor: "bg-emerald-600",
     description: "Statt geschriebenen Gästebucheinträgen hinterlassen eure Gäste persönliche Sprachnachrichten – Gänsehaut garantiert!",
@@ -87,7 +87,7 @@ const PRODUCTS = [
     id: 5,
     name: "Karaokemaschine SING",
     emoji: "🎤",
-    price: "ab 69,- €",
+    price: "ab 99,- €",
     tag: "Partymagnet",
     tagColor: "bg-purple-600",
     description: "Solo, im Duett oder als Chor – hier entstehen unvergessliche Momente voller Spaß, Lacher und Applaus.",
@@ -98,7 +98,7 @@ const PRODUCTS = [
     id: 6,
     name: "Zuckerwattemaschine LUNA",
     emoji: "🍭",
-    price: "ab 49,- €",
+    price: "ab 79,- €",
     tag: "Kinder-Favorit",
     tagColor: "bg-pink-500",
     description: "Der Duft, die flauschige Konsistenz, der nostalgische Flair – eure Gäste fühlen sich direkt wie auf dem Jahrmarkt.",
@@ -109,7 +109,7 @@ const PRODUCTS = [
     id: 7,
     name: "Seifenblasenmaschine LILO",
     emoji: "🫧",
-    price: "ab 59,- €",
+    price: "ab 99,- €",
     tag: "Romantisch",
     tagColor: "bg-rose-500",
     description: "Bringt Magie in die Luft – romantisch beim Hochzeitstanz oder verspielt im Freien. Märchenhafte Atmosphäre garantiert!",
@@ -120,7 +120,7 @@ const PRODUCTS = [
     id: 8,
     name: "Nebelmaschine MIRA",
     emoji: "☁️",
-    price: "ab 49,- €",
+    price: "ab 89,- €",
     tag: "Disco-Feeling",
     tagColor: "bg-indigo-600",
     description: "Verwandelt die Tanzfläche zur Showbühne – kombinierbar mit Lichteffekten für atemberaubende Stimmung.",
@@ -142,7 +142,7 @@ const PRODUCTS = [
     id: 10,
     name: "Hot-Dog-Wärmer SJEN",
     emoji: "🌭",
-    price: "ab 59,- €",
+    price: "ab 149,- €",
     tag: "Mitternachtssnack",
     tagColor: "bg-orange-600",
     description: "Leckere, warme Snacks – heiß, frisch und perfekt für den kleinen Hunger zwischendurch oder als Mitternachtssnack.",
@@ -164,7 +164,7 @@ const PRODUCTS = [
     id: 12,
     name: "Popcornmaschine KENO",
     emoji: "🍿",
-    price: "ab 59,- €",
+    price: "ab 99,- €",
     tag: "Klassiker",
     tagColor: "bg-red-600",
     description: "Frisch, knusprig, unwiderstehlich – der Duft verbreitet sofort gute Stimmung. Ein Must-Have für die Candy-Bar!",
@@ -209,7 +209,7 @@ const GALLERY_IMAGES = [
 const PHOTO_MIRROR_PRODUCT_NAME = "Fotospiegel GLOW";
 const DIOR_PRODUCT_NAME = "Sofortbildkamera DIOR";
 
-const PHOTO_MIRROR_PRINT_FLATRATE_LABEL = "+ Druckflatrate (Fotospiegel GLOW) - 399,- €";
+const PHOTO_MIRROR_PRINT_FLATRATE_LABEL = "+ Druckflatrate (Fotospiegel GLOW) - 100,- €";
 const DIOR_TRIPLE_PACK_LABEL = "Dreierpack (Sofortbildkamera DIOR) - 79,- €";
 
 const TESTIMONIALS = [
@@ -364,7 +364,7 @@ const CONTACT_ADD_ON_PRICING = {
   photoMirrorPrintFlatrate: {
     productName: PHOTO_MIRROR_PRODUCT_NAME,
     label: "Fotospiegel GLOW mit Druckflatrate",
-    price: 399,
+    price: 100,
   },
   diorTriplePack: {
     productName: DIOR_PRODUCT_NAME,
@@ -377,20 +377,20 @@ const CONTACT_BUNDLE_PRICING: ContactBundlePricing[] = [
   {
     name: "Das Hochzeits-Paket",
     productSlugs: ["fotospiegel-glow", "audio-gaestebuch-vivi", "sofortbildkamera-dior"],
-    originalPrice: 527,
-    discountedPrice: 475,
+    originalPrice: 657,
+    discountedPrice: 591,
   },
   {
     name: "Das Geburtstags-Paket",
     productSlugs: ["fotospiegel-glow", "karaokemaschine-sing", "popcornmaschine-keno"],
-    originalPrice: 527,
-    discountedPrice: 475,
+    originalPrice: 697,
+    discountedPrice: 627,
   },
   {
     name: "Das Gastro-Paket",
-    productSlugs: ["slushmaschine-emit", "hot-dog-waermer-sjen", "popcornmaschine-keno"],
-    originalPrice: 267,
-    discountedPrice: 239,
+    productSlugs: ["zuckerwattemaschine-luna", "hot-dog-waermer-sjen", "popcornmaschine-keno"],
+    originalPrice: 327,
+    discountedPrice: 294,
   },
 ];
 
@@ -625,6 +625,26 @@ function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): nu
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
+async function getDrivingDistanceKm(lat: number, lng: number): Promise<number> {
+  const url = `https://router.project-osrm.org/route/v1/driving/${GAGGENAU_LNG},${GAGGENAU_LAT};${lng},${lat}?overview=false&geometries=geojson`;
+  const response = await fetch(url, {
+    headers: { Accept: "application/json" },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Driving distance request failed: ${response.status}`);
+  }
+
+  const data = await response.json();
+  const distanceMeters = Number(data?.routes?.[0]?.distance);
+
+  if (!Number.isFinite(distanceMeters)) {
+    throw new Error("Driving distance response invalid");
+  }
+
+  return distanceMeters / 1000;
+}
+
 function getContactProductPrice(price: string): string {
   return price.replace(/^ab\s+/i, "");
 }
@@ -638,25 +658,7 @@ function getContactProductValue(product: Product): string {
   return `${product.name} (${getContactProductPrice(product.price)})`;
 }
 
-function getContactProductSummary(product: Product, addOns: ContactAddOns): ProductSelectionSummary {
-  const addOnEntry = Object.values(CONTACT_ADD_ON_PRICING).find(
-    (entry) => entry.productName === product.name
-  );
-
-  if (addOnEntry) {
-    const isSelected =
-      addOnEntry.productName === PHOTO_MIRROR_PRODUCT_NAME
-        ? addOns.photoMirrorPrintFlatrate
-        : addOns.diorTriplePack;
-
-    if (isSelected) {
-      return {
-        label: addOnEntry.label,
-        price: addOnEntry.price,
-      };
-    }
-  }
-
+function getContactProductSummary(product: Product): ProductSelectionSummary {
   return {
     label: product.name,
     price: parseContactProductPrice(product.price),
@@ -667,12 +669,54 @@ function getContactSelectedProductSummaries(
   selectedValues: string[],
   addOns: ContactAddOns
 ): ProductSelectionSummary[] {
-  return selectedValues
-    .map((value) => {
-      const product = PRODUCTS.find((entry) => value.startsWith(`${entry.name} (`));
-      return product ? getContactProductSummary(product, addOns) : null;
-    })
-    .filter((summary): summary is ProductSelectionSummary => summary !== null);
+  const summaries: ProductSelectionSummary[] = [];
+
+  const hasPhotoMirrorSelected = selectedValues.some((value) =>
+    value.startsWith(`${PHOTO_MIRROR_PRODUCT_NAME} (`)
+  );
+  const hasDiorSelected = selectedValues.some((value) =>
+    value.startsWith(`${DIOR_PRODUCT_NAME} (`)
+  );
+
+  const diorTriplePackAdded = new Set<string>();
+
+  for (const value of selectedValues) {
+    const product = PRODUCTS.find((entry) => value.startsWith(`${entry.name} (`));
+    if (!product) continue;
+
+    if (product.name === DIOR_PRODUCT_NAME && addOns.diorTriplePack) {
+      const triplePackSummary = {
+        label: CONTACT_ADD_ON_PRICING.diorTriplePack.label,
+        price: CONTACT_ADD_ON_PRICING.diorTriplePack.price,
+      };
+
+      if (!diorTriplePackAdded.has(product.name)) {
+        summaries.push(triplePackSummary);
+        diorTriplePackAdded.add(product.name);
+      }
+      continue;
+    }
+
+    summaries.push(getContactProductSummary(product));
+  }
+
+  const extraAddOns: ProductSelectionSummary[] = [];
+
+  if (hasPhotoMirrorSelected && addOns.photoMirrorPrintFlatrate) {
+    extraAddOns.push({
+      label: CONTACT_ADD_ON_PRICING.photoMirrorPrintFlatrate.label,
+      price: CONTACT_ADD_ON_PRICING.photoMirrorPrintFlatrate.price,
+    });
+  }
+
+  if (hasDiorSelected && addOns.diorTriplePack && !diorTriplePackAdded.has(DIOR_PRODUCT_NAME)) {
+    extraAddOns.push({
+      label: CONTACT_ADD_ON_PRICING.diorTriplePack.label,
+      price: CONTACT_ADD_ON_PRICING.diorTriplePack.price,
+    });
+  }
+
+  return [...summaries, ...extraAddOns];
 }
 
 function getBundleProductNames(bundle: ContactBundlePricing): string[] {
@@ -1157,7 +1201,10 @@ export default function Home() {
         setDeliveryInfo({ status: "error", cost: null, distance: null });
         return;
       }
-      const km = haversineKm(GAGGENAU_LAT, GAGGENAU_LNG, parseFloat(data[0].lat), parseFloat(data[0].lon));
+
+      const lat = parseFloat(data[0].lat);
+      const lon = parseFloat(data[0].lon);
+      const km = await getDrivingDistanceKm(lat, lon).catch(() => haversineKm(GAGGENAU_LAT, GAGGENAU_LNG, lat, lon));
       const rounded = Math.round(km);
       const cost = km <= 50 ? 50 : km <= 100 ? 100 : null;
       setDeliveryInfo({ status: "done", cost, distance: rounded });
@@ -1732,7 +1779,7 @@ export default function Home() {
         <div className="container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {([
-              { value: 20, suffix: "+", label: "zufriedene Kunden" },
+              { value: 40, suffix: "+", label: "zufriedene Kunden" },
               { value: 5, suffix: "★", label: "Google-Bewertung" },
               { value: 12, suffix: "", label: "Produkte verfügbar" },
               { value: 2, suffix: "h", label: "Antwortzeit" },
@@ -1976,23 +2023,23 @@ export default function Home() {
               <div className="text-center mb-4 md:mb-6 p-3 md:p-4 bg-[oklch(0.97_0.012_85)] rounded-lg">
                 <div className="flex items-center justify-center gap-3 mb-2">
                   <span className="text-sm font-semibold text-muted-foreground line-through">
-                    Gesamtpreis: 527,- €
+                    Gesamtpreis: 657,- €
                   </span>
                   <span className="inline-block bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-                    -10%
+                    -16%
                   </span>
                 </div>
                 <div className="text-2xl md:text-3xl font-bold" style={{ color: "oklch(0.75 0.14 80)" }}>
-                  475,- €
+                  549,- €
                 </div>
-                <p className="text-xs text-muted-foreground mt-1">Du sparst 52,- € im Bundle</p>
+                <p className="text-xs text-muted-foreground mt-1">Du sparst 108,- € im Bundle</p>
               </div>
 
               <div className="space-y-2 md:space-y-3 mb-6 md:mb-8">
                 {["fotospiegel-glow", "audio-gaestebuch-vivi", "sofortbildkamera-dior"].map((slug) => {
                   const product = PRODUCTS.find(p => toProductSlug(p.name) === slug);
                   let displayPrice = product?.price.replace("ab ", "");
-                  if (slug === "fotospiegel-glow") displayPrice = "399,- €";
+                  if (slug === "fotospiegel-glow") displayPrice = "499,- €";
                   if (slug === "sofortbildkamera-dior") displayPrice = "79,- €";
                   return (
                     <Link key={slug} href={`/produkt/${slug}`} className="block">
@@ -2048,22 +2095,22 @@ export default function Home() {
               <div className="text-center mb-4 md:mb-6 p-3 md:p-4 bg-[oklch(0.97_0.012_85)] rounded-lg">
                 <div className="flex items-center justify-center gap-3 mb-2">
                   <span className="text-sm font-semibold text-muted-foreground line-through">
-                    Gesamtpreis: 527,- €
+                    Gesamtpreis: 697,- €
                   </span>
                   <span className="inline-block bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-                    -10%
+                    -14%
                   </span>
                 </div>
                 <div className="text-2xl md:text-3xl font-bold" style={{ color: "oklch(0.75 0.14 80)" }}>
-                  475,- €
+                  599,- €
                 </div>
-                <p className="text-xs text-muted-foreground mt-1">Du sparst 52,- € im Bundle</p>
+                <p className="text-xs text-muted-foreground mt-1">Du sparst 98,- € im Bundle</p>
               </div>
 
               <div className="space-y-2 md:space-y-3 mb-6 md:mb-8">
                 {["fotospiegel-glow", "karaokemaschine-sing", "popcornmaschine-keno"].map((slug) => {
                   const product = PRODUCTS.find(p => toProductSlug(p.name) === slug);
-                  const displayPrice = slug === "fotospiegel-glow" ? "399,- €" : product?.price.replace("ab ", "");
+                  const displayPrice = slug === "fotospiegel-glow" ? "499,- €" : product?.price.replace("ab ", "");
                   return (
                     <Link key={slug} href={`/produkt/${slug}`} className="block">
                       <div className="flex items-center gap-2.5 md:gap-3 p-2.5 md:p-3 rounded-lg bg-[oklch(0.97_0.012_85)] hover:bg-[oklch(0.93_0.015_85)] transition-colors">
@@ -2117,20 +2164,20 @@ export default function Home() {
               <div className="text-center mb-4 md:mb-6 p-3 md:p-4 bg-[oklch(0.97_0.012_85)] rounded-lg">
                 <div className="flex items-center justify-center gap-3 mb-2">
                   <span className="text-sm font-semibold text-muted-foreground line-through">
-                    Gesamtpreis: 267,- €
+                    Gesamtpreis: 327,- €
                   </span>
                   <span className="inline-block bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-                    -10%
+                    -17%
                   </span>
                 </div>
                 <div className="text-2xl md:text-3xl font-bold" style={{ color: "oklch(0.75 0.14 80)" }}>
-                  239,- €
+                  269,- €
                 </div>
-                <p className="text-xs text-muted-foreground mt-1">Du sparst 28,- € im Bundle</p>
+                <p className="text-xs text-muted-foreground mt-1">Du sparst 58,- € im Bundle</p>
               </div>
 
               <div className="space-y-2 md:space-y-3 mb-6 md:mb-8">
-                {["slushmaschine-emit", "hot-dog-waermer-sjen", "popcornmaschine-keno"].map((slug) => {
+                {["hot-dog-waermer-sjen", "popcornmaschine-keno", "zuckerwattemaschine-luna"].map((slug) => {
                   const product = PRODUCTS.find(p => toProductSlug(p.name) === slug);
                   const displayPrice = product?.price.replace("ab ", "");
                   return (
@@ -2153,7 +2200,7 @@ export default function Home() {
               </div>
               <button
                 type="button"
-                onClick={() => handleBundleInquiry(["slushmaschine-emit", "hot-dog-waermer-sjen", "popcornmaschine-keno"])}
+                onClick={() => handleBundleInquiry(["hot-dog-waermer-sjen", "popcornmaschine-keno", "zuckerwattemaschine-luna"])}
                 className="w-full btn-gold py-2.5 px-4 rounded-lg text-sm font-bold flex items-center justify-center gap-2"
               >
                 <WhatsAppIcon />

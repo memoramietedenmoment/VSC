@@ -27,7 +27,7 @@ const PRODUCTS_DETAIL = {
     name: "Fotospiegel GLOW",
     emoji: "🪞",
     tagline: "Der moderne Garant für gute Laune und unvergessliche Erinnerungen",
-    price: "299,- €",
+    price: "399,- €",
     images: [
       "/images/Fotospiegel_Übersichtsseite.png",
       "/images/Fotospiegel_dekoriert.png",
@@ -85,9 +85,8 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-      { label: "Mietgebühr (1-tägiges Event)", value: "299,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+150,- €" },
-      { label: "Druckflatrate (bis zu 700 Stück)", value: "+100,- €" },
+      { label: "Mietgebühr (1-tägiges Event)", value: "399,- €" },
+      { label: "Druckflatrate (bis zu 350 Stück)", value: "+100,- €" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
     ],
@@ -109,6 +108,10 @@ const PRODUCTS_DETAIL = {
         a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab. Bitte beachtet: Beim Fotospiegel bieten wir keine Selbstabholung an, da der Aufbau und die Einrichtung durch unser Team erfolgt.",
         },
       {
+        q: "Können wir den Spiegel auch mehrere Tage ausleihen?",
+        a: "Ja, das könnt ihr. Eine/n Hochzeit, Geburtstag oder ähnliches berechnen wir immer nur mit einem Tag, unabhängig davon, wann die Lieferung oder Abholung erfolgt. Bei mehrtägigen Events wie Messen, berechnen wir ab dem zweiten Tag, an dem das Produkt im Einsatz ist 50 % des Normalpreises.",
+        },
+      {
         q: "Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -119,7 +122,7 @@ const PRODUCTS_DETAIL = {
     name: "Audio-Gästebuch VIVI",
     emoji: "📞",
     tagline: "Persönliche Sprachnachrichten statt schriftlicher Einträge",
-    price: "49,- €",
+    price: "79,- €",
     images: [
       "/images/Audio-Gästebuch_frontal_Produktmaße.png",
       "/images/Audio_Gästebuch_goldeneHochzeit.png",
@@ -162,8 +165,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-      { label: "Mietgebühr (1-tägiges Event)", value: "49,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+25,- €" },
+      { label: "Mietgebühr (1-tägiges Event)", value: "79,- €" },
       { label: "Lieferung (deutschlandweit)", value: "+25,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
     ],
@@ -184,6 +186,10 @@ const PRODUCTS_DETAIL = {
         q: "Könnt ihr uns das Audio-Gästebuch auch zuschicken?",
         a: "Ja, das Audio-Gästebuch VIVI sowie die Sofortbildkamera DIOR versenden wir deutschlandweit. Für die beiden Produkte berechnen wir je eine Pauschale von 25 Euro für den Hin- und Rückversand.",
       },
+      {
+        q: "Können wir das Gästebuch auch mehrere Tage ausleihen?",
+        a: "Ja, das könnt ihr. Eine/n Hochzeit, Geburtstag oder ähnliches berechnen wir immer nur mit einem Tag, unabhängig davon, wann die Lieferung oder Abholung erfolgt. Bei mehrtägigen Events wie Messen, berechnen wir ab dem zweiten Tag, an dem das Produkt im Einsatz ist 50 % des Normalpreises.",
+        },
       {
         q: "Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
@@ -228,7 +234,6 @@ const PRODUCTS_DETAIL = {
     pricing: [
       { label: "Mietgebühr Einzeln (1-tägiges Event)", value: "29,- €" },
       { label: "Mietgebühr Dreierpack (1-tägiges Event)", value: "79,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+15,- €" },
       { label: "Film 10er Pack (bei Bedarf)", value: "+15,- €" },
       { label: "Lieferung (deutschlandweit)", value: "+25,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
@@ -246,6 +251,10 @@ const PRODUCTS_DETAIL = {
         q: "Könnt ihr uns die Sofortbildkamera auch zuschicken?",
         a: "Ja, die Sofortbildkamera DIOR sowie das Audio-Gästebuch VIVI versenden wir deutschlandweit. Für die beiden Produkte berechnen wir je eine Pauschale von 25 Euro für den Hin- und Rückversand.",
       },
+      {
+        q: "Können wir die Kameras auch mehrere Tage ausleihen?",
+        a: "Ja, das könnt ihr. Eine/n Hochzeit, Geburtstag oder ähnliches berechnen wir immer nur mit einem Tag, unabhängig davon, wann die Lieferung oder Abholung erfolgt. Bei mehrtägigen Events wie Messen, berechnen wir ab dem zweiten Tag, an dem das Produkt im Einsatz ist 50 % des Normalpreises.",
+        },
       {
         q: "Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
@@ -294,7 +303,6 @@ const PRODUCTS_DETAIL = {
     ],
     pricing: [
       { label: "Mietgebühr (1-tägiges Event)", value: "149,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+75,- €" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
@@ -317,6 +325,10 @@ const PRODUCTS_DETAIL = {
         a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
       },
       {
+        q: "Können wir die Maschine auch mehrere Tage ausleihen?",
+        a: "Ja, das könnt ihr. Eine/n Hochzeit, Geburtstag oder ähnliches berechnen wir immer nur mit einem Tag, unabhängig davon, wann die Lieferung oder Abholung erfolgt. Bei mehrtägigen Events wie Messen, berechnen wir ab dem zweiten Tag, an dem das Produkt im Einsatz ist 50 % des Normalpreises.",
+        },
+      {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -327,7 +339,7 @@ const PRODUCTS_DETAIL = {
     name: "Karaokemaschine SING",
     emoji: "🎤",
     tagline: "Solo oder Duett singen und aus über 50.000 Songs auswählen",
-    price: "69,- €",
+    price: "99,- €",
     images: [
       "/images/Karaokemaschine_frontal_Produktmaße.png",
       "/images/Karaoke_imRaum.png",
@@ -385,8 +397,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-      { label: "Mietgebühr (1-tägiges Event)", value: "69,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+35,- €" },
+      { label: "Mietgebühr (1-tägiges Event)", value: "99,- €" },
        { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
@@ -409,6 +420,10 @@ const PRODUCTS_DETAIL = {
         a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
       },
       {
+        q: "Können wir die Maschine auch mehrere Tage ausleihen?",
+        a: "Ja, das könnt ihr. Eine/n Hochzeit, Geburtstag oder ähnliches berechnen wir immer nur mit einem Tag, unabhängig davon, wann die Lieferung oder Abholung erfolgt. Bei mehrtägigen Events wie Messen, berechnen wir ab dem zweiten Tag, an dem das Produkt im Einsatz ist 50 % des Normalpreises.",
+        },
+      {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -419,7 +434,7 @@ const PRODUCTS_DETAIL = {
     name: "Zuckerwattemaschine LUNA",
     emoji: "🍭",
     tagline: "Nostalgischer Jahrmarkt-Flair als süßer Höhepunkt für Kinder und Erwachsene",
-    price: "49,- €",
+    price: "79,- €",
     images: [
       "/images/Zuckerwattemaschine_frontal_Produktmaße.png",
       //"/images/Zuckerwatte_Kindergeburtstag.png",
@@ -453,8 +468,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-      { label: "Mietgebühr (1-tägiges Event)", value: "49,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+25,- €" },
+      { label: "Mietgebühr (1-tägiges Event)", value: "79,- €" },
       { label: "50 Stäbchen", value: "inklusive" },
       { label: "weitere 50 Stäbchen", value: "+10,- €" },
      { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
@@ -483,6 +497,10 @@ const PRODUCTS_DETAIL = {
         a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
       },
       {
+        q: "Können wir die Maschine auch mehrere Tage ausleihen?",
+        a: "Ja, das könnt ihr. Eine/n Hochzeit, Geburtstag oder ähnliches berechnen wir immer nur mit einem Tag, unabhängig davon, wann die Lieferung oder Abholung erfolgt. Bei mehrtägigen Events wie Messen, berechnen wir ab dem zweiten Tag, an dem das Produkt im Einsatz ist 50 % des Normalpreises.",
+        },
+      {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -493,7 +511,7 @@ const PRODUCTS_DETAIL = {
     name: "Seifenblasenmaschine LILO",
     emoji: "🫧",
     tagline: "Bring zusätzliche Magie auf deine Tanzfläche",
-    price: "59,- €",
+    price: "99,- €",
     images: [
       "/images/Seifenblasenmaschine_frontal_Produktmaße.png",
       //"/images/Seifenblasen_blau.png",
@@ -531,8 +549,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-      { label: "Mietgebühr (1-tägiges Event)", value: "59,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+30,- €" },
+      { label: "Mietgebühr (1-tägiges Event)", value: "99,- €" },
       { label: "Nebel- und Seifenblasenflüssigkeit", value: "inklusive" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
@@ -553,6 +570,10 @@ const PRODUCTS_DETAIL = {
         a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
       },
       {
+        q: "Können wir die Maschine auch mehrere Tage ausleihen?",
+        a: "Ja, das könnt ihr. Eine/n Hochzeit, Geburtstag oder ähnliches berechnen wir immer nur mit einem Tag, unabhängig davon, wann die Lieferung oder Abholung erfolgt. Bei mehrtägigen Events wie Messen, berechnen wir ab dem zweiten Tag, an dem das Produkt im Einsatz ist 50 % des Normalpreises.",
+        },
+      {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -563,7 +584,7 @@ const PRODUCTS_DETAIL = {
     name: "Nebelmaschine MIRA",
     emoji: "☁️",
     tagline: "Verwandele deine Tanzfläche in eine Showbühne",
-    price: "49,- €",
+    price: "89,- €",
     images: [
       "/images/Nebelmaschine_frontal_Produktmaße.png",
       "/images/Nebelmaschine_rechts.png",
@@ -599,8 +620,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-      { label: "Mietgebühr (1-tägiges Event)", value: "49,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+25,- €" },
+      { label: "Mietgebühr (1-tägiges Event)", value: "89,- €" },
       { label: "Nebelflüssigkeit", value: "inklusive" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
@@ -619,6 +639,10 @@ const PRODUCTS_DETAIL = {
         q: "Könnt ihr uns die Nebelmaschine auch liefern?",
         a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
       },
+      {
+        q: "Können wir die Maschine auch mehrere Tage ausleihen?",
+        a: "Ja, das könnt ihr. Eine/n Hochzeit, Geburtstag oder ähnliches berechnen wir immer nur mit einem Tag, unabhängig davon, wann die Lieferung oder Abholung erfolgt. Bei mehrtägigen Events wie Messen, berechnen wir ab dem zweiten Tag, an dem das Produkt im Einsatz ist 50 % des Normalpreises.",
+        },
       {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
@@ -667,7 +691,6 @@ const PRODUCTS_DETAIL = {
     ],
     pricing: [
       { label: "Mietgebühr (1-tägiges Event)", value: "99,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+50,- €" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
@@ -686,6 +709,10 @@ const PRODUCTS_DETAIL = {
         a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
       },
       {
+        q: "Können wir die Box auch mehrere Tage ausleihen?",
+        a: "Ja, das könnt ihr. Eine/n Hochzeit, Geburtstag oder ähnliches berechnen wir immer nur mit einem Tag, unabhängig davon, wann die Lieferung oder Abholung erfolgt. Bei mehrtägigen Events wie Messen, berechnen wir ab dem zweiten Tag, an dem das Produkt im Einsatz ist 50 % des Normalpreises.",
+        },
+      {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -696,7 +723,7 @@ const PRODUCTS_DETAIL = {
     name: "Hot-Dog-Wärmer SJEN",
     emoji: "🌭",
     tagline: "Leckere, warme Snacks, die jeden Geschmack treffen",
-    price: "59,- €",
+    price: "149,- €",
     images: [
       "/images/Hot-Dog-Wärmer_frontal_Produktmaße.png",
       "/images/Hot_dog_leer.png",
@@ -732,8 +759,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-      { label: "Mietgebühr (1-tägiges Event)", value: "59,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+30,- €" },
+      { label: "Mietgebühr (1-tägiges Event)", value: "149,- €" },
       { label: "50 Hot-Dog-Tüten", value: "inklusive" },
       { label: "weitere 50 Hot-Dog-Tüten", value: "+10,- €" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
@@ -757,6 +783,10 @@ const PRODUCTS_DETAIL = {
         q: "Könnt ihr uns den Hot-Dog-Wärmer auch liefern?",
         a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
       },
+      {
+        q: "Können wir das Gerät auch mehrere Tage ausleihen?",
+        a: "Ja, das könnt ihr. Eine/n Hochzeit, Geburtstag oder ähnliches berechnen wir immer nur mit einem Tag, unabhängig davon, wann die Lieferung oder Abholung erfolgt. Bei mehrtägigen Events wie Messen, berechnen wir ab dem zweiten Tag, an dem das Produkt im Einsatz ist 50 % des Normalpreises.",
+        },
       {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
@@ -805,7 +835,6 @@ const PRODUCTS_DETAIL = {
     ],
     pricing: [
        { label: "Mietgebühr (1-tägiges Event)", value: "49,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+25,- €" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
@@ -828,6 +857,10 @@ const PRODUCTS_DETAIL = {
         a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
       },
       {
+        q: "Können wir das Gerät auch mehrere Tage ausleihen?",
+        a: "Ja, das könnt ihr. Eine/n Hochzeit, Geburtstag oder ähnliches berechnen wir immer nur mit einem Tag, unabhängig davon, wann die Lieferung oder Abholung erfolgt. Bei mehrtägigen Events wie Messen, berechnen wir ab dem zweiten Tag, an dem das Produkt im Einsatz ist 50 % des Normalpreises.",
+        },
+      {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -838,7 +871,7 @@ const PRODUCTS_DETAIL = {
     name: "Popcornmaschine KENO",
     emoji: "🍿",
     tagline: "Frisch, knusprig, unwiderstehlich - der perfekte Snack für jede Feier",
-    price: "59,- €",
+    price: "99,- €",
     images: [
       "/images/Popcornmaschine_frontal_Produktmaße.png",
      "/images/Popcorn_leer.jpg",
@@ -888,8 +921,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-      { label: "Mietgebühr (1-tägiges Event)", value: "59,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+30,- €" },
+      { label: "Mietgebühr (1-tägiges Event)", value: "99,- €" },
       { label: "50 Popcorn-Tüten", value: "inklusive" },
       { label: "weitere 50 Popcorn-Tüten", value: "+10,- €" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
@@ -900,6 +932,10 @@ const PRODUCTS_DETAIL = {
       {
         q: "Wie viel Popcorn kann ich produzieren?",
         a: "Bis zu 6 kg pro Stunde.",
+      },
+      {
+          q: "Was ist im Lieferumfang enthalten?",
+        a: "Das Gerät selbst und 50 Tüten. Weitere Tüten könnt ihr bei uns anfragen. Mais, Popcorn und Öl müsst ihr selbst besorgen. Wir empfehlen Kokos- oder Sonnenblumenöl.",
       },
       {
         q: "Kann ich direkt Zucker dazugeben?",
@@ -913,6 +949,10 @@ const PRODUCTS_DETAIL = {
         q: "Könnt ihr uns die Popcornmaschine auch liefern?",
         a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
       },
+      {
+        q: "Können wir die Maschine auch mehrere Tage ausleihen?",
+        a: "Ja, das könnt ihr. Eine/n Hochzeit, Geburtstag oder ähnliches berechnen wir immer nur mit einem Tag, unabhängig davon, wann die Lieferung oder Abholung erfolgt. Bei mehrtägigen Events wie Messen, berechnen wir ab dem zweiten Tag, an dem das Produkt im Einsatz ist 50 % des Normalpreises.",
+        },
       {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
@@ -1384,11 +1424,11 @@ export default function ProductDetail() {
                 <div className="bg-[oklch(0.32_0.07_155)] text-white rounded-xl px-6 py-5 mb-6">
                   <div className="divide-y divide-white/20 rounded-lg border border-white/20 overflow-hidden bg-white/5">
                     <div className="flex items-start justify-between px-4 py-2.5">
-                      <span className="shrink-0 pr-4 text-left text-2xl font-bold leading-none">299,- €</span>
+                      <span className="shrink-0 pr-4 text-left text-2xl font-bold leading-none">399,- €</span>
                       <span className="flex-1 text-right text-sm font-medium text-white/85">Alle Bilder digital</span>
                     </div>
                     <div className="flex items-start justify-between px-4 py-2.5">
-                      <span className="shrink-0 pr-4 text-left text-2xl font-bold leading-none">399,- €</span>
+                      <span className="shrink-0 pr-4 text-left text-2xl font-bold leading-none">499,- €</span>
                       <span className="flex-1 text-right text-sm font-medium text-white/85">Alle Bilder digital und ausgedruckt</span>
                     </div>
                   </div>
