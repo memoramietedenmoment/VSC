@@ -22,14 +22,17 @@ async function startServer() {
     "/audio-gaestebuch-vivi": "/produkt/audio-gaestebuch-vivi",
     "/audio-gästebuch-vivi": "/produkt/audio-gaestebuch-vivi",
     "/audio-g%C3%A4stebuch-vivi": "/produkt/audio-gaestebuch-vivi",
+    "/video-gaestebuch-vimo": "/produkt/video-gaestebuch-vimo",
     "/polaroid-kamera-dior": "/produkt/sofortbildkamera-dior",
-    "/slushmaschine-emit": "/produkt/slushmaschine-emit",
+    "/slushmaschine-emit": "/produkt/fotospiegel-milo",
     "/karaokemaschine-sing": "/produkt/karaokemaschine-sing",
     "/zuckerwattemaschine-luna": "/produkt/zuckerwattemaschine-luna",
     "/popcornmaschine-keno": "/produkt/popcornmaschine-keno",
     "/seifenblasenmaschine-lilo": "/produkt/seifenblasenmaschine-lilo",
     "/nebelmaschine-mira": "/produkt/nebelmaschine-mira",
-    "/musik-box-sunu": "/produkt/musik-box-sunu",
+    "/musik-box-sunu": "/",
+    "/produkt/musik-box-sunu": "/",
+    "/produkt/musik-box-inkl-mikro-sunu": "/",
     "/hot-dog-wärmer-sjen": "/produkt/hot-dog-waermer-sjen",
     "/hot-dog-w%C3%A4rmer-sjen": "/produkt/hot-dog-waermer-sjen",
     "/nacho-wärmer-sala": "/produkt/nacho-waermer-sala",
@@ -69,4 +72,3 @@ async function startServer() {
 }
 
 startServer().catch(console.error);
-

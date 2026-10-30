@@ -21,6 +21,12 @@ export const PRODUCT_COMBINATIONS = {
     bundleOriginalPrice: 377,
     bundleDiscountedPrice: 349,
   },
+  "video-gaestebuch-vimo": {
+    related: [
+      "fotospiegel-glow",
+      "sofortbildkamera-dior",
+    ],
+  },
   "sofortbildkamera-dior": {
     related: [
       "fotospiegel-glow",
@@ -31,14 +37,13 @@ export const PRODUCT_COMBINATIONS = {
     bundleOriginalPrice: 377,
     bundleDiscountedPrice: 349,
   },
-  "slushmaschine-emit": {
+  "fotospiegel-milo": {
     related: [
-      "popcornmaschine-keno",
-      "hot-dog-waermer-sjen",
-      "nacho-waermer-sala",
+      "audio-gaestebuch-vivi",
+      "karaokemaschine-sing",
     ],
-    bundleTitle: "Das Snack-Buffet",
-    bundleDescription: "Kalte Slushies + knusprige Snacks + warme Leckereien für hungrige Gäste",
+    bundleTitle: "Erinnerungen & Snacks",
+    bundleDescription: "Fotospiegel-Erinnerungen + knusprige Snacks und warme Leckereien für hungrige Gäste",
     bundleOriginalPrice: 267,
     bundleDiscountedPrice: 239,
   },
@@ -55,11 +60,11 @@ export const PRODUCT_COMBINATIONS = {
   "zuckerwattemaschine-luna": {
     related: [
       "popcornmaschine-keno",
-      "slushmaschine-emit",
+      "fotospiegel-milo",
       "seifenblasenmaschine-lilo",
     ],
     bundleTitle: "Das Kinder-Party-Paket",
-    bundleDescription: "Zuckerwatte + Popcorn + Slusheis + Seifenblasen = glückliche Kinderaugen",
+    bundleDescription: "Zuckerwatte + Popcorn + Fotospiegel + Seifenblasen = glückliche Kinderaugen",
     bundleOriginalPrice: 267,
     bundleDiscountedPrice: 239,
   },
@@ -83,22 +88,11 @@ export const PRODUCT_COMBINATIONS = {
     bundleOriginalPrice: 177,
     bundleDiscountedPrice: 159,
   },
-  "musik-box-sunu": {
-    related: [
-      "seifenblasenmaschine-lilo",
-      "nebelmaschine-mira",
-      "audio-gaestebuch-vivi",
-    ],
-    bundleTitle: "Die Audio-Lösung",
-    bundleDescription: "Musik + Effekte + Gästebuch für das perfekte Soundtracking",
-    bundleOriginalPrice: 247,
-    bundleDiscountedPrice: 219,
-  },
   "hot-dog-waermer-sjen": {
     related: [
       "nacho-waermer-sala",
       "popcornmaschine-keno",
-      "slushmaschine-emit",
+      "fotospiegel-milo",
     ],
     bundleTitle: "Das Snack-Bundle",
     bundleDescription: "Hot Dogs + Nachos + Popcorn = perfekte Snack-Bar",
@@ -109,7 +103,7 @@ export const PRODUCT_COMBINATIONS = {
     related: [
       "hot-dog-waermer-sjen",
       "popcornmaschine-keno",
-      "slushmaschine-emit",
+      "fotospiegel-milo",
     ],
     bundleTitle: "Das Würzige Snack-Paket",
     bundleDescription: "Nachos + Hot Dogs + Popcorn für die kulinarische Party",

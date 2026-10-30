@@ -12,7 +12,7 @@ describe("contact form delivery validation", () => {
   });
 
   it("shows a notice when self pickup is not possible for the photo mirror", () => {
-    expect(getSelfPickupHint(true)).toBe("Beim Fotospiegel ist keine Selbstabholung möglich.");
+    expect(getSelfPickupHint(true)).toBe("Beim Fotospiegel GLOW ist keine Selbstabholung möglich.");
     expect(getSelfPickupHint(false)).toBeNull();
   });
 });

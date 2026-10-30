@@ -61,7 +61,7 @@ status = 301
 
 [[redirects]]
 from = "/slushmaschine-emit"
-to = "/produkt/slushmaschine-emit"
+to = "/produkt/fotospiegel-milo"
 status = 301
 
 [[redirects]]
@@ -91,7 +91,7 @@ status = 301
 
 [[redirects]]
 from = "/musik-box-sunu"
-to = "/produkt/musik-box-sunu"
+to = "/"
 status = 301
 
 [[redirects]]

@@ -32,7 +32,11 @@ import {
 } from "@/lib/seo";
 import { PRODUCT_COMBINATIONS } from "@/lib/product-combinations";
 import { getDeliveryCostForSelection } from "@/lib/delivery";
-import { getActiveContactBundle as getActiveContactBundleFromSelection } from "@/lib/contact-bundles";
+import { getDrivingDistanceKm } from "@/lib/delivery-routing";
+import {
+  getActiveContactBundle as getActiveContactBundleFromSelection,
+  getCustomBundlePricing,
+} from "@/lib/contact-bundles";
 import { getSelfPickupHint, isDeliveryPlzValid } from "@/lib/contact-form";
 import { Link } from "wouter";
 
@@ -43,23 +47,45 @@ const PRODUCTS = [
     id: 1,
     name: "Fotospiegel GLOW",
     emoji: "🪞",
-    price: "ab 299,- €",
+    price: "ab 399,- €",
     tag: "Bestseller",
     tagColor: "bg-amber-500",
     description: "Der moderne Garant für gute Laune – sofortige Schnappschüsse zum Mitnehmen. Einfach aufstellen, sofort loslegen.",
-    occasions: ["Hochzeit", "Geburtstag", "Firmenfeier"],
-    image: "/images/Fotospiegel_Übersichtsseite.png",
+    occasions: ["Bestseller", "Geburtstag", "Firmenfeier"],
+    image: "/images/Test_Fotospiegel_Übersichtsseite.png",
+  },
+  {
+    id: 4,
+    name: "Fotospiegel MILO",
+    emoji: "🪞",
+    price: "ab 299,- €",
+    tag: "Neu",
+    tagColor: "bg-amber-500",
+    description: "Der Fotospiegel MILO hält die schönsten Momente eurer Feier fest – digital oder direkt ausgedruckt.",
+    occasions: ["Highlight", "Geburtstag", "Firmenfeier"],
+    image: "/images/MILO_Geburtstag.png",
+  },
+  {
+    id: 13,
+    name: "Video-Gästebuch VIMO",
+    emoji: "🎥",
+    price: "ab 139,- €",
+    tag: "Neu",
+    tagColor: "bg-emerald-600",
+    description: "Persönliche Videobotschaften statt geschriebener Gästebucheinträge – Erinnerungen mit Bild und Ton.",
+    occasions: ["Erinnerungen", "Jubiläum", "Geburtstag"],
+    image: "/images/Test_Videogästebuch_Übersichtsseite.png",
   },
   {
     id: 2,
     name: "Audio-Gästebuch VIVI",
     emoji: "📞",
-    price: "ab 49,- €",
+    price: "ab 79,- €",
     tag: "Trend",
     tagColor: "bg-emerald-600",
     description: "Statt geschriebenen Gästebucheinträgen hinterlassen eure Gäste persönliche Sprachnachrichten – Gänsehaut garantiert!",
     occasions: ["Hochzeit", "Jubiläum", "Geburtstag"],
-    image: "/images/Audio-Gästebuch_frontal.png",
+    image: "/images/Test_Audio.png",
   },
   {
     id: 3,
@@ -69,85 +95,52 @@ const PRODUCTS = [
     tag: "Nostalgie",
     tagColor: "bg-sky-600",
     description: "Echter Retro-Charme: Gäste halten ihre Momente sofort in den Händen – perfekt für Gästebücher und Fotowände.",
-    occasions: ["Geburtstag", "Hochzeit", "Party"],
-    image: "/images/Polaroid_blanko.png",
-  },
-  {
-    id: 4,
-    name: "Slushmaschine EMIT",
-    emoji: "🧊",
-    price: "ab 149,- €",
-    tag: "Sommer-Hit",
-    tagColor: "bg-cyan-600",
-    description: "Buntes Slush-Eis im Handumdrehen – fruchtig, eiskalt und ein echter Hingucker. Mit optionalem Erwachsenen-Upgrade!",
-    occasions: ["Sommerfest", "Hochzeit", "Kindergeburtstag"],
-    image: "/images/Slush-Maschine_frontal.png",
+    occasions: ["Nostalgie", "Hochzeit", "Party"],
+    image: "/images/Test_Sofortbildkamera_Übersichtsseite.png",
   },
   {
     id: 5,
     name: "Karaokemaschine SING",
     emoji: "🎤",
-    price: "ab 69,- €",
+    price: "ab 99,- €",
     tag: "Partymagnet",
     tagColor: "bg-purple-600",
     description: "Solo, im Duett oder als Chor – hier entstehen unvergessliche Momente voller Spaß, Lacher und Applaus.",
-    occasions: ["Geburtstag", "Firmenfeier", "Party"],
-    image: "/images/Karaokemaschine_frontal.png",
+    occasions: ["Party-Kracher", "Firmenfeier", "Party"],
+    image: "/images/Test_Karaoke_Übersichtsseite.png",
+  },
+  {
+    id: 12,
+    name: "Popcornmaschine KENO",
+    emoji: "🍿",
+    price: "ab 99,- €",
+    tag: "Klassiker",
+    tagColor: "bg-red-600",
+    description: "Frisch, knusprig, unwiderstehlich – der Duft verbreitet sofort gute Stimmung. Ein Must-Have für die Candy-Bar!",
+    occasions: ["Klassiker", "Hochzeit", "Kindergeburtstag"],
+    image: "/images/Popcorn_3.png",
   },
   {
     id: 6,
     name: "Zuckerwattemaschine LUNA",
     emoji: "🍭",
-    price: "ab 49,- €",
+    price: "ab 79,- €",
     tag: "Kinder-Favorit",
     tagColor: "bg-pink-500",
     description: "Der Duft, die flauschige Konsistenz, der nostalgische Flair – eure Gäste fühlen sich direkt wie auf dem Jahrmarkt.",
     occasions: ["Kindergeburtstag", "Familienfeier", "Schulfest"],
-    image: "/images/Zuckerwattemaschine_frontal.png",
-  },
-  {
-    id: 7,
-    name: "Seifenblasenmaschine LILO",
-    emoji: "🫧",
-    price: "ab 59,- €",
-    tag: "Romantisch",
-    tagColor: "bg-rose-500",
-    description: "Bringt Magie in die Luft – romantisch beim Hochzeitstanz oder verspielt im Freien. Märchenhafte Atmosphäre garantiert!",
-    occasions: ["Hochzeit", "Verlobung", "Geburtstag"],
-    image: "/images/Seifenblasenmaschine_frontal.png",
-  },
-  {
-    id: 8,
-    name: "Nebelmaschine MIRA",
-    emoji: "☁️",
-    price: "ab 49,- €",
-    tag: "Disco-Feeling",
-    tagColor: "bg-indigo-600",
-    description: "Verwandelt die Tanzfläche zur Showbühne – kombinierbar mit Lichteffekten für atemberaubende Stimmung.",
-    occasions: ["Hochzeit", "Party", "Firmenfeier"],
-    image: "/images/Nebelmaschine_frontal.png",
-  },
-  {
-    id: 9,
-    name: "Musik-Box SUNU",
-    emoji: "🎵",
-    price: "ab 99,- €",
-    tag: "Audio-Highlight",
-    tagColor: "bg-teal-600",
-    description: "Dezente Hintergrundmusik beim Sektempfang oder Dinner – Mikrofone für Reden und Ansprachen sind inklusive.",
-    occasions: ["Hochzeit", "Firmenfeier", "Jubiläum"],
-    image: "/images/Musikbox_frontal.png",
+    image: "/images/Zuckerwatte_3.png",
   },
   {
     id: 10,
     name: "Hot-Dog-Wärmer SJEN",
     emoji: "🌭",
-    price: "ab 59,- €",
+    price: "ab 99,- €",
     tag: "Mitternachtssnack",
     tagColor: "bg-orange-600",
     description: "Leckere, warme Snacks – heiß, frisch und perfekt für den kleinen Hunger zwischendurch oder als Mitternachtssnack.",
-    occasions: ["Party", "Hochzeit", "Firmenfeier"],
-    image: "/images/Hot-Dog-Wärmer_frontal.png",
+    occasions: ["Mitternachtssnack", "Hochzeit", "Firmenfeier"],
+    image: "/images/Test_Hot-Dog_Übersichtsseite.png",
   },
   {
     id: 11,
@@ -157,19 +150,30 @@ const PRODUCTS = [
     tag: "Kino-Feeling",
     tagColor: "bg-yellow-600",
     description: "Knusprige, warme Nachos - ein ganz besonderer Snack, der garantiert schnell zum Lieblingsspot eurer Gäste wird.",
-    occasions: ["Party", "Geburtstag", "Firmenfeier"],
-    image: "/images/Nacho-Wärmer_frontal.png",
+    occasions: ["Kino-Feeling", "Geburtstag", "Firmenfeier"],
+    image: "/images/Test_Nacho-Wärmer_Übersichtsseite.png",
   },
   {
-    id: 12,
-    name: "Popcornmaschine KENO",
-    emoji: "🍿",
-    price: "ab 59,- €",
-    tag: "Klassiker",
-    tagColor: "bg-red-600",
-    description: "Frisch, knusprig, unwiderstehlich – der Duft verbreitet sofort gute Stimmung. Ein Must-Have für die Candy-Bar!",
-    occasions: ["Party", "Hochzeit", "Kindergeburtstag"],
-    image: "/images/Popcornmaschine_frontal.png",
+    id: 7,
+    name: "Seifenblasenmaschine LILO",
+    emoji: "🫧",
+    price: "ab 99,- €",
+    tag: "Romantisch",
+    tagColor: "bg-rose-500",
+    description: "Bringt Magie in die Luft – romantisch beim Hochzeitstanz oder verspielt im Freien. Märchenhafte Atmosphäre garantiert!",
+    occasions: ["Romantisch", "Verlobung", "Geburtstag"],
+    image: "/images/Test_Seifenblasenmaschine_Übersichtsseite.png",
+  },
+  {
+    id: 8,
+    name: "Nebelmaschine MIRA",
+    emoji: "☁️",
+    price: "ab 89,- €",
+    tag: "Disco-Feeling",
+    tagColor: "bg-indigo-600",
+    description: "Verwandelt die Tanzfläche zur Showbühne – kombinierbar mit Lichteffekten für atemberaubende Stimmung.",
+    occasions: ["Disco-Feeling", "Party", "Firmenfeier"],
+    image: "/images/Test_Nebelmaschine_Übersichtsseite.png",
   },
 ];
 
@@ -207,9 +211,13 @@ const GALLERY_IMAGES = [
 ];
 
 const PHOTO_MIRROR_PRODUCT_NAME = "Fotospiegel GLOW";
+const PHOTO_MIRROR_MILO_PRODUCT_NAME = "Fotospiegel MILO";
 const DIOR_PRODUCT_NAME = "Sofortbildkamera DIOR";
+const AUDIO_GUESTBOOK_PRODUCT_NAME = "Audio-Gästebuch VIVI";
+const VIDEO_GUESTBOOK_PRODUCT_NAME = "Video-Gästebuch VIMO";
 
-const PHOTO_MIRROR_PRINT_FLATRATE_LABEL = "+ Druckflatrate (Fotospiegel GLOW) - 399,- €";
+const PHOTO_MIRROR_PRINT_FLATRATE_LABEL = "+ Druckflatrate (Fotospiegel GLOW) - 100,- €";
+const PHOTO_MIRROR_MILO_PRINT_FLATRATE_LABEL = "+ Druckflatrate (Fotospiegel MILO) - 100,- €";
 const DIOR_TRIPLE_PACK_LABEL = "Dreierpack (Sofortbildkamera DIOR) - 79,- €";
 
 const TESTIMONIALS = [
@@ -239,15 +247,6 @@ const TESTIMONIALS = [
     event: "30. Geburtstag",
     avatar: "J",
     avatarColor: "bg-sky-600",
-  },
-  {
-    name: "Lena Fellmoser",
-    date: "Februar 2026",
-    rating: 5,
-    text: "Wir haben die Slushi-Maschine für unsere Faschingsfeier ausgeliehen und sind absolut begeistert! Die Kommunikation war von Anfang an hervorragend, schnell und unkompliziert. Die Maschine war ein echtes Highlight.",
-    event: "Faschingsfeier",
-    avatar: "L",
-    avatarColor: "bg-amber-500",
   },
   {
     name: "Christine Be",
@@ -342,9 +341,11 @@ const TESTIMONIALS = [
 ];
 
 type Product = (typeof PRODUCTS)[number];
+type AudioGuestbookColor = "" | "Weiß" | "Schwarz";
 
 type ContactAddOns = {
   photoMirrorPrintFlatrate: boolean;
+  photoMirrorMiloPrintFlatrate: boolean;
   diorTriplePack: boolean;
 };
 
@@ -364,7 +365,12 @@ const CONTACT_ADD_ON_PRICING = {
   photoMirrorPrintFlatrate: {
     productName: PHOTO_MIRROR_PRODUCT_NAME,
     label: "Fotospiegel GLOW mit Druckflatrate",
-    price: 399,
+    price: 100,
+  },
+  photoMirrorMiloPrintFlatrate: {
+    productName: PHOTO_MIRROR_MILO_PRODUCT_NAME,
+    label: "Fotospiegel MILO mit Druckflatrate",
+    price: 100,
   },
   diorTriplePack: {
     productName: DIOR_PRODUCT_NAME,
@@ -376,28 +382,29 @@ const CONTACT_ADD_ON_PRICING = {
 const CONTACT_BUNDLE_PRICING: ContactBundlePricing[] = [
   {
     name: "Das Hochzeits-Paket",
-    productSlugs: ["fotospiegel-glow", "audio-gaestebuch-vivi", "sofortbildkamera-dior"],
-    originalPrice: 527,
-    discountedPrice: 475,
+    productSlugs: ["fotospiegel-glow", "video-gaestebuch-vimo", "sofortbildkamera-dior"],
+    originalPrice: 717,
+    discountedPrice: 645,
   },
   {
     name: "Das Geburtstags-Paket",
-    productSlugs: ["fotospiegel-glow", "karaokemaschine-sing", "popcornmaschine-keno"],
-    originalPrice: 527,
-    discountedPrice: 475,
+    productSlugs: ["fotospiegel-milo", "karaokemaschine-sing", "audio-gaestebuch-vivi"],
+    originalPrice: 577,
+    discountedPrice: 519,
   },
   {
     name: "Das Gastro-Paket",
-    productSlugs: ["slushmaschine-emit", "hot-dog-waermer-sjen", "popcornmaschine-keno"],
-    originalPrice: 267,
-    discountedPrice: 239,
+    productSlugs: ["zuckerwattemaschine-luna", "hot-dog-waermer-sjen", "popcornmaschine-keno"],
+    originalPrice: 277,
+    discountedPrice: 249,
   },
 ];
 
 const MOBILE_INITIAL_PRODUCT_SLUGS = [
   "fotospiegel-glow",
+  "fotospiegel-milo",
+  "video-gaestebuch-vimo",
   "audio-gaestebuch-vivi",
-  "popcornmaschine-keno",
 ] as const;
 
 const SERVICE_AREAS = [
@@ -418,12 +425,12 @@ const HOME_FAQ_ITEMS = [
   {
     question: "Kann ich die Produkte abholen oder liefern lassen?",
     answer:
-      "Ja. Du kannst die Produkte kostenlos in Gaggenau abholen oder dir die Ausstattung bequem liefern lassen. Auf Wunsch liefern wir zu eurer Location im Umkreis von bis zu 100 km.",
+      "Ja. Du kannst die Produkte kostenlos in Gaggenau abholen oder dir die Ausstattung bequem liefern lassen. Auf Wunsch liefern wir zu eurer Location bis zu 100 km Fahrstrecke.",
       },
   {
     question: "Was kostet die Lieferung?",
     answer:
-      "Die Lieferung richtet sich nach der Entfernung von unserem Standort in Gaggenau zu deiner Location. Für Lieferungen innerhalb von 50 km berechnen wir eine Pauschale von 50,- €. Für Lieferungen innerhalb von 100 km berechnen wir eine Pauschale von 100,- €.",
+      "Die Lieferung richtet sich nach der Fahrstrecke von unserem Standort in Gaggenau zu deiner Location. Für Lieferungen bis 50 km Fahrstrecke berechnen wir eine Pauschale von 50,- €. Für Lieferungen bis 100 km Fahrstrecke berechnen wir eine Pauschale von 100,- €.",
   },
   {
     question: "In welchem Gebiet liefert ihr?",
@@ -613,18 +620,6 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
 const GAGGENAU_LAT = 48.8025;
 const GAGGENAU_LNG = 8.3336;
 
-function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
-  const R = 6371;
-  const dLat = ((lat2 - lat1) * Math.PI) / 180;
-  const dLng = ((lng2 - lng1) * Math.PI) / 180;
-  const a =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos((lat1 * Math.PI) / 180) *
-      Math.cos((lat2 * Math.PI) / 180) *
-      Math.sin(dLng / 2) ** 2;
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-}
-
 function getContactProductPrice(price: string): string {
   return price.replace(/^ab\s+/i, "");
 }
@@ -638,25 +633,7 @@ function getContactProductValue(product: Product): string {
   return `${product.name} (${getContactProductPrice(product.price)})`;
 }
 
-function getContactProductSummary(product: Product, addOns: ContactAddOns): ProductSelectionSummary {
-  const addOnEntry = Object.values(CONTACT_ADD_ON_PRICING).find(
-    (entry) => entry.productName === product.name
-  );
-
-  if (addOnEntry) {
-    const isSelected =
-      addOnEntry.productName === PHOTO_MIRROR_PRODUCT_NAME
-        ? addOns.photoMirrorPrintFlatrate
-        : addOns.diorTriplePack;
-
-    if (isSelected) {
-      return {
-        label: addOnEntry.label,
-        price: addOnEntry.price,
-      };
-    }
-  }
-
+function getContactProductSummary(product: Product): ProductSelectionSummary {
   return {
     label: product.name,
     price: parseContactProductPrice(product.price),
@@ -667,12 +644,59 @@ function getContactSelectedProductSummaries(
   selectedValues: string[],
   addOns: ContactAddOns
 ): ProductSelectionSummary[] {
-  return selectedValues
-    .map((value) => {
-      const product = PRODUCTS.find((entry) => value.startsWith(`${entry.name} (`));
-      return product ? getContactProductSummary(product, addOns) : null;
-    })
-    .filter((summary): summary is ProductSelectionSummary => summary !== null);
+  const summaries: ProductSelectionSummary[] = [];
+  const hasPhotoMirrorGlowSelected = selectedValues.some((value) =>
+    value.startsWith(`${PHOTO_MIRROR_PRODUCT_NAME} (`)
+  );
+  const hasPhotoMirrorMiloSelected = selectedValues.some((value) =>
+    value.startsWith(`${PHOTO_MIRROR_MILO_PRODUCT_NAME} (`)
+  );
+  const hasDiorSelected = selectedValues.some((value) =>
+    value.startsWith(`${DIOR_PRODUCT_NAME} (`)
+  );
+  const diorTriplePackAdded = new Set<string>();
+
+  for (const value of selectedValues) {
+    const product = PRODUCTS.find((entry) => value.startsWith(`${entry.name} (`));
+    if (!product) continue;
+
+    if (product.name === DIOR_PRODUCT_NAME && addOns.diorTriplePack) {
+      if (!diorTriplePackAdded.has(product.name)) {
+        summaries.push({
+          label: CONTACT_ADD_ON_PRICING.diorTriplePack.label,
+          price: CONTACT_ADD_ON_PRICING.diorTriplePack.price,
+        });
+        diorTriplePackAdded.add(product.name);
+      }
+      continue;
+    }
+
+    summaries.push(getContactProductSummary(product));
+  }
+
+  const extraAddOns: ProductSelectionSummary[] = [];
+  if (hasPhotoMirrorGlowSelected && addOns.photoMirrorPrintFlatrate) {
+    extraAddOns.push({
+      label: CONTACT_ADD_ON_PRICING.photoMirrorPrintFlatrate.label,
+      price: CONTACT_ADD_ON_PRICING.photoMirrorPrintFlatrate.price,
+    });
+  }
+
+  if (hasPhotoMirrorMiloSelected && addOns.photoMirrorMiloPrintFlatrate) {
+    extraAddOns.push({
+      label: CONTACT_ADD_ON_PRICING.photoMirrorMiloPrintFlatrate.label,
+      price: CONTACT_ADD_ON_PRICING.photoMirrorMiloPrintFlatrate.price,
+    });
+  }
+
+  if (hasDiorSelected && addOns.diorTriplePack && !diorTriplePackAdded.has(DIOR_PRODUCT_NAME)) {
+    extraAddOns.push({
+      label: CONTACT_ADD_ON_PRICING.diorTriplePack.label,
+      price: CONTACT_ADD_ON_PRICING.diorTriplePack.price,
+    });
+  }
+
+  return [...summaries, ...extraAddOns];
 }
 
 function getBundleProductNames(bundle: ContactBundlePricing): string[] {
@@ -697,10 +721,12 @@ export default function Home() {
     phone: "",
     date: "",
     products: [] as string[],
+    audioGuestbookColor: "" as AudioGuestbookColor,
     message: "",
     selfPickup: false,
     addOns: {
       photoMirrorPrintFlatrate: false,
+      photoMirrorMiloPrintFlatrate: false,
       diorTriplePack: false,
     },
   });
@@ -727,13 +753,24 @@ export default function Home() {
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const isTestimonialsInView = useInView(testimonialRef, { amount: 0.35 });
 
-  const isPhotoMirrorSelected = formData.products.some((product) =>
+  const isPhotoMirrorGlowSelected = formData.products.some((product) =>
     product.startsWith(`${PHOTO_MIRROR_PRODUCT_NAME} (`)
+  );
+  const isPhotoMirrorMiloSelected = formData.products.some((product) =>
+    product.startsWith(`${PHOTO_MIRROR_MILO_PRODUCT_NAME} (`)
   );
   const isDiorSelected = formData.products.some((product) =>
     product.startsWith(`${DIOR_PRODUCT_NAME} (`)
   );
-  const selfPickupHint = getSelfPickupHint(isPhotoMirrorSelected);
+  const isAudioGuestbookSelected = formData.products.some((product) =>
+    product.startsWith(`${AUDIO_GUESTBOOK_PRODUCT_NAME} (`)
+  );
+  const isVideoGuestbookSelected = formData.products.some((product) =>
+    product.startsWith(`${VIDEO_GUESTBOOK_PRODUCT_NAME} (`)
+  );
+  const shouldShowDeliveryDistance =
+    !isAudioGuestbookSelected && !isVideoGuestbookSelected && !isDiorSelected;
+  const selfPickupHint = getSelfPickupHint(isPhotoMirrorGlowSelected);
   const isDeliveryPlzRequired = !formData.selfPickup;
   const selectedProductSummaries = getContactSelectedProductSummaries(
     formData.products,
@@ -743,15 +780,19 @@ export default function Home() {
     (sum, summary) => sum + summary.price,
     0
   );
+  const selectedProductSlugs = formData.products
+    .map((value) => {
+      const product = PRODUCTS.find((entry) => value.startsWith(`${entry.name} (`));
+      return product ? toProductSlug(product.name) : null;
+    })
+    .filter((slug): slug is string => Boolean(slug));
   const activeContactBundle = getActiveContactBundleFromSelection(
-    formData.products
-      .map((value) => {
-        const product = PRODUCTS.find((entry) => value.startsWith(`${entry.name} (`));
-        return product ? toProductSlug(product.name) : null;
-      })
-      .filter((slug): slug is string => Boolean(slug)),
+    selectedProductSlugs,
     CONTACT_BUNDLE_PRICING
   );
+  const customBundlePricing = activeContactBundle
+    ? null
+    : getCustomBundlePricing(selectedProductTotal, selectedProductSlugs.length);
   const bundleProductNames = activeContactBundle
     ? new Set(getBundleProductNames(activeContactBundle))
     : null;
@@ -760,6 +801,9 @@ export default function Home() {
         ...(Array.from(bundleProductNames) as string[]),
         ...(bundleProductNames.has(PHOTO_MIRROR_PRODUCT_NAME)
           ? [CONTACT_ADD_ON_PRICING.photoMirrorPrintFlatrate.label]
+          : []),
+        ...(bundleProductNames.has(PHOTO_MIRROR_MILO_PRODUCT_NAME)
+          ? [CONTACT_ADD_ON_PRICING.photoMirrorMiloPrintFlatrate.label]
           : []),
         ...(bundleProductNames.has(DIOR_PRODUCT_NAME)
           ? [CONTACT_ADD_ON_PRICING.diorTriplePack.label]
@@ -774,21 +818,23 @@ export default function Home() {
       : selectedProductTotal;
   const effectiveProductsTotal = activeContactBundle
     ? activeContactBundle.discountedPrice + extraProductsTotal
-    : selectedProductTotal;
-  const shouldAutoSelectPhotoMirrorAddOn =
+    : customBundlePricing?.discountedPrice ?? selectedProductTotal;
+  const shouldAutoSelectPhotoMirrorGlowAddOn =
     activeContactBundle?.productSlugs.includes("fotospiegel-glow") ?? false;
+  const shouldAutoSelectPhotoMirrorMiloAddOn =
+    activeContactBundle?.productSlugs.includes("fotospiegel-milo") ?? false;
   const shouldAutoSelectDiorAddOn =
     activeContactBundle?.productSlugs.includes("sofortbildkamera-dior") ?? false;
   const mobileInitialProducts = MOBILE_INITIAL_PRODUCT_SLUGS
     .map((slug) => PRODUCTS.find((product) => toProductSlug(product.name) === slug))
     .filter((product): product is Product => Boolean(product));
-  const initialProducts = isMobileViewport ? mobileInitialProducts : PRODUCTS.slice(0, 6);
+  const initialProducts = isMobileViewport ? mobileInitialProducts : PRODUCTS;
   const expandedProducts = isMobileViewport
     ? PRODUCTS.filter(
         (product) =>
           !mobileInitialProducts.some((mobileProduct) => mobileProduct.id === product.id)
       )
-    : PRODUCTS.slice(6, 12);
+    : [];
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
@@ -808,15 +854,25 @@ export default function Home() {
     }
 
     void calculateDelivery(deliveryPlz);
-  }, [formData.products, formData.addOns.photoMirrorPrintFlatrate, formData.addOns.diorTriplePack]);
+  }, [
+    formData.products,
+    formData.addOns.photoMirrorPrintFlatrate,
+    formData.addOns.photoMirrorMiloPrintFlatrate,
+    formData.addOns.diorTriplePack,
+  ]);
 
   useEffect(() => {
     setFormData((prev) => {
       let hasChanges = false;
       const nextAddOns = { ...prev.addOns };
 
-      if (!isPhotoMirrorSelected && prev.addOns.photoMirrorPrintFlatrate) {
+      if (!isPhotoMirrorGlowSelected && prev.addOns.photoMirrorPrintFlatrate) {
         nextAddOns.photoMirrorPrintFlatrate = false;
+        hasChanges = true;
+      }
+
+      if (!isPhotoMirrorMiloSelected && prev.addOns.photoMirrorMiloPrintFlatrate) {
+        nextAddOns.photoMirrorMiloPrintFlatrate = false;
         hasChanges = true;
       }
 
@@ -827,18 +883,30 @@ export default function Home() {
 
       return hasChanges ? { ...prev, addOns: nextAddOns } : prev;
     });
-  }, [isPhotoMirrorSelected, isDiorSelected]);
+  }, [isPhotoMirrorGlowSelected, isPhotoMirrorMiloSelected, isDiorSelected]);
 
   useEffect(() => {
-    if (isPhotoMirrorSelected && formData.selfPickup) {
+    if (!isAudioGuestbookSelected && formData.audioGuestbookColor) {
+      setFormData((prev) =>
+        prev.audioGuestbookColor ? { ...prev, audioGuestbookColor: "" } : prev
+      );
+    }
+  }, [isAudioGuestbookSelected, formData.audioGuestbookColor]);
+
+  useEffect(() => {
+    if (isPhotoMirrorGlowSelected && formData.selfPickup) {
       setFormData((prev) => (prev.selfPickup ? { ...prev, selfPickup: false } : prev));
       setDeliveryPlz("");
       setDeliveryInfo({ status: "idle", cost: null, distance: null });
     }
-  }, [isPhotoMirrorSelected, formData.selfPickup]);
+  }, [isPhotoMirrorGlowSelected, formData.selfPickup]);
 
   useEffect(() => {
-    if (!shouldAutoSelectPhotoMirrorAddOn && !shouldAutoSelectDiorAddOn) {
+    if (
+      !shouldAutoSelectPhotoMirrorGlowAddOn &&
+      !shouldAutoSelectPhotoMirrorMiloAddOn &&
+      !shouldAutoSelectDiorAddOn
+    ) {
       return;
     }
 
@@ -847,11 +915,20 @@ export default function Home() {
       const nextAddOns = { ...prev.addOns };
 
       if (
-        shouldAutoSelectPhotoMirrorAddOn &&
-        isPhotoMirrorSelected &&
+        shouldAutoSelectPhotoMirrorGlowAddOn &&
+        isPhotoMirrorGlowSelected &&
         !prev.addOns.photoMirrorPrintFlatrate
       ) {
         nextAddOns.photoMirrorPrintFlatrate = true;
+        hasChanges = true;
+      }
+
+      if (
+        shouldAutoSelectPhotoMirrorMiloAddOn &&
+        isPhotoMirrorMiloSelected &&
+        !prev.addOns.photoMirrorMiloPrintFlatrate
+      ) {
+        nextAddOns.photoMirrorMiloPrintFlatrate = true;
         hasChanges = true;
       }
 
@@ -867,11 +944,14 @@ export default function Home() {
       return hasChanges ? { ...prev, addOns: nextAddOns } : prev;
     });
   }, [
-    shouldAutoSelectPhotoMirrorAddOn,
+    shouldAutoSelectPhotoMirrorGlowAddOn,
+    shouldAutoSelectPhotoMirrorMiloAddOn,
     shouldAutoSelectDiorAddOn,
-    isPhotoMirrorSelected,
+    isPhotoMirrorGlowSelected,
+    isPhotoMirrorMiloSelected,
     isDiorSelected,
     formData.addOns.photoMirrorPrintFlatrate,
+    formData.addOns.photoMirrorMiloPrintFlatrate,
     formData.addOns.diorTriplePack,
   ]);
 
@@ -1066,6 +1146,7 @@ export default function Home() {
       .filter(val => !formData.products.includes(val));
 
     const includesPhotoMirror = productSlugs.includes("fotospiegel-glow");
+    const includesPhotoMirrorMilo = productSlugs.includes("fotospiegel-milo");
     const includesDior = productSlugs.includes("sofortbildkamera-dior");
     
     setFormData((prev) => ({
@@ -1075,6 +1156,8 @@ export default function Home() {
         ...prev.addOns,
         photoMirrorPrintFlatrate:
           prev.addOns.photoMirrorPrintFlatrate || includesPhotoMirror,
+        photoMirrorMiloPrintFlatrate:
+          prev.addOns.photoMirrorMiloPrintFlatrate || includesPhotoMirrorMilo,
         diorTriplePack: prev.addOns.diorTriplePack || includesDior,
       },
     }));
@@ -1117,7 +1200,7 @@ export default function Home() {
     if (slideWidth === 0) return;
 
     const nextIndex = Math.round(container.scrollLeft / slideWidth);
-    setActiveBundleSlide(Math.max(0, Math.min(2, nextIndex)));
+    setActiveBundleSlide(Math.max(0, Math.min(3, nextIndex)));
   };
 
   const scrollToBundleSlide = (index: number) => {
@@ -1152,16 +1235,29 @@ export default function Home() {
         `https://nominatim.openstreetmap.org/search?postalcode=${plz}&country=DE&format=json&limit=1`,
         { headers: { "Accept-Language": "de" } }
       );
+      if (!res.ok) {
+        throw new Error(`PLZ geocoding failed: ${res.status}`);
+      }
       const data = await res.json();
       if (!Array.isArray(data) || data.length === 0) {
         setDeliveryInfo({ status: "error", cost: null, distance: null });
         return;
       }
-      const km = haversineKm(GAGGENAU_LAT, GAGGENAU_LNG, parseFloat(data[0].lat), parseFloat(data[0].lon));
+      const lat = Number(data[0].lat);
+      const lng = Number(data[0].lon);
+      if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+        throw new Error("PLZ geocoding returned invalid coordinates");
+      }
+
+      const km = await getDrivingDistanceKm(
+        { lat: GAGGENAU_LAT, lng: GAGGENAU_LNG },
+        { lat, lng }
+      );
       const rounded = Math.round(km);
       const cost = km <= 50 ? 50 : km <= 100 ? 100 : null;
       setDeliveryInfo({ status: "done", cost, distance: rounded });
-    } catch {
+    } catch (error) {
+      console.error("Failed to calculate delivery distance", error);
       setDeliveryInfo({ status: "error", cost: null, distance: null });
     }
   };
@@ -1173,13 +1269,18 @@ export default function Home() {
       return;
     }
 
+    if (isAudioGuestbookSelected && !formData.audioGuestbookColor) {
+      alert("Bitte wähle eine Farbe für das Audio-Gästebuch aus.");
+      return;
+    }
+
     if (!isDeliveryPlzValid(deliveryPlz, formData.selfPickup)) {
       alert("Bitte gib deine PLZ ein, um die Lieferkosten zu berechnen.");
       return;
     }
 
-    if (isPhotoMirrorSelected && formData.selfPickup) {
-      alert("Beim Fotospiegel ist keine Selbstabholung möglich. Bitte gib eine Lieferadresse oder PLZ ein.");
+    if (isPhotoMirrorGlowSelected && formData.selfPickup) {
+      alert("Beim Fotospiegel GLOW ist keine Selbstabholung möglich. Bitte gib eine Lieferadresse oder PLZ ein.");
       return;
     }
 
@@ -1192,7 +1293,13 @@ export default function Home() {
       formData.addOns
     );
     const productList = messageProducts
-      .map((item) => `${item.label} (${item.price},- €)`)
+      .map((item) => {
+        const color =
+          item.label === AUDIO_GUESTBOOK_PRODUCT_NAME && formData.audioGuestbookColor
+            ? ` – Farbe: ${formData.audioGuestbookColor}`
+            : "";
+        return `${item.label}${color} (${item.price},- €)`;
+      })
       .join(" | ");
 
     const bundleProductNames = activeContactBundle
@@ -1203,6 +1310,9 @@ export default function Home() {
           ...(Array.from(bundleProductNames) as string[]),
           ...(bundleProductNames.has(PHOTO_MIRROR_PRODUCT_NAME)
             ? [CONTACT_ADD_ON_PRICING.photoMirrorPrintFlatrate.label]
+            : []),
+          ...(bundleProductNames.has(PHOTO_MIRROR_MILO_PRODUCT_NAME)
+            ? [CONTACT_ADD_ON_PRICING.photoMirrorMiloPrintFlatrate.label]
             : []),
           ...(bundleProductNames.has(DIOR_PRODUCT_NAME)
             ? [CONTACT_ADD_ON_PRICING.diorTriplePack.label]
@@ -1217,7 +1327,7 @@ export default function Home() {
         : selectedProductTotal;
     const effectiveProductsTotal = activeContactBundle
       ? activeContactBundle.discountedPrice + extraProductsTotal
-      : selectedProductTotal;
+      : customBundlePricing?.discountedPrice ?? selectedProductTotal;
 
     const selectedProductNames = formData.products
       .map((value) => {
@@ -1236,9 +1346,13 @@ export default function Home() {
       deliveryCostForTotal > 0
         ? activeContactBundle
           ? `Gesamtpreis: ${totalPriceWithDelivery},- € (Paket ${activeContactBundle.discountedPrice},- € + Zusatzprodukte ${extraProductsTotal},- € + Lieferung ${deliveryCostForTotal},- €)`
+          : customBundlePricing
+          ? `Gesamtpreis: ${totalPriceWithDelivery},- € (Produkte nach 10 % Paket-Rabatt ${effectiveProductsTotal},- € statt ${customBundlePricing.originalPrice},- € + Lieferung ${deliveryCostForTotal},- €)`
           : `Gesamtpreis: ${totalPriceWithDelivery},- € (Produkte ${effectiveProductsTotal},- € + Lieferung ${deliveryCostForTotal},- €)`
         : activeContactBundle
         ? `Gesamtpreis Produkte: ${effectiveProductsTotal},- € (Paket ${activeContactBundle.discountedPrice},- € + Zusatzprodukte ${extraProductsTotal},- €)`
+        : customBundlePricing
+        ? `Gesamtpreis Produkte: ${effectiveProductsTotal},- € nach 10 % Paket-Rabatt (statt ${customBundlePricing.originalPrice},- €)`
         : `Gesamtpreis Produkte: ${effectiveProductsTotal},- €`;
     const deliveryLine =
       deliveryInfo.status === "done" && deliveryInfo.cost !== null
@@ -1270,8 +1384,8 @@ export default function Home() {
   return (
     <div className="min-h-[100svh] md:min-h-screen bg-background font-sans overflow-x-hidden">
       <Seo
-        title="Eventausstattung mieten in Karlsruhe, Rastatt & Baden-Baden | memora"
-        description="Eventausstattung mieten in Karlsruhe, Rastatt, Baden-Baden und Umgebung: Fotospiegel, Slushmaschine, Audio-Gästebuch, Popcornmaschine und mehr. Abholung in Gaggenau oder Lieferung im Umkreis von bis zu 100 km."
+        title="Eventausstattung mieten in Karlsruhe & Umgebung | memora"
+        description="Eventausstattung für Hochzeiten, Geburtstage & Firmenfeiern in Karlsruhe und Umgebung. Fotospiegel, Gästebücher, Abholung in Gaggenau oder Lieferung bis 100 km."
         canonicalUrl={SITE_URL}
         image={DEFAULT_OG_IMAGE}
         structuredData={HOME_STRUCTURED_DATA}
@@ -1732,7 +1846,7 @@ export default function Home() {
         <div className="container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {([
-              { value: 20, suffix: "+", label: "zufriedene Kunden" },
+              { value: 40, suffix: "+", label: "zufriedene Kunden" },
               { value: 5, suffix: "★", label: "Google-Bewertung" },
               { value: 12, suffix: "", label: "Produkte verfügbar" },
               { value: 2, suffix: "h", label: "Antwortzeit" },
@@ -1774,7 +1888,7 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="mx-auto grid grid-cols-2 gap-3 sm:gap-6 lg:max-w-6xl lg:grid-cols-4">
             {initialProducts.map((product, i) => {
               const slug = toProductSlug(product.name);
               return (
@@ -1791,40 +1905,31 @@ export default function Home() {
                   className="block hover:opacity-95 transition-opacity"
                 >
                 {/* Product Image / Emoji */}
-                <div className="relative h-40 overflow-hidden bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.88_0.02_85)]">
+                <div className="relative aspect-[9/16] overflow-hidden bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.88_0.02_85)]">
                   {product.image ? (
                     <img
                       src={product.image}
                       alt={`${product.name} - Eventausstattung Vermietung für ${product.occasions.join(", ")}`}
-                      className="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-7xl">
                       {product.emoji}
                     </div>
                   )}
-                  {/* Tag Badge */}
-                  <div className={`absolute top-3 left-3 ${product.tagColor} text-white text-xs font-bold px-2.5 py-1 rounded-full`}>
-                    {product.tag}
-                  </div>
-                  {/* Price Badge */}
-                  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-[oklch(0.18_0.02_65)] text-sm font-bold px-3 py-1 rounded-full shadow-sm">
-                    {product.price}
-                  </div>
                 </div>
 
                 {/* Content */}
                 <div className="p-4">
-                  <h3 className="text-lg font-bold mb-2 text-foreground hover:text-[oklch(0.32_0.07_155)] transition-colors" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  <h3 className="text-lg font-bold mb-0.5 text-foreground hover:text-[oklch(0.32_0.07_155)] transition-colors" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                     {product.name}
                   </h3>
-                  <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
-                    {product.description}
+                  <p className="text-sm font-semibold text-[oklch(0.32_0.07_155)] mb-2">
+                    {product.price}
                   </p>
-
                   {/* Occasions */}
                   <div className="flex flex-wrap gap-1.5">
-                    {product.occasions.map((occ) => (
+                    {product.occasions.slice(0, 1).map((occ) => (
                       <span key={occ} className="text-xs bg-[oklch(0.93_0.015_85)] text-[oklch(0.32_0.07_155)] px-2 py-0.5 rounded-full font-medium">
                         {occ}
                       </span>
@@ -1838,7 +1943,7 @@ export default function Home() {
           </div>
 
           {/* Expanded Products Section */}
-          {showAllProducts && (
+          {showAllProducts && expandedProducts.length > 0 && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
@@ -1846,7 +1951,7 @@ export default function Home() {
               transition={{ duration: 0.4 }}
               className="mt-8 overflow-hidden"
             >
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="mx-auto grid grid-cols-2 gap-3 sm:gap-6 lg:max-w-6xl lg:grid-cols-4">
                 {expandedProducts.map((product, i) => {
                   const slug = toProductSlug(product.name);
                   return (
@@ -1863,40 +1968,31 @@ export default function Home() {
                       className="block hover:opacity-95 transition-opacity"
                     >
                     {/* Product Image / Emoji */}
-                    <div className="relative h-40 overflow-hidden bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.88_0.02_85)]">
+                    <div className="relative aspect-[9/16] overflow-hidden bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.88_0.02_85)]">
                       {product.image ? (
                         <img
                           src={product.image}
                           alt={`${product.name} - Eventausstattung Vermietung für ${product.occasions.join(", ")}`}
-                          className="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-7xl">
                           {product.emoji}
                         </div>
                       )}
-                      {/* Tag Badge */}
-                      <div className={`absolute top-3 left-3 ${product.tagColor} text-white text-xs font-bold px-2.5 py-1 rounded-full`}>
-                        {product.tag}
-                      </div>
-                      {/* Price Badge */}
-                      <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-[oklch(0.18_0.02_65)] text-sm font-bold px-3 py-1 rounded-full shadow-sm">
-                        {product.price}
-                      </div>
                     </div>
 
                     {/* Content */}
                     <div className="p-4">
-                      <h3 className="text-lg font-bold mb-2 text-foreground hover:text-[oklch(0.32_0.07_155)] transition-colors" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                      <h3 className="text-lg font-bold mb-0.5 text-foreground hover:text-[oklch(0.32_0.07_155)] transition-colors" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                         {product.name}
                       </h3>
-                      <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
-                        {product.description}
+                      <p className="text-sm font-semibold text-[oklch(0.32_0.07_155)] mb-2">
+                        {product.price}
                       </p>
-
                       {/* Occasions */}
                       <div className="flex flex-wrap gap-1.5">
-                        {product.occasions.map((occ) => (
+                        {product.occasions.slice(0, 1).map((occ) => (
                           <span key={occ} className="text-xs bg-[oklch(0.93_0.015_85)] text-[oklch(0.32_0.07_155)] px-2 py-0.5 rounded-full font-medium">
                             {occ}
                           </span>
@@ -1916,7 +2012,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mt-12"
+            className="text-center mt-12 md:hidden"
           >
             <p className="text-muted-foreground mb-4">Noch nicht das Richtige gefunden? Wir haben noch mehr!</p>
             <button
@@ -1952,7 +2048,7 @@ export default function Home() {
           <div
             ref={bundleCarouselRef}
             onScroll={handleBundleCarouselScroll}
-            className="flex gap-0 overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth pb-3 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-3 md:gap-8 md:overflow-visible max-w-6xl mx-auto"
+            className="flex gap-0 overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth pb-3 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-2 xl:grid-cols-4 md:gap-8 md:overflow-visible max-w-6xl mx-auto"
             style={{ touchAction: "pan-x pan-y" }}
           >
             {/* Hochzeit-Bundle */}
@@ -1960,7 +2056,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="min-w-full snap-start md:min-w-0 overflow-hidden rounded-2xl border border-border bg-white p-5 md:p-8 shadow-lg hover:shadow-xl transition-shadow"
+              className="min-w-full snap-start md:min-w-0 md:flex md:flex-col overflow-hidden rounded-2xl border border-border bg-white p-5 md:p-8 shadow-lg hover:shadow-xl transition-shadow"
             >
               <div className="text-center mb-6">
                 <div className="text-4xl md:text-5xl mb-2 md:mb-3">💍</div>
@@ -1976,32 +2072,34 @@ export default function Home() {
               <div className="text-center mb-4 md:mb-6 p-3 md:p-4 bg-[oklch(0.97_0.012_85)] rounded-lg">
                 <div className="flex items-center justify-center gap-3 mb-2">
                   <span className="text-sm font-semibold text-muted-foreground line-through">
-                    Gesamtpreis: 527,- €
+                    Gesamtpreis: 717,- €
                   </span>
                   <span className="inline-block bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
                     -10%
                   </span>
                 </div>
                 <div className="text-2xl md:text-3xl font-bold" style={{ color: "oklch(0.75 0.14 80)" }}>
-                  475,- €
+                  645,- €
                 </div>
-                <p className="text-xs text-muted-foreground mt-1">Du sparst 52,- € im Bundle</p>
+                <p className="text-xs text-muted-foreground mt-1">Du sparst 72,- € im Bundle</p>
               </div>
 
               <div className="space-y-2 md:space-y-3 mb-6 md:mb-8">
-                {["fotospiegel-glow", "audio-gaestebuch-vivi", "sofortbildkamera-dior"].map((slug) => {
+                {["fotospiegel-glow", "video-gaestebuch-vimo", "sofortbildkamera-dior"].map((slug) => {
                   const product = PRODUCTS.find(p => toProductSlug(p.name) === slug);
                   let displayPrice = product?.price.replace("ab ", "");
-                  if (slug === "fotospiegel-glow") displayPrice = "399,- €";
+                  if (slug === "fotospiegel-glow") displayPrice = "499,- €";
                   if (slug === "sofortbildkamera-dior") displayPrice = "79,- €";
                   return (
                     <Link key={slug} href={`/produkt/${slug}`} className="block">
                       <div className="flex items-center gap-2.5 md:gap-3 p-2.5 md:p-3 rounded-lg bg-[oklch(0.97_0.012_85)] hover:bg-[oklch(0.93_0.015_85)] transition-colors">
-                        <img
-                          src={product?.image}
-                          alt={product?.name ?? "Produktbild"}
-                          className="h-9 w-9 md:h-10 md:w-10 rounded-md object-cover bg-white"
-                        />
+                        <div className="aspect-[9/16] w-9 md:w-10 shrink-0 overflow-hidden rounded-md bg-white">
+                          <img
+                            src={product?.image}
+                            alt={product?.name ?? "Produktbild"}
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
                         <div className="flex-1">
                           <div className="font-semibold text-foreground text-sm">{product?.name}</div>
                           <div className="text-xs text-muted-foreground">
@@ -2018,8 +2116,8 @@ export default function Home() {
               </div>
               <button
                 type="button"
-                onClick={() => handleBundleInquiry(["fotospiegel-glow", "audio-gaestebuch-vivi", "sofortbildkamera-dior"])}
-                className="w-full btn-gold py-2.5 px-4 rounded-lg text-sm font-bold flex items-center justify-center gap-2"
+                onClick={() => handleBundleInquiry(["fotospiegel-glow", "video-gaestebuch-vimo", "sofortbildkamera-dior"])}
+                className="w-full md:mt-auto btn-gold py-2.5 px-4 rounded-lg text-sm font-bold flex items-center justify-center gap-2"
               >
                 <WhatsAppIcon />
                 Paket anfragen
@@ -2032,7 +2130,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="min-w-full snap-start md:min-w-0 overflow-hidden rounded-2xl border border-border bg-white p-5 md:p-8 shadow-lg hover:shadow-xl transition-shadow"
+              className="min-w-full snap-start md:min-w-0 md:flex md:flex-col overflow-hidden rounded-2xl border border-border bg-white p-5 md:p-8 shadow-lg hover:shadow-xl transition-shadow"
             >
               <div className="text-center mb-6">
                 <div className="text-4xl md:text-5xl mb-2 md:mb-3">🎉</div>
@@ -2040,7 +2138,7 @@ export default function Home() {
                   Das Geburtstags-Paket
                 </h3>
                 <p className="text-muted-foreground text-sm">
-                  Feiern & Snacken
+                  Feiern & Erinnerungen
                 </p>
               </div>
 
@@ -2048,35 +2146,37 @@ export default function Home() {
               <div className="text-center mb-4 md:mb-6 p-3 md:p-4 bg-[oklch(0.97_0.012_85)] rounded-lg">
                 <div className="flex items-center justify-center gap-3 mb-2">
                   <span className="text-sm font-semibold text-muted-foreground line-through">
-                    Gesamtpreis: 527,- €
+                    Gesamtpreis: 577,- €
                   </span>
                   <span className="inline-block bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
                     -10%
                   </span>
                 </div>
                 <div className="text-2xl md:text-3xl font-bold" style={{ color: "oklch(0.75 0.14 80)" }}>
-                  475,- €
+                  519,- €
                 </div>
-                <p className="text-xs text-muted-foreground mt-1">Du sparst 52,- € im Bundle</p>
+                <p className="text-xs text-muted-foreground mt-1">Du sparst 58,- € im Bundle</p>
               </div>
 
               <div className="space-y-2 md:space-y-3 mb-6 md:mb-8">
-                {["fotospiegel-glow", "karaokemaschine-sing", "popcornmaschine-keno"].map((slug) => {
+                {["fotospiegel-milo", "karaokemaschine-sing", "audio-gaestebuch-vivi"].map((slug) => {
                   const product = PRODUCTS.find(p => toProductSlug(p.name) === slug);
-                  const displayPrice = slug === "fotospiegel-glow" ? "399,- €" : product?.price.replace("ab ", "");
+                  const displayPrice = slug === "fotospiegel-milo" ? "399,- €" : product?.price.replace("ab ", "");
                   return (
                     <Link key={slug} href={`/produkt/${slug}`} className="block">
                       <div className="flex items-center gap-2.5 md:gap-3 p-2.5 md:p-3 rounded-lg bg-[oklch(0.97_0.012_85)] hover:bg-[oklch(0.93_0.015_85)] transition-colors">
-                        <img
-                          src={product?.image}
-                          alt={product?.name ?? "Produktbild"}
-                          className="h-9 w-9 md:h-10 md:w-10 rounded-md object-cover bg-white"
-                        />
+                        <div className="aspect-[9/16] w-9 md:w-10 shrink-0 overflow-hidden rounded-md bg-white">
+                          <img
+                            src={product?.image}
+                            alt={product?.name ?? "Produktbild"}
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
                         <div className="flex-1">
                           <div className="font-semibold text-foreground text-sm">{product?.name}</div>
                           <div className="text-xs text-muted-foreground">
                             {displayPrice}
-                            {slug === "fotospiegel-glow" && <span className="text-[0.65rem] text-muted-foreground block mt-0.5">inkl. Druckflatrate</span>}
+                            {slug === "fotospiegel-milo" && <span className="text-[0.65rem] text-muted-foreground block mt-0.5">inkl. Druckflatrate</span>}
                           </div>
                         </div>
                         <span className="text-[oklch(0.75_0.14_80)] text-lg">→</span>
@@ -2087,8 +2187,8 @@ export default function Home() {
               </div>
               <button
                 type="button"
-                onClick={() => handleBundleInquiry(["fotospiegel-glow", "karaokemaschine-sing", "popcornmaschine-keno"])}
-                className="w-full btn-gold py-2.5 px-4 rounded-lg text-sm font-bold flex items-center justify-center gap-2"
+                onClick={() => handleBundleInquiry(["fotospiegel-milo", "karaokemaschine-sing", "audio-gaestebuch-vivi"])}
+                className="w-full md:mt-auto btn-gold py-2.5 px-4 rounded-lg text-sm font-bold flex items-center justify-center gap-2"
               >
                 <WhatsAppIcon />
                 Paket anfragen
@@ -2101,7 +2201,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="min-w-full snap-start md:min-w-0 overflow-hidden rounded-2xl border border-border bg-white p-5 md:p-8 shadow-lg hover:shadow-xl transition-shadow"
+              className="min-w-full snap-start md:min-w-0 md:flex md:flex-col overflow-hidden rounded-2xl border border-border bg-white p-5 md:p-8 shadow-lg hover:shadow-xl transition-shadow"
             >
               <div className="text-center mb-6">
                 <div className="text-4xl md:text-5xl mb-2 md:mb-3">🍿</div>
@@ -2109,7 +2209,7 @@ export default function Home() {
                   Das Gastro-Paket
                 </h3>
                 <p className="text-muted-foreground text-sm">
-                  Getränke & Snacks
+                  Süße & herzhafte Snacks
                 </p>
               </div>
 
@@ -2117,30 +2217,32 @@ export default function Home() {
               <div className="text-center mb-4 md:mb-6 p-3 md:p-4 bg-[oklch(0.97_0.012_85)] rounded-lg">
                 <div className="flex items-center justify-center gap-3 mb-2">
                   <span className="text-sm font-semibold text-muted-foreground line-through">
-                    Gesamtpreis: 267,- €
+                    Gesamtpreis: 277,- €
                   </span>
                   <span className="inline-block bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
                     -10%
                   </span>
                 </div>
                 <div className="text-2xl md:text-3xl font-bold" style={{ color: "oklch(0.75 0.14 80)" }}>
-                  239,- €
+                  249,- €
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">Du sparst 28,- € im Bundle</p>
               </div>
 
               <div className="space-y-2 md:space-y-3 mb-6 md:mb-8">
-                {["slushmaschine-emit", "hot-dog-waermer-sjen", "popcornmaschine-keno"].map((slug) => {
+                {["zuckerwattemaschine-luna", "hot-dog-waermer-sjen", "popcornmaschine-keno"].map((slug) => {
                   const product = PRODUCTS.find(p => toProductSlug(p.name) === slug);
                   const displayPrice = product?.price.replace("ab ", "");
                   return (
                     <Link key={slug} href={`/produkt/${slug}`} className="block">
                       <div className="flex items-center gap-2.5 md:gap-3 p-2.5 md:p-3 rounded-lg bg-[oklch(0.97_0.012_85)] hover:bg-[oklch(0.93_0.015_85)] transition-colors">
-                        <img
-                          src={product?.image}
-                          alt={product?.name ?? "Produktbild"}
-                          className="h-9 w-9 md:h-10 md:w-10 rounded-md object-cover bg-white"
-                        />
+                        <div className="aspect-[9/16] w-9 md:w-10 shrink-0 overflow-hidden rounded-md bg-white">
+                          <img
+                            src={product?.image}
+                            alt={product?.name ?? "Produktbild"}
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
                         <div className="flex-1">
                           <div className="font-semibold text-foreground text-sm">{product?.name}</div>
                           <div className="text-xs text-muted-foreground">{displayPrice}</div>
@@ -2153,17 +2255,69 @@ export default function Home() {
               </div>
               <button
                 type="button"
-                onClick={() => handleBundleInquiry(["slushmaschine-emit", "hot-dog-waermer-sjen", "popcornmaschine-keno"])}
-                className="w-full btn-gold py-2.5 px-4 rounded-lg text-sm font-bold flex items-center justify-center gap-2"
+                onClick={() => handleBundleInquiry(["zuckerwattemaschine-luna", "hot-dog-waermer-sjen", "popcornmaschine-keno"])}
+                className="w-full md:mt-auto btn-gold py-2.5 px-4 rounded-lg text-sm font-bold flex items-center justify-center gap-2"
               >
                 <WhatsAppIcon />
                 Paket anfragen
               </button>
             </motion.div>
+
+            {/* Individuelles Paket */}
+            <motion.div
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="min-w-full snap-start md:min-w-0 overflow-hidden rounded-2xl border border-border bg-white p-5 md:p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col"
+            >
+              <div className="text-center mb-6">
+                <div className="text-4xl md:text-5xl mb-2 md:mb-3">🎁</div>
+                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-1.5 md:mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  Dein individuelles Paket
+                </h3>
+                <p className="text-muted-foreground text-sm">
+                  Stelle dein Wunschpaket zusammen
+                </p>
+              </div>
+
+              <div className="flex-1 rounded-lg bg-[oklch(0.97_0.012_85)] p-5 text-center mb-6">
+                <div className="text-3xl font-bold mb-3" style={{ color: "oklch(0.75 0.14 80)" }}>
+                  10 % Rabatt
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  Erhalte 10 % Rabatt ab drei beliebigen gebuchten Produkten.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-4 justify-items-center gap-2 mb-6">
+                {PRODUCTS.map((product) => (
+                  <div
+                    key={product.id}
+                    className="aspect-[9/16] w-9 md:w-10 overflow-hidden rounded-md bg-[oklch(0.93_0.015_85)]"
+                    title={product.name}
+                  >
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                onClick={scrollToContact}
+                className="w-full btn-gold py-2.5 px-4 rounded-lg text-sm font-bold"
+              >
+                Produkte auswählen
+              </button>
+            </motion.div>
           </div>
 
           <div className="flex justify-center gap-2 mt-1 md:hidden">
-            {[0, 1, 2].map((index) => (
+            {[0, 1, 2, 3].map((index) => (
               <button
                 key={index}
                 type="button"
@@ -2365,6 +2519,15 @@ export default function Home() {
                                   {`${activeContactBundle.originalPrice},- €`}
                                 </span>
                               </span>
+                            ) : customBundlePricing ? (
+                              <span className="inline-flex flex-wrap items-center gap-1.5">
+                                <span>
+                                  {`${formData.products.length} Produkte ausgewählt · 10 % Rabatt · Gesamt ${effectiveProductsTotal},- €`}
+                                </span>
+                                <span className="text-xs text-muted-foreground line-through">
+                                  {`${customBundlePricing.originalPrice},- €`}
+                                </span>
+                              </span>
                             ) : (
                               `${formData.products.length} ${formData.products.length === 1 ? "Produkt" : "Produkte"} ausgewählt · Gesamt ${selectedProductTotal},- €`
                             )}
@@ -2380,6 +2543,16 @@ export default function Home() {
                             </div>
                             <div className="text-muted-foreground line-through text-xs">
                               Statt {activeContactBundle.originalPrice},- €
+                            </div>
+                          </div>
+                        )}
+                        {customBundlePricing && (
+                          <div className="border-b border-border bg-[oklch(0.97_0.012_85)] px-4 py-2.5 text-sm">
+                            <div className="font-semibold text-foreground">
+                              Dein individuelles Paket: {effectiveProductsTotal},- € (10 % Rabatt)
+                            </div>
+                            <div className="text-muted-foreground line-through text-xs">
+                              Statt {customBundlePricing.originalPrice},- €
                             </div>
                           </div>
                         )}
@@ -2408,10 +2581,41 @@ export default function Home() {
                     </Popover>
                   </div>
 
-                  {(isPhotoMirrorSelected || isDiorSelected) && (
+                  {isAudioGuestbookSelected && (
+                    <fieldset className="rounded-lg border border-border bg-[oklch(0.97_0.006_85)] p-4">
+                      <legend className="px-1 text-sm font-semibold text-foreground">
+                        Farbe des Audio-Gästebuchs *
+                      </legend>
+                      <div className="flex flex-wrap gap-4">
+                        {(["Weiß", "Schwarz"] as const).map((color) => (
+                          <label
+                            key={color}
+                            className="flex items-center gap-2 text-sm text-foreground cursor-pointer"
+                          >
+                            <input
+                              type="radio"
+                              name="audioGuestbookColor"
+                              required
+                              className="h-4 w-4 border-border text-amber-500 focus:ring-amber-300"
+                              checked={formData.audioGuestbookColor === color}
+                              onChange={() =>
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  audioGuestbookColor: color,
+                                }))
+                              }
+                            />
+                            {color}
+                          </label>
+                        ))}
+                      </div>
+                    </fieldset>
+                  )}
+
+                  {(isPhotoMirrorGlowSelected || isPhotoMirrorMiloSelected || isDiorSelected) && (
                     <div className="rounded-lg border border-border bg-[oklch(0.97_0.006_85)] p-4 space-y-2">
                       <p className="text-sm font-semibold text-foreground">Zusatzoptionen</p>
-                      {isPhotoMirrorSelected && (
+                      {isPhotoMirrorGlowSelected && (
                         <label className="flex items-center gap-3 text-sm text-foreground cursor-pointer">
                           <input
                             type="checkbox"
@@ -2428,6 +2632,25 @@ export default function Home() {
                             }
                           />
                           <span>{PHOTO_MIRROR_PRINT_FLATRATE_LABEL}</span>
+                        </label>
+                      )}
+                      {isPhotoMirrorMiloSelected && (
+                        <label className="flex items-center gap-3 text-sm text-foreground cursor-pointer">
+                          <input
+                            type="checkbox"
+                            className="h-4 w-4 rounded border-border text-amber-500 focus:ring-amber-300"
+                            checked={formData.addOns.photoMirrorMiloPrintFlatrate}
+                            onChange={(e) =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                addOns: {
+                                  ...prev.addOns,
+                                  photoMirrorMiloPrintFlatrate: e.target.checked,
+                                },
+                              }))
+                            }
+                          />
+                          <span>{PHOTO_MIRROR_MILO_PRINT_FLATRATE_LABEL}</span>
                         </label>
                       )}
                       {isDiorSelected && (
@@ -2480,7 +2703,10 @@ export default function Home() {
                       <div className="mt-2 rounded-lg bg-[oklch(0.93_0.015_85)] px-4 py-2.5 text-sm font-medium flex items-start gap-2">
                         <span className="text-[oklch(0.58_0.18_145)] mt-0.5">✓</span>
                         <span>
-                          Lieferung möglich – ca. {deliveryInfo.distance} km ·{" "}
+                          Lieferung möglich
+                          {shouldShowDeliveryDistance &&
+                            ` – ca. ${deliveryInfo.distance} km Fahrstrecke`}
+                          {" · "}
                           <strong>{deliveryInfo.cost},- €</strong>{" "}
                           (Abholung in Gaggenau kostenlos)
                         </span>
@@ -2490,7 +2716,7 @@ export default function Home() {
                       <div className="mt-2 rounded-lg bg-amber-50 px-4 py-2.5 text-sm font-medium flex items-start gap-2 text-amber-800">
                         <span className="mt-0.5">⚠️</span>
                         <span>
-                          Leider außerhalb unseres Liefergebiets (max. 100 km ab Gaggenau).{" "}
+                          Leider außerhalb unseres Liefergebiets (max. 100 km Fahrstrecke ab Gaggenau).{" "}
                           Gerne machen wir dir ein individuelles Angebot!
                         </span>
                       </div>
@@ -2504,12 +2730,12 @@ export default function Home() {
                         {selfPickupHint}
                       </p>
                     )}
-                    <label className={`mt-3 flex items-center gap-3 text-sm ${isPhotoMirrorSelected ? "text-muted-foreground cursor-not-allowed" : "text-foreground cursor-pointer"}`}>
+                    <label className={`mt-3 flex items-center gap-3 text-sm ${isPhotoMirrorGlowSelected ? "text-muted-foreground cursor-not-allowed" : "text-foreground cursor-pointer"}`}>
                       <input
                         type="checkbox"
                         className="h-4 w-4 rounded border-border text-amber-500 focus:ring-amber-300"
                         checked={formData.selfPickup}
-                        disabled={isPhotoMirrorSelected}
+                        disabled={isPhotoMirrorGlowSelected}
                         onChange={(e) => {
                           if (e.target.checked) {
                             setDeliveryPlz("");
@@ -2600,7 +2826,7 @@ export default function Home() {
               <div className="order-3 lg:order-2 space-y-3">
                 {([
                   { icon: "⚡", title: "Schnelle Antwort", desc: "Wir melden uns innerhalb von 2 Stunden und sind auch während der gesamten Mietdauer für euch erreichbar." },
-                  { icon: "🚚", title: "Lieferung & Abholung", desc: "Kostenlose Abholung oder bequeme Lieferung im 100-km-Umkreis von Gaggenau." },
+                  { icon: "🚚", title: "Lieferung & Abholung", desc: "Kostenlose Abholung oder bequeme Lieferung bis 100 km Fahrstrecke ab Gaggenau." },
                   { icon: "🎓", title: "Einweisung inklusive", desc: "Alle Geräte sind sofort einsatzbereit – wir erklären alles in wenigen Minuten." },
                   { icon: "💚", title: "Faire Preise", desc: "Transparente Preise ohne versteckte Kosten. Schon ab 29,- € für dein Event." },
                 ]).map((point, i) => (
@@ -2822,8 +3048,8 @@ export default function Home() {
               Eventausstattung im Raum Karlsruhe, Rastatt & Baden-Baden
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-              Wir vermieten Eventausstattung mit Fokus auf die Region Karlsruhe, Rastatt, Baden-Baden und den erweiterten Umkreis.
-              Abholung ist in Gaggenau möglich, auf Wunsch liefern wir zu eurer Location im Umkreis von bis zu 100 km.
+              Wir vermieten Eventausstattung mit Fokus auf die Region Karlsruhe, Rastatt, Baden-Baden und Umgebung.
+              Abholung ist in Gaggenau möglich, auf Wunsch liefern wir zu eurer Location bis zu 100 km Fahrstrecke.
             </p>
 
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 text-left">

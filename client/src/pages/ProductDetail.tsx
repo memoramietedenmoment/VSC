@@ -21,24 +21,23 @@ import { Button } from "@/components/ui/button";
 
 // ─── Produktdaten ─────────────────────────────────────────────────────────────
 
-const PRODUCTS_DETAIL = {
-  "fotospiegel-glow": {
+const GLOW_PRODUCT_DETAILS = {
     id: 1,
     name: "Fotospiegel GLOW",
     emoji: "🪞",
     tagline: "Der moderne Garant für gute Laune und unvergessliche Erinnerungen",
-    price: "299,- €",
+    price: "399,- €",
     images: [
-      "/images/Fotospiegel_Übersichtsseite.png",
-      "/images/Fotospiegel_dekoriert.png",
-      "/images/Fotospiegel_mit_Koffer.png",
+      "/images/Test_Fotospiegel_Übersichtsseite.png",
+      "/images/Fotospiegel_Video.mp4",
+      "/images/Fotospiegel_Toskana.png",
     ],
     description: "Sofortige Schnappschüsse zum Mitnehmen. Der Fotospiegel GLOW ist das Highlight auf jeder Feier – Gäste halten ihre Momente sofort in den Händen und haben eine echte Erinnerung.",
     longDescription: "Mit seiner eleganten Oberfläche und der interaktiven LED-Beleuchtung ist der GLOW nicht nur ein Fotospiegel, sondern ein echtes Statement-Piece. Die Sofortdrucke ermöglichen es deinen Gästen, ihre Fotos direkt mitzunehmen – perfekt für Gästebücher oder als Andenken.",
     specs: [
       { label: "Größe", value: "ca. 180 x 70 cm" },
       { label: "Beleuchtung", value: "Oberlicht und LED-Rahmen, einstellbar per App oder Fernbedienung" },
-      { label: "Drucke", value: "Sofortdruck (10x15 cm), bis zu 700 Stück pro Event" },
+      { label: "Drucke", value: "Sofortdruck (10x15 cm), bis zu 350 Stück pro Event" },
       { label: "Kamera", value: "Professionelle DSLR mit Blitz" },
       { label: "Betrieb", value: "Stromanschluss erforderlich" },
       { label: "Bildschirm", value: "43″ Touch-Monitor" },
@@ -85,20 +84,20 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-      { label: "Mietgebühr (1-tägiges Event)", value: "299,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+150,- €" },
-      { label: "Druckflatrate (bis zu 700 Stück)", value: "+100,- €" },
+      { label: "Mietgebühr", value: "399,- €" },
+      { label: "Druckflatrate (bis zu 350 Stück)", value: "+100,- €" },
+      { label: "Requisiten", value: "kostenlos" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
     ],
     faq: [
       {
         q: "Wie viele Fotos können gemacht werden?",
-        a: "Es gibt keine Begrenzung für die Anzahl der Aufnahmen, aber die Drucke sind auf 700 Stück limitiert. Alle Fotos werden digital gespeichert.",
+        a: "Es gibt keine Begrenzung für die Anzahl der Aufnahmen, aber die Drucke sind auf 350 Stück limitiert. Alle Fotos werden digital gespeichert.",
       },
       {
         q: "Können die Fotos digital gespeichert werden?",
-        a: "Ja, alle Fotos werden digital archiviert und dir nach dem Event per USB oder Cloud-Link zur Verfügung gestellt.",
+        a: "Ja, alle Fotos werden digital archiviert und dir nach dem Event per Cloud-Link zur Verfügung gestellt.",
       },
       {
         q: "Kann man die Drucke individualisieren?",
@@ -108,6 +107,65 @@ const PRODUCTS_DETAIL = {
         q: "Liefert ihr uns den Fotospiegel?",
         a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab. Bitte beachtet: Beim Fotospiegel bieten wir keine Selbstabholung an, da der Aufbau und die Einrichtung durch unser Team erfolgt.",
         },
+      {
+         q: "Können wir das Gerät auch mehrere Tage mieten?",
+        a: "Ja, klar! Bei einer Mietdauer über mehrere Tage berechnen wir den ersten Tag mit der Tagesmiete und jeden darauffolgenden Tag mit 50 % der Tagesmiete.",
+        },
+      {
+        q: "Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
+        a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
+      },
+    ],
+};
+
+const BASE_PRODUCTS_DETAIL = {
+  "fotospiegel-glow": GLOW_PRODUCT_DETAILS,
+  "fotospiegel-milo": {
+    ...GLOW_PRODUCT_DETAILS,
+    id: 4,
+    name: "Fotospiegel MILO",
+    images: ["/images/Test_Fotospiegel_Klein_Übersichtsseite.png", "/images/MILO_Geburtstag.png", "/images/MILO_Firmenfeier.png"],
+    tagline: "Digitale Erinnerungen und Sofortdrucke für unvergessliche Feiern",
+    price: "299,- €",
+    description: "Der Fotospiegel MILO hält die schönsten Momente eurer Feier fest – digital oder direkt ausgedruckt.",
+    longDescription: "Der Fotospiegel MILO sorgt für besondere Erinnerungen auf Hochzeiten, Geburtstagen und Firmenfeiern. Alle Bilder sind digital verfügbar; auf Wunsch können sie direkt vor Ort ausgedruckt werden.",
+    specs: [
+      { label: "Größe", value: "ca. 180 cm" },
+      { label: "Beleuchtung", value: "Oberlicht und LED-Rahmen, einstellbar per App oder Fernbedienung" },
+      { label: "Drucke", value: "Sofortdruck (10x15 cm), bis zu 350 Stück pro Event" },
+      { label: "Kamera", value: "Professionelle DSLR mit Blitz" },
+      { label: "Betrieb", value: "Stromanschluss erforderlich" },
+      { label: "Bildschirm", value: "8″ Touch-Monitor" },
+    ],
+    reviews: [],
+    pricing: [
+      { label: "Mietgebühr", value: "299,- €" },
+      { label: "Druckflatrate (bis zu 350 Stück)", value: "+100,- €" },
+      { label: "Requisiten", value: "kostenlos" },
+      { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
+      { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
+    ],
+    faq: [
+      {
+        q: "Wie viele Fotos können gemacht werden?",
+        a: "Es gibt keine Begrenzung für die Anzahl der Aufnahmen, aber die Drucke sind auf 350 Stück limitiert. Alle Fotos werden digital gespeichert.",
+      },
+      {
+        q: "Können die Fotos digital gespeichert werden?",
+        a: "Ja, alle Fotos werden digital archiviert und dir nach dem Event per Cloud-Link zur Verfügung gestellt.",
+      },
+      {
+        q: "Kann man die Drucke individualisieren?",
+        a: "Ja! Wir können die Ausdrucke mit deinem Namen, Logo oder Motiv bedrucken lassen.",
+      },
+      {
+        q: "Liefert ihr uns den Fotospiegel?",
+        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau und bieten eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab. Alternativ ist beim Fotospiegel MILO eine Selbstabholung möglich.",
+      },
+      {
+        q: "Können wir das Gerät auch mehrere Tage mieten?",
+        a: "Ja, klar! Bei einer Mietdauer über mehrere Tage berechnen wir den ersten Tag mit der Tagesmiete und jeden darauffolgenden Tag mit 50 % der Tagesmiete.",
+      },
       {
         q: "Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
@@ -119,11 +177,11 @@ const PRODUCTS_DETAIL = {
     name: "Audio-Gästebuch VIVI",
     emoji: "📞",
     tagline: "Persönliche Sprachnachrichten statt schriftlicher Einträge",
-    price: "49,- €",
+    price: "79,- €",
     images: [
-      "/images/Audio-Gästebuch_frontal_Produktmaße.png",
-      "/images/Audio_Gästebuch_goldeneHochzeit.png",
-      "/images/Audio-Gästebuch_Polaroid.jpg",
+      "/images/Test_Audio.png",
+      "/images/Audio-Gästebuch_2.png",
+      "/images/Audio-Gästebuch_3.png",
       //"/images/Audio-Gästebuch_Hochzeit.png",
     ],
     description: "Statt Gästebucheinträgen hinterlassen eure Gäste persönliche Sprachnachrichten – Gänsehaut garantiert!",
@@ -162,8 +220,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-      { label: "Mietgebühr (1-tägiges Event)", value: "49,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+25,- €" },
+      { label: "Mietgebühr", value: "79,- €" },
       { label: "Lieferung (deutschlandweit)", value: "+25,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
     ],
@@ -185,6 +242,10 @@ const PRODUCTS_DETAIL = {
         a: "Ja, das Audio-Gästebuch VIVI sowie die Sofortbildkamera DIOR versenden wir deutschlandweit. Für die beiden Produkte berechnen wir je eine Pauschale von 25 Euro für den Hin- und Rückversand.",
       },
       {
+         q: "Können wir das Gerät auch mehrere Tage mieten?",
+        a: "Ja, klar! Bei einer Mietdauer über mehrere Tage berechnen wir den ersten Tag mit der Tagesmiete und jeden darauffolgenden Tag mit 50 % der Tagesmiete.",
+        },
+      {
         q: "Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -197,9 +258,10 @@ const PRODUCTS_DETAIL = {
     tagline: "Echter Retro-Charme und nostalgische Erinnerungen",
     price: "29,- €",
     images: [
-      "/images/Polaroid_blanko.png",
-      "/images/Polaroid_rechts.png",
-      "/images/Polaroid_links.png",
+      "/images/Test_Sofortbildkamera_Übersichtsseite.png",
+      "/images/Sofortbildkamera_2.png",
+      "/images/Sofortbildkamera_3.png",
+      "/images/Sofortbildkamera_4.png",
     ],
     description: "Gäste halten ihre Momente sofort in den Händen – perfekt für Gästebücher und Fotowände.",
     longDescription: "Die Sofortbildkamera DIOR bringt nostalgischen Charme auf dein Event. Mit echten Sofortbildern haben deine Gäste ein echtes, analoges Andenken – perfekt zum Signieren im Gästebuch oder zum Aufhängen an eine Fotowand.",
@@ -226,9 +288,8 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-      { label: "Mietgebühr Einzeln (1-tägiges Event)", value: "29,- €" },
-      { label: "Mietgebühr Dreierpack (1-tägiges Event)", value: "79,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+15,- €" },
+      { label: "Mietgebühr Einzeln", value: "29,- €" },
+      { label: "Mietgebühr Dreierpack", value: "79,- €" },
       { label: "Film 10er Pack (bei Bedarf)", value: "+15,- €" },
       { label: "Lieferung (deutschlandweit)", value: "+25,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
@@ -247,77 +308,11 @@ const PRODUCTS_DETAIL = {
         a: "Ja, die Sofortbildkamera DIOR sowie das Audio-Gästebuch VIVI versenden wir deutschlandweit. Für die beiden Produkte berechnen wir je eine Pauschale von 25 Euro für den Hin- und Rückversand.",
       },
       {
-        q: "Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
-        a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
-      },
-    ],
-  },
-  "slushmaschine-emit": {
-    id: 4,
-    name: "Slushmaschine EMIT",
-    emoji: "🧊",
-    tagline: "Buntes Slush-Eis im Handumdrehen für Kinder und Erwachsene",
-    price: "149,- €",
-    images: [
-      "/images/Slush-Maschine_frontal.png",
-      "/images/Slush_befüllt.png",
-      "/images/Slush_Alkohol.png",
-      "/images/Slush_Aperol.png",
-    ],
-    description: "Fruchtig, eiskalt und ein echter Hingucker. Mit optionalem Erwachsenen-Upgrade!",
-    longDescription: "Die Slushmaschine EMIT ist das perfekte Highlight für Sommer-Events. Bunte, frische Slush-Getränke in verschiedenen Geschmacksrichtungen – und optional auch mit Alkohol für die Erwachsenen. Ein echter Hingucker und bei Gästen jeden Alters beliebt.",
-    specs: [
-      { label: "Kapazität", value: "2x 12 Liter" },
-      { label: "Größe", value: "ca. 80 x 50 x 100 cm" },
-      { label: "Gewicht", value: "ca. 40 kg" },
-      { label: "Betrieb", value: "Stromanschluss erforderlich" },
-      { label: "Geschmacksrichtungen", value: "Erdbeere, Himbeere, Zitrone, Blaubeere, Aperol, Daiquiri und viele mehr" },
-      { label: "Gebrauchsbereit", value: "nach ca. 45-60 Minuten initialer Kühlung" },
-    ],
-    features: [
-      "Hochleistungsmotor",
-      "Mehrere Geschmacksrichtungen",
-      "Optionales Alkohol-Upgrade",
-      "Automatische Kühlung",
-      "Einfache Bedienung",
-      "Nostalgiefaktor garantiert",
-    ],
-    occasions: ["Sommerfest", "Hochzeit", "Kindergeburtstag"],
-    reviews: [
-      {
-        name: "Lena F.",
-        rating: 5,
-        date: "Februar 2026",
-        text: "Wir haben die Slushi-Maschine für unsere Faschingsfeier ausgeliehen und sind absolut begeistert! Die Kommunikation war von Anfang an hervorragend.",
-        event: "Faschingsfeier",
-      },
-    ],
-    pricing: [
-      { label: "Mietgebühr (1-tägiges Event)", value: "149,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+75,- €" },
-      { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
-      { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
-      { label: "Abholung", value: "kostenlos (Gaggenau)" },
-    ],
-    faq: [
-      {
-        q: "Wie viele Gäste können bedient werden?",
-        a: "Mit insgesamt 24 Litern können 50-100 Gäste gut versorgt werden.",
-      },
-      {
-        q: "Ist ein Alkohol-Upgrade möglich?",
-        a: "Ja! Die Slushmaschine funktioniert auch mit Rum, Vodka oder anderen Spirituosen. Gerne beraten wir dich!",
+         q: "Können wir das Gerät auch mehrere Tage mieten?",
+        a: "Ja, klar! Bei einer Mietdauer über mehrere Tage berechnen wir den ersten Tag mit der Tagesmiete und jeden darauffolgenden Tag mit 50 % der Tagesmiete.",
         },
       {
-        q:"Müssen wir das Gerät nach der Nutzung reinigen?",
-        a:"Eine Intensiv-Reinigung ist nicht erforderlich. Wir empfehlen, die Maschine nach der Nutzung mit klarem Wasser durchzuspülen. Eine gründliche Reinigung erfolgt bei uns nach jedem Event. Bei starker Verschmutzung behalten wir uns vor eine Reinigungsgebühr in Höhe von 50,- € zu berechnen.",
-         },
-      {
-        q: "Könnt ihr uns die Slushmaschine auch liefern?",
-        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
-      },
-      {
-        q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
+        q: "Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
     ],
@@ -327,12 +322,11 @@ const PRODUCTS_DETAIL = {
     name: "Karaokemaschine SING",
     emoji: "🎤",
     tagline: "Solo oder Duett singen und aus über 50.000 Songs auswählen",
-    price: "69,- €",
+    price: "99,- €",
     images: [
-      "/images/Karaokemaschine_frontal_Produktmaße.png",
-      "/images/Karaoke_imRaum.png",
-      //"/images/Karaoke_Benutzung.png",
-      "/images/Karaoke_Weihnachtsfeier.jpg",
+      "/images/Test_Karaoke_Übersichtsseite.png",
+      "/images/Karaoke_2.png",
+      "/images/Karaoke_3.png",
     ],
     description: "Solo, im Duett oder als Chor – hier entstehen unvergessliche Momente voller Spaß, Lacher und Applaus.",
     longDescription: "Die Karaokemaschine SING ist der Garant für gute Laune und unvergessliche Momente. Mit einer riesigen Songbibliothek, professionellem Sound und LED-Effekten wird dein Event zur Party-Bühne.",
@@ -385,8 +379,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-      { label: "Mietgebühr (1-tägiges Event)", value: "69,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+35,- €" },
+      { label: "Mietgebühr", value: "99,- €" },
        { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
@@ -409,6 +402,10 @@ const PRODUCTS_DETAIL = {
         a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
       },
       {
+         q: "Können wir das Gerät auch mehrere Tage mieten?",
+        a: "Ja, klar! Bei einer Mietdauer über mehrere Tage berechnen wir den ersten Tag mit der Tagesmiete und jeden darauffolgenden Tag mit 50 % der Tagesmiete.",
+        },
+      {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -419,12 +416,11 @@ const PRODUCTS_DETAIL = {
     name: "Zuckerwattemaschine LUNA",
     emoji: "🍭",
     tagline: "Nostalgischer Jahrmarkt-Flair als süßer Höhepunkt für Kinder und Erwachsene",
-    price: "49,- €",
+    price: "79,- €",
     images: [
-      "/images/Zuckerwattemaschine_frontal_Produktmaße.png",
-      //"/images/Zuckerwatte_Kindergeburtstag.png",
-      "/images/Zuckerwatte_Hochzeit.png",
-      //"/images/Zuckerwatte_Winterfeier.png",
+      "/images/Test_Zuckerwatte_Übersichtsseite.png",
+      "/images/Zuckerwatte_2.png",
+      "/images/Zuckerwatte_3.png",
     ],
     description: "Der Duft, die flauschige Konsistenz, der nostalgische Flair – eure Gäste sind direkt auf dem Jahrmarkt.",
     longDescription: "Die Zuckerwattemaschine LUNA bringt Jahrmarkt-Flair auf dein Event. Mit frisch gemachter, flauschiger Zuckerwatte in verschiedenen Farben und Geschmäckern – ein Hit bei Kindern und Erwachsenen!",
@@ -453,8 +449,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-      { label: "Mietgebühr (1-tägiges Event)", value: "49,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+25,- €" },
+      { label: "Mietgebühr", value: "79,- €" },
       { label: "50 Stäbchen", value: "inklusive" },
       { label: "weitere 50 Stäbchen", value: "+10,- €" },
      { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
@@ -483,6 +478,10 @@ const PRODUCTS_DETAIL = {
         a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
       },
       {
+         q: "Können wir das Gerät auch mehrere Tage mieten?",
+        a: "Ja, klar! Bei einer Mietdauer über mehrere Tage berechnen wir den ersten Tag mit der Tagesmiete und jeden darauffolgenden Tag mit 50 % der Tagesmiete.",
+        },
+      {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -493,11 +492,9 @@ const PRODUCTS_DETAIL = {
     name: "Seifenblasenmaschine LILO",
     emoji: "🫧",
     tagline: "Bring zusätzliche Magie auf deine Tanzfläche",
-    price: "59,- €",
+    price: "99,- €",
     images: [
-      "/images/Seifenblasenmaschine_frontal_Produktmaße.png",
-      //"/images/Seifenblasen_blau.png",
-      "/images/Seifenblasenmaschine_Hochzeit.png",
+      "/images/Test_Seifenblasenmaschine_Übersichtsseite.png",
       "/images/Seifenblasen_Hochzeit_Kuss.png",
     ],
     description: "Bringt Magie in die Luft – romantisch beim Hochzeitstanz oder verspielt im Freien.",
@@ -531,8 +528,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-      { label: "Mietgebühr (1-tägiges Event)", value: "59,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+30,- €" },
+      { label: "Mietgebühr", value: "99,- €" },
       { label: "Nebel- und Seifenblasenflüssigkeit", value: "inklusive" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
@@ -553,6 +549,10 @@ const PRODUCTS_DETAIL = {
         a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
       },
       {
+         q: "Können wir das Gerät auch mehrere Tage mieten?",
+        a: "Ja, klar! Bei einer Mietdauer über mehrere Tage berechnen wir den ersten Tag mit der Tagesmiete und jeden darauffolgenden Tag mit 50 % der Tagesmiete.",
+        },
+      {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -563,12 +563,10 @@ const PRODUCTS_DETAIL = {
     name: "Nebelmaschine MIRA",
     emoji: "☁️",
     tagline: "Verwandele deine Tanzfläche in eine Showbühne",
-    price: "49,- €",
+    price: "89,- €",
     images: [
-      "/images/Nebelmaschine_frontal_Produktmaße.png",
-      "/images/Nebelmaschine_rechts.png",
-      "/images/Nebelmaschine_links.png",
-      "/images/Nebelmaschine_Hochzeit.png",
+      "/images/Test_Nebelmaschine_Übersichtsseite.png",
+      "/images/Nebelmaschine_2.png",
     ],
     description: "Verwandelt die Tanzfläche zur Showbühne – kombinierbar mit Lichteffekten.",
     longDescription: "Die Nebelmaschine MIRA schafft atemberaubende Stimmung auf deiner Party. Mit dichtem, kühlem Nebel und in Kombination mit Lichteffekten wird deine Tanzfläche zur professionellen Showbühne.",
@@ -599,8 +597,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-      { label: "Mietgebühr (1-tägiges Event)", value: "49,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+25,- €" },
+      { label: "Mietgebühr", value: "89,- €" },
       { label: "Nebelflüssigkeit", value: "inklusive" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
@@ -620,71 +617,9 @@ const PRODUCTS_DETAIL = {
         a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
       },
       {
-        q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
-        a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
-      },
-    ],
-  },
-  "musik-box-sunu": {
-    id: 9,
-    name: "Musik-Box SUNU",
-    emoji: "🎵",
-    tagline: "Für dezente Hintergrundmusik und spontane Ansprachen",
-    price: "99,- €",
-    images: [
-      "/images/Musikbox_frontal_Produktmaße.png",
-       "/images/Musikbox_unten.png",
-      "/images/Musikbox_oben.png",
-      //"/images/Musikbox_Szene.png",
-    ],
-    description: "Dezente Hintergrundmusik beim Sektempfang oder Dinner – Mikro für Reden inklusive.",
-    longDescription: "Die Musik-Box SUNU ist das perfekte Audio-System für elegante Events. Mit hochwertigen Lautsprechern für Hintergrundmusik und einem professionellen Mikrofon für Reden und Ansprachen.",
-    specs: [
-      { label: "Art", value: "Mobiles Sound-System" },
-      { label: "Leistung", value: "450W Verstärker" },
-      { label: "Mikrofon", value: "2x Funk & 1x kabelgebunden" },
-      { label: "Konnektivität", value: "Bluetooth, USB, CD" },
-      { label: "Akkuleistung", value: "bis zu 6 Stunden" },
-      { label: "Reichweite", value: "bis zu 50m" },
-    ],
-    features: [
-      "Hochwertiger Sound",
-      "Drahtlose Mikrofone",
-      "Bluetooth-Konnektivität",
-      "Einfache Bedienung",
-      "Leichter Transport durch integrierte Rollen",
-      "Professionelle Qualität",
-    ],
-    occasions: ["Hochzeit", "Firmenfeier", "Jubiläum"],
-    reviews: [
-      {
-        name: "Angelika S.",
-        rating: 5,
-        date: "März 2026",
-        text: "Die Musik-Box war perfekt für unsere Hochzeit. Der Sound war klar und alle Reden waren gut zu hören.",
-        event: "Hochzeit",
-      },
-    ],
-    pricing: [
-      { label: "Mietgebühr (1-tägiges Event)", value: "99,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+50,- €" },
-      { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
-      { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
-      { label: "Abholung", value: "kostenlos (Gaggenau)" },
-    ],
-    faq: [
-      {
-        q: "Kann ich meine Playlist abspielen?",
-        a: "Ja, über Bluetooth oder USB kannst du deine Musik direkt abspielen.",
-      },
-      {
-        q: "Wie weit reicht das Mikrofon?",
-        a: "Das drahtlose Mikrofon hat eine Reichweite von bis zu 50 Metern.",
-         },
-      {
-        q: "Könnt ihr uns die Musik-Box auch liefern?",
-        a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
-      },
+         q: "Können wir das Gerät auch mehrere Tage mieten?",
+        a: "Ja, klar! Bei einer Mietdauer über mehrere Tage berechnen wir den ersten Tag mit der Tagesmiete und jeden darauffolgenden Tag mit 50 % der Tagesmiete.",
+        },
       {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
@@ -696,12 +631,11 @@ const PRODUCTS_DETAIL = {
     name: "Hot-Dog-Wärmer SJEN",
     emoji: "🌭",
     tagline: "Leckere, warme Snacks, die jeden Geschmack treffen",
-    price: "59,- €",
+    price: "99,- €",
     images: [
-      "/images/Hot-Dog-Wärmer_frontal_Produktmaße.png",
-      "/images/Hot_dog_leer.png",
-      "/images/Hot_Dog_links.png",
-      //"/images/Hot_Dog_Hochzeit.png",
+      "/images/Test_Hot-Dog_Übersichtsseite.png",
+      "/images/Hot-Dog_2.png",
+      "/images/Hot-Dog_3.png",
     ],
     description: "Leckere, warme Snacks – heiß, frisch und perfekt für den kleinen Hunger.",
     longDescription: "Der Hot-Dog-Wärmer SJEN ist das perfekte Snack-Highlight für dein Event. Mit professionellem Wärmesystem hältst du Hot Dogs, Würstchen und andere Snacks warm und appetitlich.",
@@ -732,8 +666,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-      { label: "Mietgebühr (1-tägiges Event)", value: "59,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+30,- €" },
+      { label: "Mietgebühr", value: "99,- €" },
       { label: "50 Hot-Dog-Tüten", value: "inklusive" },
       { label: "weitere 50 Hot-Dog-Tüten", value: "+10,- €" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
@@ -758,6 +691,10 @@ const PRODUCTS_DETAIL = {
         a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
       },
       {
+         q: "Können wir das Gerät auch mehrere Tage mieten?",
+        a: "Ja, klar! Bei einer Mietdauer über mehrere Tage berechnen wir den ersten Tag mit der Tagesmiete und jeden darauffolgenden Tag mit 50 % der Tagesmiete.",
+        },
+      {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -770,10 +707,9 @@ const PRODUCTS_DETAIL = {
     tagline: "Der perfekte Snack an der Candybar oder für zwischendurch",
     price: "49,- €",
     images: [
-      "/images/Nacho-Wärmer_frontal_Produktmaße.png",
-       "/images/Nacho-Wärmer_rechts.png",
-      "/images/Nacho_Wärmer_vorne.png",
-      "/images/Nacho_Wärmer_dekoriert.png",
+      "/images/Test_Nacho-Wärmer_Übersichtsseite.png",
+      "/images/Nacho-Wärmer_2.png",
+      "/images/Nacho-Wärmer_3.png",
     ],
     description: "Knusprige Nachos mit warmer, cremiger Käsesoße – echtes Kino-Feeling!",
     longDescription: "Der Nacho-Wärmer SALA ist die perfekte Ergänzung für deine Candy-Bar. Verschiedene Saucen und Toppings sorgen für Abwechslung, während die Nachos knusprig bleiben – ein echter Hit bei Gästen jeden Alters!",
@@ -804,8 +740,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-       { label: "Mietgebühr (1-tägiges Event)", value: "49,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+25,- €" },
+       { label: "Mietgebühr", value: "49,- €" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
       { label: "Lieferung im 100-km-Umkreis", value: "+100,- €" },
       { label: "Abholung", value: "kostenlos (Gaggenau)" },
@@ -828,6 +763,10 @@ const PRODUCTS_DETAIL = {
         a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
       },
       {
+         q: "Können wir das Gerät auch mehrere Tage mieten?",
+        a: "Ja, klar! Bei einer Mietdauer über mehrere Tage berechnen wir den ersten Tag mit der Tagesmiete und jeden darauffolgenden Tag mit 50 % der Tagesmiete.",
+        },
+      {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
@@ -838,12 +777,11 @@ const PRODUCTS_DETAIL = {
     name: "Popcornmaschine KENO",
     emoji: "🍿",
     tagline: "Frisch, knusprig, unwiderstehlich - der perfekte Snack für jede Feier",
-    price: "59,- €",
+    price: "99,- €",
     images: [
-      "/images/Popcornmaschine_frontal_Produktmaße.png",
-     "/images/Popcorn_leer.jpg",
-      "/images/Popcorn_offen.png",
-      "/images/Popcorn_dekoriert.png",
+      "/images/Test_Popcorn_Übersichtsseite.png",
+     "/images/Popcorn_2.png",
+      "/images/Popcorn_3.png",
     ],
     description: "Frisch, knusprig, unwiderstehlich – ein Must-Have für die Candy-Bar!",
     longDescription: "Die Popcornmaschine KENO ist der Klassiker auf jedem Event. Mit professionellem Wärmesystem und großem Behälter – der Duft von warmem Popcorn verbreitet sofort gute Stimmung!",
@@ -888,8 +826,7 @@ const PRODUCTS_DETAIL = {
       },
     ],
     pricing: [
-      { label: "Mietgebühr (1-tägiges Event)", value: "59,- €" },
-      { label: "Jeder weitere Event-Tag", value: "+30,- €" },
+      { label: "Mietgebühr", value: "99,- €" },
       { label: "50 Popcorn-Tüten", value: "inklusive" },
       { label: "weitere 50 Popcorn-Tüten", value: "+10,- €" },
       { label: "Lieferung im 50-km-Umkreis", value: "+50,- €" },
@@ -900,6 +837,10 @@ const PRODUCTS_DETAIL = {
       {
         q: "Wie viel Popcorn kann ich produzieren?",
         a: "Bis zu 6 kg pro Stunde.",
+      },
+      {
+         q: "Was ist im Lieferumfang enthalten?",
+        a: "Das Gerät selbst und 50 Tüten. Weitere Tüten könnt ihr bei uns anfragen. Mais, Popcorn und Öl müsst ihr selbst besorgen. Wir empfehlen Kokos- oder Sonnenblumenöl.",
       },
       {
         q: "Kann ich direkt Zucker dazugeben?",
@@ -914,7 +855,67 @@ const PRODUCTS_DETAIL = {
         a: "Ja, wir fokussieren uns auf die Regionen Karlsruhe, Rastatt, Baden-Baden und Gaggenau, bieten aber eine Lieferung im Umkreis von bis zu 100 km an. Die genauen Kosten hängen von der Entfernung ab.",
       },
       {
+        q: "Können wir das Gerät auch mehrere Tage mieten?",
+        a: "Ja, klar! Bei einer Mietdauer über mehrere Tage berechnen wir den ersten Tag mit der Tagesmiete und jeden darauffolgenden Tag mit 50 % der Tagesmiete.",
+        },
+      {
         q:"Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
+        a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
+      },
+    ],
+  },
+};
+
+const PRODUCTS_DETAIL = {
+  ...BASE_PRODUCTS_DETAIL,
+  "video-gaestebuch-vimo": {
+    ...BASE_PRODUCTS_DETAIL["audio-gaestebuch-vivi"],
+    id: 13,
+    name: "Video-Gästebuch VIMO",
+    tagline: "Persönliche Videobotschaften für unvergessliche Erinnerungen",
+    price: "139,- €",
+    images: ["/images/Test_Videogästebuch_Übersichtsseite.png"],
+    description: "Mit dem Video-Gästebuch VIMO halten eure Gäste persönliche Glückwünsche und Erinnerungen als Videobotschaft fest.",
+    longDescription: "Das Video-Gästebuch VIMO macht aus persönlichen Glückwünschen lebendige Erinnerungen. Eure Gäste nehmen Videobotschaften auf, die ihr euch auch nach der Feier immer wieder ansehen könnt.",
+    specs: [
+      { label: "Erinnerungsformat", value: "Persönliche Videobotschaften" },
+      { label: "Bereitstellung", value: "Digitale Videodateien" },
+      { label: "Mikrofon", value: "Hochwertiges Kondensatormikrofon" },
+      { label: "Aufnahmegerät", value: "Digitales Rekorder-System" },
+      { label: "Speicherung", value: "SD-Karte (bis zu 40h Aufnahmezeit)" },
+      { label: "Betrieb", value: "Akkubetrieb (bis zu 20h)" },
+    ],
+    features: [
+      "Persönliche Erinnerungen mit Bild und Ton",
+      "Einfache Bedienung",
+      "Digitale Archivierung",
+      "Individuelle Glückwünsche und Anekdoten",
+    ],
+    reviews: [],
+    pricing: [
+      { label: "Mietgebühr", value: "139,- €" },
+      { label: "Lieferung (deutschlandweit)", value: "+25,- €" },
+      { label: "Abholung", value: "kostenlos (Gaggenau)" },
+    ],
+    faq: [
+      {
+        q: "Was können Gäste mit dem Video-Gästebuch aufnehmen?",
+        a: "Eure Gäste können persönliche Glückwünsche, Erinnerungen und Anekdoten als Videobotschaften festhalten.",
+      },
+      {
+        q: "Wie erhalte ich die Videobotschaften?",
+        a: "Die aufgenommenen Videobotschaften werden euch nach eurem Event digital zur Verfügung gestellt.",
+      },
+      {
+        q: "Könnt ihr uns das Video-Gästebuch auch zuschicken?",
+        a: "Ja, wir versenden das Video-Gästebuch deutschlandweit. Für Hin- und Rückversand berechnen wir eine Pauschale von 25 Euro.",
+      },
+      {
+         q: "Können wir das Gerät auch mehrere Tage mieten?",
+        a: "Ja, klar! Bei einer Mietdauer über mehrere Tage berechnen wir den ersten Tag mit der Tagesmiete und jeden darauffolgenden Tag mit 50 % der Tagesmiete.",
+        },
+      {
+        q: "Kommt auf eure Preise noch die Mehrwertsteuer drauf?",
         a: "Wir sind ein Kleinunternehmen im Sinne von § 19 UStG. Das bedeutet: Wir berechnen keine Umsatzsteuer, da wir von der sogenannten Kleinunternehmerregelung Gebrauch machen.",
       },
     ],
@@ -925,18 +926,40 @@ const LEGACY_SLUG_REDIRECTS: Record<string, string> = {
   "audio-gstebuch-vivi": "audio-gaestebuch-vivi",
   "hot-dog-wrmer-sjen": "hot-dog-waermer-sjen",
   "nacho-wrmer-sala": "nacho-waermer-sala",
+  "slushmaschine-emit": "fotospiegel-milo",
 };
 
 type ProductDetailData = (typeof PRODUCTS_DETAIL)[keyof typeof PRODUCTS_DETAIL];
 
+const PRODUCT_OVERVIEW_IMAGES: Record<string, string> = {
+  "fotospiegel-glow": "/images/Test_Fotospiegel_Übersichtsseite.png",
+  "fotospiegel-milo": "/images/Test_Fotospiegel_Klein_Übersichtsseite.png",
+  "video-gaestebuch-vimo": "/images/Test_Videogästebuch_Übersichtsseite.png",
+  "audio-gaestebuch-vivi": "/images/Test_Audio.png",
+  "sofortbildkamera-dior": "/images/Test_Sofortbildkamera_Übersichtsseite.png",
+  "karaokemaschine-sing": "/images/Test_Karaoke_Übersichtsseite.png",
+  "popcornmaschine-keno": "/images/Test_Popcorn_Übersichtsseite.png",
+  "zuckerwattemaschine-luna": "/images/Test_Zuckerwatte_Übersichtsseite.png",
+  "hot-dog-waermer-sjen": "/images/Test_Hot-Dog_Übersichtsseite.png",
+  "nacho-waermer-sala": "/images/Test_Nacho-Wärmer_Übersichtsseite.png",
+  "seifenblasenmaschine-lilo": "/images/Test_Seifenblasenmaschine_Übersichtsseite.png",
+  "nebelmaschine-mira": "/images/Test_Nebelmaschine_Übersichtsseite.png",
+};
+
+function isVideoAsset(asset: string) {
+  return /\.(mp4|webm|ogg)(?:$|[?#])/i.test(asset);
+}
+
 function buildProductStructuredData(product: ProductDetailData, slug: string) {
   const canonicalUrl = `${SITE_URL}/produkt/${slug}`;
-  const imageUrls = product.images.map((image) => toAbsoluteUrl(image));
+  const imageUrls = product.images
+    .filter((image) => !isVideoAsset(image))
+    .map((image) => toAbsoluteUrl(image));
   const numericPrice = extractNumericPrice(product.price);
   const reviewCount = product.reviews.length;
   const ratingValue = reviewCount > 0
     ? (product.reviews.reduce((sum, review) => sum + review.rating, 0) / reviewCount).toFixed(1)
-    : "5.0";
+    : null;
 
   return {
     "@context": "https://schema.org",
@@ -967,13 +990,17 @@ function buildProductStructuredData(product: ProductDetailData, slug: string) {
             url: SITE_URL,
           },
         },
-        aggregateRating: {
-          "@type": "AggregateRating",
-          ratingValue,
-          reviewCount: String(reviewCount),
-          bestRating: "5",
-          worstRating: "1",
-        },
+        ...(ratingValue
+          ? {
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue,
+                reviewCount: String(reviewCount),
+                bestRating: "5",
+                worstRating: "1",
+              },
+            }
+          : {}),
         review: product.reviews.map((review) => ({
           "@type": "Review",
           reviewRating: {
@@ -1094,6 +1121,10 @@ export default function ProductDetail() {
     window.location.replace(`/produkt/${LEGACY_SLUG_REDIRECTS[slug]}`);
     return null;
   }
+  if (slug === "musik-box-sunu") {
+    window.location.replace("/");
+    return null;
+  }
   if (!product) {
     return (
       <div className="min-h-[100svh] md:min-h-screen flex items-center justify-center bg-background">
@@ -1172,9 +1203,11 @@ export default function ProductDetail() {
   const canonicalUrl = `${SITE_URL}/produkt/${slug}`;
   const seoTitle = `${product.name} mieten in Karlsruhe | memora`;
   const seoDescription = `${product.name} ab ${product.price.replace("ab ", "")} fuer Hochzeiten, Geburtstage und Firmenfeiern in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten. ${product.description}`;
-  const seoImage = product.images[0] ? toAbsoluteUrl(product.images[0]) : DEFAULT_OG_IMAGE;
+  const seoImageAsset = product.images.find((image) => !isVideoAsset(image));
+  const seoImage = seoImageAsset ? toAbsoluteUrl(seoImageAsset) : DEFAULT_OG_IMAGE;
   const structuredData = buildProductStructuredData(product, slug);
-  const isFotospiegelGlow = slug === "fotospiegel-glow";
+  const isFotospiegel = slug === "fotospiegel-glow" || slug === "fotospiegel-milo";
+  const isFotospiegelMilo = slug === "fotospiegel-milo";
   const isSofortbildkameraDior = slug === "sofortbildkamera-dior";
 
   return (
@@ -1295,21 +1328,35 @@ export default function ProductDetail() {
             <motion.div
               initial={{ opacity: 0, x: -32 }}
               animate={{ opacity: 1, x: 0 }}
-              className="relative"
+              className="relative lg:mx-auto lg:w-1/2"
             >
               <div
-                className="relative overflow-hidden rounded-2xl shadow-lg"
+                className="relative aspect-[9/16] overflow-hidden rounded-2xl bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.88_0.02_85)] shadow-lg"
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
               >
                 {product.images && product.images.length > 0 ? (
                   <>
-                    <img
-                      src={product.images[currentImageIndex]}
-                      alt={`${product.name} - Bild ${currentImageIndex + 1}`}
-                      className="w-full h-auto object-contain"
-                    />
+                    {isVideoAsset(product.images[currentImageIndex]) ? (
+                      <video
+                        src={product.images[currentImageIndex]}
+                        autoPlay
+                        controls
+                        muted
+                        playsInline
+                        preload="metadata"
+                        poster={seoImageAsset}
+                        aria-label={`${product.name} - Video ${currentImageIndex + 1}`}
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                    ) : (
+                      <img
+                        src={product.images[currentImageIndex]}
+                        alt={`${product.name} - Bild ${currentImageIndex + 1}`}
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                    )}
 
                     {/* Navigation Arrows */}
                     {product.images.length > 1 && (
@@ -1354,7 +1401,7 @@ export default function ProductDetail() {
                     )}
                   </>
                 ) : (
-                  <div className="w-full h-96 bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.88_0.02_85)] rounded-2xl flex items-center justify-center text-9xl">
+                  <div className="absolute inset-0 flex items-center justify-center text-9xl">
                     {product.emoji}
                   </div>
                 )}
@@ -1372,23 +1419,25 @@ export default function ProductDetail() {
               <p className="text-lg text-[oklch(0.75_0.14_80)] italic mb-4">{product.tagline}</p>
 
               {/* Rating */}
-              <div className="flex items-center gap-3 mb-6">
-                <StarRating count={5} />
-                <span className="text-sm text-muted-foreground">
-                  {product.reviews.length} Bewertungen · 5.0 Sterne
-                </span>
-              </div>
+              {product.reviews.length > 0 && (
+                <div className="flex items-center gap-3 mb-6">
+                  <StarRating count={5} />
+                  <span className="text-sm text-muted-foreground">
+                    {product.reviews.length} Bewertungen · 5.0 Sterne
+                  </span>
+                </div>
+              )}
 
               {/* Price */}
-              {isFotospiegelGlow ? (
+              {isFotospiegel ? (
                 <div className="bg-[oklch(0.32_0.07_155)] text-white rounded-xl px-6 py-5 mb-6">
                   <div className="divide-y divide-white/20 rounded-lg border border-white/20 overflow-hidden bg-white/5">
                     <div className="flex items-start justify-between px-4 py-2.5">
-                      <span className="shrink-0 pr-4 text-left text-2xl font-bold leading-none">299,- €</span>
+                      <span className="shrink-0 pr-4 text-left text-2xl font-bold leading-none">{isFotospiegelMilo ? "299,- €" : "399,- €"}</span>
                       <span className="flex-1 text-right text-sm font-medium text-white/85">Alle Bilder digital</span>
                     </div>
                     <div className="flex items-start justify-between px-4 py-2.5">
-                      <span className="shrink-0 pr-4 text-left text-2xl font-bold leading-none">399,- €</span>
+                      <span className="shrink-0 pr-4 text-left text-2xl font-bold leading-none">{isFotospiegelMilo ? "399,- €" : "499,- €"}</span>
                       <span className="flex-1 text-right text-sm font-medium text-white/85">Alle Bilder digital und ausgedruckt</span>
                     </div>
                   </div>
@@ -1536,6 +1585,7 @@ export default function ProductDetail() {
       {/* ═══════════════════════════════════════════════════
           KUNDENBEWERTUNGEN
       ═══════════════════════════════════════════════════ */}
+      {product.reviews.length > 0 && (
       <section className="py-16 bg-background">
         <div className="container max-w-4xl">
           <motion.div
@@ -1574,6 +1624,7 @@ export default function ProductDetail() {
           </motion.div>
         </div>
       </section>
+      )}
 
       {/* ═══════════════════════════════════════════════════
           FAQ
@@ -1649,7 +1700,7 @@ export default function ProductDetail() {
               </h2>
             </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-6">
               {PRODUCT_COMBINATIONS[slug as keyof typeof PRODUCT_COMBINATIONS]?.related.map((relatedSlug, idx) => {
                 const relatedProduct = PRODUCTS_DETAIL[relatedSlug as keyof typeof PRODUCTS_DETAIL];
                 if (!relatedProduct) return null;
@@ -1664,12 +1715,12 @@ export default function ProductDetail() {
                       className="group cursor-pointer rounded-xl overflow-hidden bg-white border border-border hover:shadow-lg transition-shadow"
                     >
                       {/* Product Image */}
-                      <div className="relative h-40 bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.88_0.02_85)] overflow-hidden flex items-center justify-center">
-                        {relatedProduct.images?.[0] ? (
+                      <div className="relative aspect-[9/16] bg-gradient-to-br from-[oklch(0.93_0.015_85)] to-[oklch(0.88_0.02_85)] overflow-hidden">
+                        {PRODUCT_OVERVIEW_IMAGES[relatedSlug] ? (
                           <img
-                            src={relatedProduct.images[0]}
+                            src={PRODUCT_OVERVIEW_IMAGES[relatedSlug]}
                             alt={`${relatedProduct.name} - zu ${product.name} kombinieren - Eventausstattung`}
-                            className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                           />
                         ) : (
                           <div className="text-5xl">{relatedProduct.emoji}</div>
@@ -1679,12 +1730,18 @@ export default function ProductDetail() {
                       {/* Product Info */}
                       <div className="p-4">
                         <h3 className="font-bold text-foreground mb-1 group-hover:text-[oklch(0.32_0.07_155)] transition-colors">
-                          {relatedProduct.name}
+                          {relatedProduct.name === "Fotospiegel GLOW" ||
+                          relatedProduct.name === "Fotospiegel MILO" ? (
+                            <>
+                              Fotospiegel
+                              <br />
+                              {relatedProduct.name.endsWith("MILO") ? "MILO" : "GLOW"}
+                            </>
+                          ) : (
+                            relatedProduct.name
+                          )}
                         </h3>
                         <p className="text-sm text-muted-foreground mb-3">{relatedProduct.price}</p>
-                        <p className="text-xs text-muted-foreground line-clamp-2 mb-4">
-                          {relatedProduct.description}
-                        </p>
                         <span className="w-full text-sm btn-green py-2 rounded-lg font-semibold group-hover:scale-[1.02] transition-transform flex items-center justify-center">
                           Zum Produkt
                         </span>

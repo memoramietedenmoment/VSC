@@ -1,5 +1,6 @@
 const SPECIAL_DELIVERY_PRODUCT_NAMES = new Set([
   "Audio-Gästebuch VIVI",
+  "Video-Gästebuch VIMO",
   "Sofortbildkamera DIOR",
 ]);
 

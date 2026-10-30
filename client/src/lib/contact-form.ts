@@ -13,5 +13,5 @@ export function getSelfPickupHint(isPhotoMirrorSelected: boolean): string | null
     return null;
   }
 
-  return "Beim Fotospiegel ist keine Selbstabholung möglich.";
+  return "Beim Fotospiegel GLOW ist keine Selbstabholung möglich.";
 }

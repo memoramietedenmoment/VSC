@@ -10,110 +10,98 @@ const PRODUCTS = [
   {
     slug: "fotospiegel-glow",
     name: "Fotospiegel GLOW",
-    price: "299",
+    price: "399",
     description:
-      "Fotospiegel GLOW ab 299,- EUR fuer Hochzeiten, Geburtstage und Firmenfeiern in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
-    image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/fotospiegel-glow-neu-mEWnc6uokeNiC4Qd7MzeJ3.webp",
+      "Fotospiegel GLOW für Hochzeiten, Geburtstage und Firmenfeiern ab 399 € in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
+    image: "/images/Test_Fotospiegel_Übersichtsseite.png",
+  },
+  {
+    slug: "video-gaestebuch-vimo",
+    name: "Video-Gästebuch VIMO",
+    price: "139",
+    description:
+      "Video-Gästebuch VIMO ab 139 € für persönliche Videobotschaften bei Hochzeiten und Feiern in Karlsruhe, Rastatt und Baden-Baden mieten.",
+    image: "/images/Test_Videogästebuch_Übersichtsseite.png",
   },
   {
     slug: "audio-gaestebuch-vivi",
-    name: "Audio-Gaestebuch VIVI",
-    price: "49",
+    name: "Audio-Gästebuch VIVI",
+    price: "79",
     description:
-      "Audio-Gaestebuch VIVI ab 49,- EUR fuer Hochzeiten und Events in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
-    image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/audio-gaestebuch-vivi-8TDr2DteLoHaGVv5GwKgqm.webp",
+      "Audio-Gästebuch VIVI ab 79 € für persönliche Sprachnachrichten auf Hochzeiten und Feiern in Karlsruhe, Rastatt und Baden-Baden mieten.",
+    image: "/images/Test_Audio.png",
   },
   {
     slug: "sofortbildkamera-dior",
     name: "Sofortbildkamera DIOR",
     price: "29",
     description:
-      "Sofortbildkamera DIOR ab 29,- EUR fuer Hochzeiten, Geburtstage und Partys in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
-    image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/polaroidkamera-dior-mZPP2JPUnM27FCH5g72tbZ.webp",
+      "Sofortbildkamera DIOR ab 29 € für Hochzeiten, Geburtstage und Partys mieten. Abholung in Gaggenau und Lieferung im Umkreis möglich.",
+    image: "/images/Test_Sofortbildkamera_Übersichtsseite.png",
   },
   {
-    slug: "slushmaschine-emit",
-    name: "Slushmaschine EMIT",
-    price: "149",
+    slug: "fotospiegel-milo",
+    name: "Fotospiegel MILO",
+    price: "299",
     description:
-      "Slushmaschine EMIT ab 149,- EUR fuer Sommerpartys und Events in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
-    image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/slushmaschine-emit-HuhgPzCXyq2oCRg9XN26nA.webp",
+      "Fotospiegel MILO ab 299 € für Hochzeiten, Geburtstage und Firmenfeiern in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
+    image: "/images/Test_Fotospiegel_Klein_Übersichtsseite.png",
   },
   {
     slug: "karaokemaschine-sing",
     name: "Karaokemaschine SING",
-    price: "69",
+    price: "99",
     description:
-      "Karaokemaschine SING ab 69,- EUR fuer Geburtstage, Firmenfeiern und Partys in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
-    image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/karaokemaschine-sing-E68YRAvtn3s3erpgQufsH5.webp",
+      "Karaokemaschine SING ab 99 € für Geburtstage, Firmenfeiern und Partys in Karlsruhe, Rastatt und Baden-Baden mieten.",
+    image: "/images/Test_Karaoke_Übersichtsseite.png",
   },
   {
     slug: "zuckerwattemaschine-luna",
     name: "Zuckerwattemaschine LUNA",
-    price: "49",
+    price: "79",
     description:
-      "Zuckerwattemaschine LUNA ab 49,- EUR fuer Kindergeburtstage und Feiern in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
-    image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/zuckerwattemaschine-luna-YssUQSBqzSfkyTrshDaWmk.webp",
+      "Zuckerwattemaschine LUNA ab 79 € für Kindergeburtstage und Feiern in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
+    image: "/images/Test_Zuckerwatte_Übersichtsseite.png",
   },
   {
     slug: "seifenblasenmaschine-lilo",
     name: "Seifenblasenmaschine LILO",
-    price: "59",
+    price: "99",
     description:
-      "Seifenblasenmaschine LILO ab 59,- EUR fuer Hochzeiten und Events in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
-    image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/seifenblasenmaschine-lilo-o6z2zHGSXkLJAPjW43bzS5.webp",
+      "Seifenblasenmaschine LILO ab 99 € für Hochzeitstanz und Feiern in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
+    image: "/images/Test_Seifenblasenmaschine_Übersichtsseite.png",
   },
   {
     slug: "nebelmaschine-mira",
     name: "Nebelmaschine MIRA",
-    price: "49",
+    price: "89",
     description:
-      "Nebelmaschine MIRA ab 49,- EUR fuer Partys und Events in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
-    image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/nebelmaschine-mira-DNAQuYqcf66FgucyiTU5iB.webp",
-  },
-  {
-    slug: "musik-box-inkl-mikro-sunu",
-    name: "Musik-Box inkl. Mikro SUNU",
-    price: "99",
-    description:
-      "Musik-Box inkl. Mikro SUNU ab 99,- EUR fuer Hochzeiten und Firmenfeiern in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
-    image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/musikbox-sunu-YzchpMLmbyfqh4DufPyvkD.webp",
+      "Nebelmaschine MIRA ab 89 € für Partys und Events in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
+    image: "/images/Test_Nebelmaschine_Übersichtsseite.png",
   },
   {
     slug: "hot-dog-waermer-sjen",
-    name: "Hot-Dog-Waermer SJEN",
-    price: "59",
+    name: "Hot-Dog-Wärmer SJEN",
+    price: "99",
     description:
-      "Hot-Dog-Waermer SJEN ab 59,- EUR fuer Feiern und Firmenevents in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
-    image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/hotdogwarmer-sjen-4DJ6cgoBWB5cKTqHNYryL3.webp",
+      "Hot-Dog-Wärmer SJEN ab 99 € für Feiern und Firmenevents in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
+    image: "/images/Test_Hot-Dog_Übersichtsseite.png",
   },
   {
     slug: "nacho-waermer-sala",
-    name: "Nacho-Waermer SALA",
+    name: "Nacho-Wärmer SALA",
     price: "49",
     description:
-      "Nacho-Waermer SALA ab 49,- EUR fuer Partys und Veranstaltungen in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
-    image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/nachowarmer-sala-65QjBzSrDUQNoGexkDjxQr.webp",
+      "Nacho-Wärmer SALA ab 49 € für Partys und Veranstaltungen in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
+    image: "/images/Test_Nacho-Wärmer_Übersichtsseite.png",
   },
   {
     slug: "popcornmaschine-keno",
     name: "Popcornmaschine KENO",
-    price: "59",
+    price: "99",
     description:
-      "Popcornmaschine KENO ab 59,- EUR fuer Feiern und Events in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
-    image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/popcornmaschine-keno-CFunR82z9YowPtJfffpUAz.webp",
+      "Popcornmaschine KENO ab 99 € für Feiern und Events in Karlsruhe, Rastatt, Baden-Baden und Gaggenau mieten.",
+    image: "/images/Test_Popcorn_Übersichtsseite.png",
   },
 ];
 
@@ -121,6 +109,7 @@ const LEGACY_SLUG_REDIRECTS = {
   "audio-gstebuch-vivi": "audio-gaestebuch-vivi",
   "hot-dog-wrmer-sjen": "hot-dog-waermer-sjen",
   "nacho-wrmer-sala": "nacho-waermer-sala",
+  "slushmaschine-emit": "fotospiegel-milo",
 };
 
 const distPublicPath = path.resolve(process.cwd(), "dist", "public");
@@ -139,6 +128,10 @@ function escapeHtml(value) {
     .replace(/>/g, "&gt;")
     .replace(/\"/g, "&quot;")
     .replace(/'/g, "&#39;");
+}
+
+function toAbsoluteUrl(url) {
+  return new URL(url, SITE_URL).href;
 }
 
 function upsertMeta(html, attribute, key, content) {
@@ -193,7 +186,7 @@ function buildProductJsonLd(product, canonicalUrl) {
         "@type": "Product",
         name: product.name,
         description: product.description,
-        image: [product.image || DEFAULT_OG_IMAGE],
+        image: [toAbsoluteUrl(product.image || DEFAULT_OG_IMAGE)],
         sku: product.slug,
         brand: {
           "@type": "Brand",
@@ -237,7 +230,7 @@ function buildProductHtml(product) {
   const canonicalUrl = `${SITE_URL}/produkt/${product.slug}`;
   const title = `${product.name} mieten in Karlsruhe | memora`;
   const description = product.description;
-  const image = product.image || DEFAULT_OG_IMAGE;
+  const image = toAbsoluteUrl(product.image || DEFAULT_OG_IMAGE);
 
   let html = baseHtml;
   html = upsertTitle(html, title);

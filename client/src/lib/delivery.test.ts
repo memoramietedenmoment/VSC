@@ -4,9 +4,10 @@ import { getDeliveryCostForSelection } from "./delivery";
 describe("getDeliveryCostForSelection", () => {
   it("returns 25 euro for a single special device", () => {
     expect(getDeliveryCostForSelection(["Audio-Gästebuch VIVI"])).toBe(25);
+    expect(getDeliveryCostForSelection(["Video-Gästebuch VIMO"])).toBe(25);
   });
 
-  it("returns 50 euro when both special devices are selected", () => {
+  it("returns 50 euro when multiple special devices are selected", () => {
     expect(
       getDeliveryCostForSelection(["Audio-Gästebuch VIVI", "Sofortbildkamera DIOR"])
     ).toBe(50);
