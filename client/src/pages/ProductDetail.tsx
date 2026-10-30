@@ -31,6 +31,7 @@ const GLOW_PRODUCT_DETAILS = {
       "/images/Test_Fotospiegel_Übersichtsseite.png",
       "/images/Fotospiegel_Video.mp4",
       "/images/Fotospiegel_Toskana.png",
+      "/images/GLOW_Dilger.mp4",
     ],
     description: "Sofortige Schnappschüsse zum Mitnehmen. Der Fotospiegel GLOW ist das Highlight auf jeder Feier – Gäste halten ihre Momente sofort in den Händen und haben eine echte Erinnerung.",
     longDescription: "Mit seiner eleganten Oberfläche und der interaktiven LED-Beleuchtung ist der GLOW nicht nur ein Fotospiegel, sondern ein echtes Statement-Piece. Die Sofortdrucke ermöglichen es deinen Gästen, ihre Fotos direkt mitzunehmen – perfekt für Gästebücher oder als Andenken.",
@@ -880,7 +881,7 @@ const PRODUCTS_DETAIL = {
     specs: [
       { label: "Erinnerungsformat", value: "Persönliche Videobotschaften" },
       { label: "Bereitstellung", value: "Digitale Videodateien" },
-      { label: "Mikrofon", value: "Hochwertiges Kondensatormikrofon" },
+      { label: "Mikrofon", value: "Kondensatormikrofon" },
       { label: "Aufnahmegerät", value: "Digitales Rekorder-System" },
       { label: "Speicherung", value: "SD-Karte (bis zu 40h Aufnahmezeit)" },
       { label: "Betrieb", value: "Akkubetrieb (bis zu 20h)" },
@@ -1357,6 +1358,15 @@ export default function ProductDetail() {
                         className="absolute inset-0 h-full w-full object-cover"
                       />
                     )}
+
+                    {(isFotospiegel ||
+                      product.images[currentImageIndex] === "/images/Zuckerwatte_3.png" ||
+                      product.images[currentImageIndex] === "/images/Popcorn_3.png") &&
+                      !isVideoAsset(product.images[currentImageIndex]) && (
+                        <span className="absolute bottom-4 right-4 rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-[oklch(0.32_0.07_155)] shadow-md">
+                          KI-unterstützt
+                        </span>
+                      )}
 
                     {/* Navigation Arrows */}
                     {product.images.length > 1 && (
