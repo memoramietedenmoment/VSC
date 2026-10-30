@@ -37,7 +37,7 @@ function SiteNav() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-[oklch(0.22_0.06_155)] shadow-lg">
       <div className="container relative flex items-center h-16">
         <Link href="/" className="flex items-center gap-2 group">
-          <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663559905199/naWukJUn4HFLcrakq5tncW/memora_Logo_9da7fd54.png" alt="memora Logo" className="h-10 w-auto filter invert" />
+          <img src="/images/memora-logo_freigestellt.png" alt="memora Logo" className="h-10 w-auto filter invert" />
         </Link>
         <div className="md:hidden absolute right-4">
           <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
