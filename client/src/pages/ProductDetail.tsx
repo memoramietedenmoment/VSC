@@ -16,6 +16,10 @@ import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL, extractNumericPrice, toAbsoluteU
 import { Link, useLocation, useRoute } from "wouter";
 import { ChevronLeft, ChevronRight, Check, AlertCircle, MenuIcon, Instagram } from "lucide-react";
 import { PRODUCT_COMBINATIONS } from "@/lib/product-combinations";
+import {
+  BOOKING_PROMOTION_END_DATE,
+  isBookingPromotionActive,
+} from "@/lib/booking-promotion";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 
@@ -1210,6 +1214,7 @@ export default function ProductDetail() {
   const isFotospiegel = slug === "fotospiegel-glow" || slug === "fotospiegel-milo";
   const isFotospiegelMilo = slug === "fotospiegel-milo";
   const isSofortbildkameraDior = slug === "sofortbildkamera-dior";
+  const bookingPromotionActive = isBookingPromotionActive();
 
   return (
     <div className="min-h-[100svh] md:min-h-screen bg-background overflow-x-hidden pb-20 md:pb-0">
@@ -1472,6 +1477,11 @@ export default function ProductDetail() {
                   <div className="text-3xl font-bold mb-3">{product.price}</div>
                   <p className="text-sm text-white/80">zzgl. Lieferung (Abholung kostenlos)</p>
                 </div>
+              )}
+              {bookingPromotionActive && (
+                <p className="mb-6 -mt-3 rounded-lg border border-[oklch(0.75_0.14_80/0.6)] bg-[oklch(0.97_0.012_85)] px-4 py-3 text-sm text-foreground">
+                  <strong>10 % Rabatt auf deine gesamte Buchung</strong> – Mietpreise und Lieferung, bei Buchung bis {BOOKING_PROMOTION_END_DATE}. Auch für Events 2027.
+                </p>
               )}
 
               {/* Occasions */}

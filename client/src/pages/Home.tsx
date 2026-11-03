@@ -38,6 +38,12 @@ import {
   getCustomBundlePricing,
 } from "@/lib/contact-bundles";
 import { getSelfPickupHint, isDeliveryPlzValid } from "@/lib/contact-form";
+import {
+  BOOKING_PROMOTION_END_DATE,
+  calculateBookingPromotion,
+  formatPromotionPrice,
+  isBookingPromotionActive,
+} from "@/lib/booking-promotion";
 import { Link } from "wouter";
 
 // ─── Daten ───────────────────────────────────────────────────────────────────
@@ -819,6 +825,27 @@ export default function Home() {
   const effectiveProductsTotal = activeContactBundle
     ? activeContactBundle.discountedPrice + extraProductsTotal
     : customBundlePricing?.discountedPrice ?? selectedProductTotal;
+  const selectedProductNames = formData.products
+    .map((value) => {
+      const product = PRODUCTS.find((entry) => value.startsWith(`${entry.name} (`));
+      return product ? product.name : null;
+    })
+    .filter((name): name is string => Boolean(name));
+  const specialDeliveryCost = getDeliveryCostForSelection(selectedProductNames);
+  const deliveryCostForTotal = formData.selfPickup
+    ? 0
+    : deliveryInfo.status === "done" && deliveryInfo.cost !== null
+      ? deliveryInfo.cost
+      : specialDeliveryCost;
+  const bookingSubtotal =
+    deliveryCostForTotal !== null
+      ? effectiveProductsTotal + deliveryCostForTotal
+      : null;
+  const bookingPromotionActive = isBookingPromotionActive();
+  const bookingPromotion =
+    bookingPromotionActive && bookingSubtotal !== null
+      ? calculateBookingPromotion(bookingSubtotal)
+      : null;
   const shouldAutoSelectPhotoMirrorGlowAddOn =
     activeContactBundle?.productSlugs.includes("fotospiegel-glow") ?? false;
   const shouldAutoSelectPhotoMirrorMiloAddOn =
@@ -1329,31 +1356,41 @@ export default function Home() {
       ? activeContactBundle.discountedPrice + extraProductsTotal
       : customBundlePricing?.discountedPrice ?? selectedProductTotal;
 
-    const selectedProductNames = formData.products
-      .map((value) => {
-        const product = PRODUCTS.find((entry) => value.startsWith(`${entry.name} (`));
-        return product ? product.name : null;
-      })
-      .filter((name): name is string => Boolean(name));
-
-    const specialDeliveryCost = getDeliveryCostForSelection(selectedProductNames);
-    const deliveryCostForTotal =
-      deliveryInfo.status === "done" && deliveryInfo.cost !== null
+    const requestDeliveryCost = formData.selfPickup
+      ? 0
+      : deliveryInfo.status === "done"
         ? deliveryInfo.cost
-        : specialDeliveryCost ?? 0;
-    const totalPriceWithDelivery = effectiveProductsTotal + deliveryCostForTotal;
-    const totalPriceLine =
-      deliveryCostForTotal > 0
+        : specialDeliveryCost;
+    const totalPriceWithDelivery =
+      requestDeliveryCost === null
+        ? null
+        : effectiveProductsTotal + requestDeliveryCost;
+    const baseTotalPriceLine =
+      requestDeliveryCost === null
+        ? `Zwischensumme Produkte: ${effectiveProductsTotal},- € (Lieferkosten werden individuell kalkuliert)`
+        : requestDeliveryCost > 0
         ? activeContactBundle
-          ? `Gesamtpreis: ${totalPriceWithDelivery},- € (Paket ${activeContactBundle.discountedPrice},- € + Zusatzprodukte ${extraProductsTotal},- € + Lieferung ${deliveryCostForTotal},- €)`
+          ? `Gesamtpreis vor Aktionsrabatt: ${totalPriceWithDelivery},- € (Paket ${activeContactBundle.discountedPrice},- € + Zusatzprodukte ${extraProductsTotal},- € + Lieferung ${requestDeliveryCost},- €)`
           : customBundlePricing
-          ? `Gesamtpreis: ${totalPriceWithDelivery},- € (Produkte nach 10 % Paket-Rabatt ${effectiveProductsTotal},- € statt ${customBundlePricing.originalPrice},- € + Lieferung ${deliveryCostForTotal},- €)`
-          : `Gesamtpreis: ${totalPriceWithDelivery},- € (Produkte ${effectiveProductsTotal},- € + Lieferung ${deliveryCostForTotal},- €)`
+          ? `Gesamtpreis vor Aktionsrabatt: ${totalPriceWithDelivery},- € (Produkte nach 10 % Paket-Rabatt ${effectiveProductsTotal},- € statt ${customBundlePricing.originalPrice},- € + Lieferung ${requestDeliveryCost},- €)`
+          : `Gesamtpreis vor Aktionsrabatt: ${totalPriceWithDelivery},- € (Produkte ${effectiveProductsTotal},- € + Lieferung ${requestDeliveryCost},- €)`
         : activeContactBundle
-        ? `Gesamtpreis Produkte: ${effectiveProductsTotal},- € (Paket ${activeContactBundle.discountedPrice},- € + Zusatzprodukte ${extraProductsTotal},- €)`
+        ? `Gesamtpreis Produkte vor Aktionsrabatt: ${effectiveProductsTotal},- € (Paket ${activeContactBundle.discountedPrice},- € + Zusatzprodukte ${extraProductsTotal},- €)`
         : customBundlePricing
-        ? `Gesamtpreis Produkte: ${effectiveProductsTotal},- € nach 10 % Paket-Rabatt (statt ${customBundlePricing.originalPrice},- €)`
-        : `Gesamtpreis Produkte: ${effectiveProductsTotal},- €`;
+        ? `Gesamtpreis Produkte vor Aktionsrabatt: ${effectiveProductsTotal},- € nach 10 % Paket-Rabatt (statt ${customBundlePricing.originalPrice},- €)`
+        : `Gesamtpreis Produkte vor Aktionsrabatt: ${effectiveProductsTotal},- €`;
+    const requestPromotion = bookingPromotionActive && totalPriceWithDelivery !== null
+      ? calculateBookingPromotion(totalPriceWithDelivery)
+      : null;
+    const promotionLines = requestPromotion
+      ? [
+          `Zwischensumme inkl. Lieferung: ${formatPromotionPrice(requestPromotion.subtotal)}`,
+          `Aktionsrabatt 10 % (bei Buchung bis ${BOOKING_PROMOTION_END_DATE}): -${formatPromotionPrice(requestPromotion.discount)}`,
+          `Gesamtpreis mit Aktionsrabatt: ${formatPromotionPrice(requestPromotion.total)}`,
+        ]
+      : bookingPromotionActive
+        ? [`10 % Aktionsrabatt auf den Gesamtpreis inklusive Lieferung bei Buchung bis ${BOOKING_PROMOTION_END_DATE}`]
+        : [];
     const deliveryLine =
       deliveryInfo.status === "done" && deliveryInfo.cost !== null
         ? specialDeliveryCost !== null
@@ -1368,7 +1405,7 @@ export default function Home() {
     const messageLine = formData.message.trim()
       ? `Nachricht: ${formData.message.trim()}`
       : null;
-    const priceLines = [deliveryLine, totalPriceLine]
+    const priceLines = [deliveryLine, baseTotalPriceLine, ...promotionLines]
       .filter(Boolean)
       .join("\n");
     const optionalLines = [pickupLine, messageLine]
@@ -1615,6 +1652,16 @@ export default function Home() {
           {/* H1 for SEO - visually hidden */}
           <h1 className="sr-only">Eventausstattung mieten in Karlsruhe, Rastatt und Baden-Baden | memora - miete den moment</h1>
           <div className="max-w-2xl mt-4 md:mt-0">
+            {bookingPromotionActive && (
+              <div className="inline-flex flex-col gap-1 rounded-xl border border-[oklch(0.75_0.14_80/0.55)] bg-[oklch(0.22_0.06_155/0.8)] px-5 py-3 mb-5 text-white shadow-lg">
+                <span className="font-bold text-[oklch(0.82_0.14_80)]">
+                  10 % Rabatt auf deine gesamte Buchung
+                </span>
+                <span className="text-sm text-white/85">
+                  Mietpreise + Lieferung · bei Buchung bis {BOOKING_PROMOTION_END_DATE} · auch für Events 2027
+                </span>
+              </div>
+            )}
             {/* Urgency Badge */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
@@ -2753,6 +2800,39 @@ export default function Home() {
                       <span>Ich hole selbst ab.</span>
                     </label>
                   </div>
+
+                  {bookingPromotionActive && selectedProductSummaries.length > 0 && (
+                    <div className="rounded-xl border border-[oklch(0.75_0.14_80/0.6)] bg-[oklch(0.97_0.012_85)] p-4">
+                      <p className="font-bold text-foreground">
+                        10 % Aktionsrabatt bei Buchung bis {BOOKING_PROMOTION_END_DATE}
+                      </p>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        Der Rabatt gilt zusätzlich zu Paketpreisen auf Mietpreise und Lieferung – auch für Events 2027.
+                      </p>
+                      {bookingPromotion ? (
+                        <div className="mt-3 space-y-1.5 text-sm">
+                          <div className="flex justify-between gap-4">
+                            <span>Zwischensumme inkl. Lieferung</span>
+                            <span className="font-medium">{formatPromotionPrice(bookingPromotion.subtotal)}</span>
+                          </div>
+                          <div className="flex justify-between gap-4 text-emerald-800">
+                            <span>Aktionsrabatt (10 %)</span>
+                            <span className="font-semibold">−{formatPromotionPrice(bookingPromotion.discount)}</span>
+                          </div>
+                          <div className="flex justify-between gap-4 border-t border-border pt-2 text-base font-bold text-foreground">
+                            <span>Gesamtpreis mit Rabatt</span>
+                            <span>{formatPromotionPrice(bookingPromotion.total)}</span>
+                          </div>
+                        </div>
+                      ) : (
+                        <p className="mt-2 text-sm text-muted-foreground">
+                          {deliveryInfo.status === "done" && deliveryInfo.cost === null
+                            ? "Die Lieferkosten werden individuell kalkuliert. Der Rabatt wird auf den Gesamtpreis inklusive Lieferung angewendet."
+                            : "Gib deine PLZ ein, damit wir den Aktionspreis inklusive Lieferung berechnen können."}
+                        </p>
+                      )}
+                    </div>
+                  )}
 
                   <div>
                     <label className="block text-sm font-semibold text-foreground mb-1.5">
